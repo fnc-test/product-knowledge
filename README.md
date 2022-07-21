@@ -2,6 +2,13 @@
 
 This is a [MonoRepo](https://en.wikipedia.org/wiki/Monorepo) linking all the modules and infrastructure codes related to the Hey Catena! product.
 
+* See this [copyright notice](COPYRIGHT.md)
+* See the [authors file](AUTHORS.md)
+* See the [license file](LICENSE.md)
+* See the [code of conduct](CODE_OF_CONDUCT.md)
+* See the [contribution guidelines](CONTRIBUTING.md)
+* See the [dependencies and their licenses](DEPENDENCIES.md)
+
 The individual sources may be maintained in separate repositories, but are linked as [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) 
 so be sure to run the following command after cloning this repo:
 

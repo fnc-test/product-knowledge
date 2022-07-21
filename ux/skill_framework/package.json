@@ -1,0 +1,12 @@
+{
+    "name": "@knowledge-agents-ux/skill_framework",
+    "version": "0.5.1",
+    "description": "Catena-X Knowledge Agents Skill Framework",
+    "author": "The Catena-X Consortium Team Knowledge Agents",
+    "license": "Apache-2.0",
+    "main": "bin/index.js",
+    "scripts": {
+      "compile": "tsc -b",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    }
+  }
