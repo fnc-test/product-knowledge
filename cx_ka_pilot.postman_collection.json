@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "6a1813a3-766d-42e2-962d-3b340fbba397",
+		"name": "Knowledge Agents Pilot",
+		"description": "A collection of API calls against various services of the Knowledge Agents Pilot.\n\nAlso contains a special integration test subfolder.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2757771"
+	},
+	"item": [
+		{
+			"name": "Dataspace",
+			"item": [
+				{
+					"name": "Provider",
+					"item": [
+						{
+							"name": "Provisioning Agent (Intern)",
+							"item": [
+								{
+									"name": "Query the Provisioning Agent",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"accept": true
+										}
+									},
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/sparql-query",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{provisioningAgent}}/sparql",
+											"host": [
+												"{{provisioningAgent}}"
+											],
+											"path": [
+												"sparql"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"description": "A Collection of API Calls Against the Data Provisioning Agents Directly Which Sits upon some Data Source."
+						}
+					],
+					"description": "A Collection of API Calls Against the Provisioning Components of the Dataspace."
+				}
+			],
+			"description": "A Collection of API Calls Against the Dataspace Components."
+		}
+	]
+}

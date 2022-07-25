@@ -25,5 +25,16 @@ These are the sub-modules of the Hey Catena! product (and their respective sub-f
 - [UX](ux/README.md) hosts the User Experience components
 - [Infrastructure](infrastructure/README.md) hosts the "Infrastructure as Code" descriptions
 
+## Containerizing and Deployment
+
+Knowledge Agents builds all containers using docker technology. The docker buildfiles are part of the respective source code repositories.
+
+Knowledge Agents builds all deployments using docker-compose and helm technology. The docker compose files and helm charts can be found in the  [infrastructure](infrastructure) folder.
+
+## Running Against the Services and APIs / Integration Tests
+
+You may use/export/fork this online [Postman Workspace/Collecion](https://www.postman.com/catena-x/workspace/catena-x-knowledge-agents/collection/2757771-6a1813a3-766d-42e2-962d-3b340fbba397?action=share&creator=2757771) a copy of which is embedded [here](cx_ka_pilot.postman_collection.json). 
+It contains collection of sample interactions with the various products in various environments. Also integrated there is a folder with the integrations tests.
+
 
 

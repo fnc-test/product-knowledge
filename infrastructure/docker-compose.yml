@@ -1,0 +1,35 @@
+#
+# Docker compose recipe for setting up the sample infrastructure
+# See copyright notice in the top folder
+# See authors file in the top folder
+# See license file in the top folder
+#
+
+# that is the version of the docker compose runtime
+version: "3.9"
+
+services:
+
+  #
+  # Configures the provisioning agent image
+  #
+
+  provisioning-agent:
+    build:
+      dockerfile: Dockerfile
+      context: ../dataspace/agents/provisioning
+    image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.1
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    ports:
+      - "8080:8080" # sparql endpoint
+      - "8090:8090" # debugging endpoint
+    environment:
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090
+      ONTOLOGY: /input/ontology.ttl
+      MAPPING: /input/mapping.obda
+      SETTINGS: /input/settings.properties      
+    volumes:
+      - ./provider/resources/ontology.ttl:/input/ontology.ttl
+      - ./provider/resources/mapping.obda:/input/mapping.obda
+      - ./provider/resources/settings.properties:/input/settings.properties
+      - ./provider/resources/data.sql:/input/data.sql
