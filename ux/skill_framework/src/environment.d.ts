@@ -9,6 +9,8 @@ declare global {
     namespace NodeJS {
       interface ProcessEnv {
         SKILL_CONNECTOR?: string;
+        SKILL_CONNECTOR_AUTH_HEADER_KEY?: string;
+        SKILL_CONNECTOR_AUTH_HEADER_VALUE?: string;
       }
     }
   }

@@ -2,7 +2,7 @@
     "compilerOptions": {
         "incremental": true,
         "target": "es2019",
-        "module": "commonjs",
+        "module": "ES6",
         "declaration": true,
         "sourceMap": true,
         "strict": true,
@@ -10,7 +10,7 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "rootDir": "./src",
+        "rootDirs": ["./src","./test"],
         "outDir": "./bin",
         "composite": true
     },

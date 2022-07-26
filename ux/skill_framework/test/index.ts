@@ -5,10 +5,18 @@
 // See license file in the top folder
 //
 
-import { listAssets } from '../src/index';
+import { getConnectorFactory } from '../src/index';
+import {jest} from '@jest/globals';
 
+/**
+ * test the mock connector
+ */
 describe('testing skill framework', () => {
-    test('empty string should result in zero', () => {
-      expect(listAssets()).toHaveLength(1);
+  jest.setTimeout(15000);
+  test('empty string should result in zero', async () => {
+      var factory = getConnectorFactory().create();
+      var catalogue = await factory.listAssets();
+      expect(catalogue.id).toBeDefined();
+      expect(catalogue.contractOffers.length).toBeGreaterThan(0);
     });
-  });
+});
