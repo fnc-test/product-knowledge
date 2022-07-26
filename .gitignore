@@ -1,3 +1,5 @@
 node_modules/
 *.tsbuildinfo
 bin/
+target/
+dependency-reduced-pom.xml

@@ -15,12 +15,15 @@
 * Comment - any further remarks on the kind of dependency
 
 | Product | Component | Library/Module  | Version | Stage | License | Comment |
-|--- | --- | --- | --- | --- | ---| 
+|--- | --- | --- | --- | --- | --- | ---| 
 | Dataspace | * | [Java Runtime Environment (JRE)](https://de.wikipedia.org/wiki/Java-Laufzeitumgebung) | >=11 | Test + Provided | * | License (GPL, BCL, ...) depends on choosen runtime. 
 | Dataspace | * | [Java Development Kit (JDK)](https://de.wikipedia.org/wiki/Java_Development_Kit) | >=11 | Compile + Packaging | * | License (GPL, BCL, ...) depends on choosen kit. 
 | Dataspace | Provisioning Agent | [Ontop VKP](https://ontop-vkg.org/) | >=3.0 | Packaging + Runtime | Apache License 2.0 | 
 | Dataspace | Provisioning Agent | [H2 Database](http://h2database.com/) | >=2.1 | Runtime | Mozilla Public License (2.0) and Eclipse Public License (1.0) | 
+| Ontology | Tools | [OWLApi](https://github.com/owlcs/owlapi) | >=5.1 | Compile + Test + Packaging | LGPL and Apache License | 
 | UX | * | [NodeJS](https://nodejs.org/en/) | >=14 | All | MIT (Main) + Various Extensions |
-| UX | * | [Typescript](https://www.typescriptlang.org/) | >=14 | Compile + Runtime | Apache License 2.0 |
+| UX | * | [Typescript](https://www.typescriptlang.org/) | >=4.7 | Compile + Runtime | Apache License 2.0 |
+| UX | * | [JEST](https://jestjs.io/) | >=28.1 | Test | MIT |
+| UX | Skill Framework | [node-fetch](https://github.com/node-fetch/node-fetch) | >=2.6 | All | MIT |
 | * | * | Docker Engine | >=20.10.17 | Packaging + Provided | Apache License 2.0 |
 | * | * | [kubernetes](https://kubernetes.io/de/)/[helm](https://helm.sh/) | >=1.20/3.9 | Provided | Apache License 2.0 |
