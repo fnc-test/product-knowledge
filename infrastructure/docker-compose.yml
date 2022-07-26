@@ -19,7 +19,7 @@ services:
       dockerfile: Dockerfile
       context: ../dataspace/agents/provisioning
     image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.1
-    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    platform: ${DOCKER_DEFAULT_PLATFORM:-linux/amd64}
     ports:
       - "8080:8080" # sparql endpoint
       - "8090:8090" # debugging endpoint
