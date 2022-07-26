@@ -331,7 +331,7 @@ interface IRealmMappingFactory {
 }
 
 interface IRealmMapping {
-    getHeaderAnnotation: () => any
+    getHeaderAnnotation: (targetDomain:string ) => any
 }
 
 class EnvironmentRealmMappingFactory implements IRealmMappingFactory {
@@ -348,7 +348,7 @@ class EnvironmentRealmMappingFactory implements IRealmMappingFactory {
 
 class EnvironmentRealmMapping implements IRealmMapping {
 
-    public getHeaderAnnotation() {
+    public getHeaderAnnotation(targetDomain:string) {
         var headers:any={};
         if(process.env.SKILL_CONNECTOR_AUTH_HEADER_KEY != undefined) {
             headers[ process.env.SKILL_CONNECTOR_AUTH_HEADER_KEY ?? "" ] =  process.env.SKILL_CONNECTOR_AUTH_HEADER_VALUE;
@@ -382,10 +382,10 @@ class EnvironmentRealmMapping implements IRealmMapping {
  * Implementation of a mock connector
  */
 class RemoteConnector implements IConnector {
-    private url:String;
+    private url:string;
     private realmMapping:IRealmMapping;
 
-    constructor(url:String, realmMapping?:IRealmMapping) {
+    constructor(url:string, realmMapping?:IRealmMapping) {
         this.url=url;
         this.realmMapping=realmMapping ?? getRealmMappingFactory().create();
     }
@@ -401,7 +401,7 @@ class RemoteConnector implements IConnector {
        // 👇️ const response: Response
        const response = await fetch(finalUrl, {
         method: 'GET',
-        headers: this.realmMapping.getHeaderAnnotation()
+        headers: this.realmMapping.getHeaderAnnotation(this.url)
        });
 
        let elapsed = new Date().getTime() - start;
