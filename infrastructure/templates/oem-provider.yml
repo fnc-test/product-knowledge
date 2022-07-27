@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oem-provider-agent-config
+data:
+  cx-ontology.xml: |-
+{{- .Files.Get "provider/resources/cx-ontology.xml" | nindent 4 }}
+  dtc.obda: |-
+{{- .Files.Get "provider/resources/dtc.obda" | nindent 4 }}
+  dtc.sql: |-
+{{- .Files.Get "provider/resources/dtc.sql" | nindent 4 }}
+  settings.properties: |-
+{{- .Files.Get "provider/resources/settings.properties" | nindent 4 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oem-provider-agent
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: oem-provider-agent
+  template:
+    metadata:
+      labels:
+        app: oem-provider-agent
+    spec:
+      containers:
+        - name: oem-provider-agent
+          image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080 # API
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
+            - name: ONTOLOGY 
+              value: "/input/cx-ontology.xml"
+            - name: MAPPING 
+              value: "/input/dtc.obda"
+            - name: SETTINGS
+              value: "/input/settings.properties"
+          volumeMounts:
+            - name: oem-provider-agent-config
+              mountPath: /input
+      volumes:
+        - name: oem-provider-agent-config
+          configMap:
+            name: oem-provider-agent-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oem-provider-agent
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: oem-provider-agent
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oem-provider-agent-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/x-forwarded-prefix: "/oem-provider-agent"
+    nginx.org/mergeable-ingress-type: master
+spec:
+  tls:
+    - hosts:
+        - knowledge.int.demo.catena-x.net
+      secretName: tls-secret
+  rules:
+    - host: knowledge.int.demo.catena-x.net
+      http:
+        paths:
+          - path: /oem-provider-agent(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: oem-provider-agent
+                port:
+                  number: 8080
