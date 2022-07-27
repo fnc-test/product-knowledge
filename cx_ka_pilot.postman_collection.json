@@ -40,6 +40,10 @@
 												"type": "text"
 											}
 										],
+										"body": {
+											"mode": "raw",
+											"raw": "PREFIX cx: <https://github.com/catenax-ng/product-knowledge/cx.ttl#>\nPREFIX cx-diag: <https://github.com/catenax-ng/product-knowledge/diagnosis.ttl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?reason ?code ?description ?version ?partend ?partcat ?partclass WHERE {\n  ?bp cx:BPNL \"BPNL00000003COJN\".\n  ?dtc rdf:type cx-diag:DTC.\n  ?dtc cx:provisionedBy ?bp.\n  ?dtc cx-diag:PossibleCauses ?reason.\n  FILTER contains(?reason,\"Kabelbaum\").\n  ?dtc cx-diag:Code ?code.\n  ?dtc cx-diag:Description ?description.\n  ?dtc cx-diag:Version ?version.\n  ?dtc cx-diag:affects ?part.\n  ?part cx-diag:Category ?partcat.\n  ?part cx-diag:EnDenomination ?partend.\n  ?part cx-diag:Classification ?partclass.\n  FILTER contains(?partclass,'Powertrain').\n} \n"
+										},
 										"url": {
 											"raw": "{{provisioningAgent}}/sparql",
 											"host": [
