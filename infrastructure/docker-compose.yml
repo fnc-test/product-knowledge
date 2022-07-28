@@ -25,11 +25,12 @@ services:
       - "8090:8090" # debugging endpoint
     environment:
       JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090
-      ONTOLOGY: /input/cx-ontology.xml
-      MAPPING: /input/dtc.obda
-      SETTINGS: /input/settings.properties      
+      ONTOP_ONTOLOGY_FILE: /input/cx-ontology.xml
+      ONTOP_MAPPING_FILE: /input/dtc.obda
+      ONTOP_PROPERTIES_FILE: /input/settings.properties
+      ONTOP_PORTAL_FILE: /input/portal.toml
     volumes:
       - ./provider/resources/cx-ontology.xml:/input/cx-ontology.xml
       - ./provider/resources/dtc.obda:/input/dtc.obda
       - ./provider/resources/settings.properties:/input/settings.properties
-      - ./provider/resources/dtc.sql:/input/dtc.sql
+      - ./provider/resources/portal.toml:/input/portal.toml

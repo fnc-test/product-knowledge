@@ -1,0 +1,33 @@
+title="Catena-X Agent Provisioning Demo"
+
+[[tabGroups]]
+
+name="Example Queries"
+
+[[tabGroups.tabs]]
+
+name="diagnosis"
+query="""
+PREFIX cx: <https://github.com/catenax-ng/product-knowledge/cx.ttl#>
+PREFIX cx-diag: <https://github.com/catenax-ng/product-knowledge/diagnosis.ttl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?reason ?code ?description ?version ?partend ?partcat ?partclass WHERE {
+  ?bp cx:BPNL "BPNL00000003COJN".
+  ?dtc rdf:type cx-diag:DTC.
+  ?dtc cx:provisionedBy ?bp.
+  ?dtc cx-diag:PossibleCauses ?reason.
+  FILTER contains(?reason,"Kabelbaum").
+  ?dtc cx-diag:Code ?code.
+  ?dtc cx-diag:Description ?description.
+  ?dtc cx-diag:Version ?version.
+  ?dtc cx-diag:affects ?part.
+  ?part cx-diag:Category ?partcat.
+  ?part cx-diag:EnDenomination ?partend.
+  ?part cx-diag:Classification ?partclass.
+  FILTER contains(?partclass,'Powertrain').
+} LIMIT 40
+
+"""
+
+

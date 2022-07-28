@@ -9,6 +9,8 @@ data:
 {{- .Files.Get "provider/resources/dtc.obda" | nindent 4 }}
   settings.properties: |-
 {{- .Files.Get "provider/resources/settings.properties" | nindent 4 }}
+  portal.toml: |-
+{{- .Files.Get "provider/resources/portal.toml" | nindent 4 }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -34,12 +36,14 @@ spec:
           env:
             - name: JAVA_TOOL_OPTIONS
               value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
-            - name: ONTOLOGY 
+            - name: ONTOP_ONTOLOGY_FILE 
               value: "/input/cx-ontology.xml"
-            - name: MAPPING 
+            - name: ONTOP_MAPPING_FILE 
               value: "/input/dtc.obda"
-            - name: SETTINGS
+            - name: ONTOP_PROPERTIES_FILE
               value: "/input/settings.properties"
+            - name: ONTOP_PORTAL_FILE
+              value: "/input/portal.toml"
           volumeMounts:
             - name: oem-provider-agent-config
               mountPath: /input
