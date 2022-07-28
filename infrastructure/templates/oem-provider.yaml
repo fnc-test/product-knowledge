@@ -7,8 +7,6 @@ data:
 {{- .Files.Get "provider/resources/cx-ontology.xml" | nindent 4 }}
   dtc.obda: |-
 {{- .Files.Get "provider/resources/dtc.obda" | nindent 4 }}
-  dtc.sql: |-
-{{- .Files.Get "provider/resources/dtc.sql" | nindent 4 }}
   settings.properties: |-
 {{- .Files.Get "provider/resources/settings.properties" | nindent 4 }}
 ---

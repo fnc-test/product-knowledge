@@ -3,3 +3,4 @@ node_modules/
 bin/
 target/
 dependency-reduced-pom.xml
+.DS_Store
