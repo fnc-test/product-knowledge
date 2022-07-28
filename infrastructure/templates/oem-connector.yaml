@@ -80,7 +80,7 @@ spec:
         app: oem-control-plane
     spec:
       containers:
-        - image: ghcr.io/catenax-ng/product-edc/edc-controlplane-memory:0.0.5
+        - image: ghcr.io/catenax-ng/product-edc/edc-controlplane-memory:0.0.3
           imagePullPolicy: Always
           name: control-plane
           ports:
