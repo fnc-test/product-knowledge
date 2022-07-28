@@ -4,6 +4,4 @@ name: knowledge-agents
 description: EDC-Based Agent Architecture
 home: https://github.com/catenax-ng/product-knowledge/infrastructure
 type: application
-appVersion: 0.5.1
 version: 0.5.1
-maintainers: [ "The Catena-X Knowledge Agents Team"]
