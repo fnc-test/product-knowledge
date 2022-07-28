@@ -12,6 +12,14 @@ data:
   portal.toml: |-
 {{- .Files.Get "provider/resources/portal.toml" | nindent 4 }}
 ---
+apiVersion: v1
+data:
+  auth: Zm9vOiRhcHIxJEEwMVY5WUxaJGtobE9jSEowVGwvdnJBWFlUMEQ2UTAK
+kind: Secret
+metadata:
+  name: oem-provider-auth
+type: Opaque
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -76,6 +84,12 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     nginx.ingress.kubernetes.io/x-forwarded-prefix: "/oem-provider-agent"
     nginx.org/mergeable-ingress-type: master
+    # type of authentication
+    nginx.ingress.kubernetes.io/auth-type: basic
+    # name of the secret that contains the user/password definitions
+    nginx.ingress.kubernetes.io/auth-secret: oem-provider-auth
+    # message to display with an appropriate context why the authentication is required
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - OEM'
 spec:
   tls:
     - hosts:
