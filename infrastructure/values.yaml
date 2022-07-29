@@ -1,3 +1,9 @@
+edc:
+  version: 0.0.4
+
+dataspace:
+  bpnOem: BPNL00000003COJN
+
 ingress:
   host: knowledge.int.demo.catena-x.net
   issuer: letsencrypt-prod
@@ -7,7 +13,7 @@ security:
   dapsClientId: ""
   dapsPrivateKeyAlias: ""
   dapsPublicKeyAlias: ""
-  dapsUrl: "https://daps.int.demo.catena-x.net"
+  dapsUrl: "https://daps1.int.demo.catena-x.net"
   tokenPrivateKeyAlias: ""
   tokenPublicKeyAlias: ""
   vaultClientId: ""

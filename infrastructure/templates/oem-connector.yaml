@@ -45,7 +45,7 @@ data:
     edc.receiver.http.auth-key={{ .Values.security.xApiKey }}
     edc.receiver.http.endpoint=http://oem-agent-wrapper:9192/callback/endpoint-data-reference
 
-    edc.transfer.proxy.endpoint=https://{{ .Values.ingress.host }}/oem-edc-data/BPNL00000003COJN
+    edc.transfer.proxy.endpoint=https://{{ .Values.ingress.host }}/oem-edc-data/{{ .Values.dataspace.bpnOem }}
     edc.transfer.proxy.token.signer.privatekey.alias={{ .Values.security.tokenPrivateKeyAlias }}
     edc.transfer.proxy.token.verifier.publickey.alias={{ .Values.security.tokenPublicKeyAlias }}
     
@@ -54,7 +54,7 @@ data:
     edc.vault.name={{ .Values.security.vaultName }}
     edc.vault.tenantid={{ .Values.security.vaultTenant }}
     
-    ids.webhook.address=https://{{ .Values.ingress.host }}/oem-edc-control/BPNL00000003COJN
+    ids.webhook.address=https://{{ .Values.ingress.host }}/oem-edc-control/{{ .Values.dataspace.bpnOem }}
   opentelemetry.properties: |-
     otel.javaagent.enabled=false
     otel.javaagent.debug=false
@@ -80,7 +80,7 @@ spec:
         app: oem-control-plane
     spec:
       containers:
-        - image: ghcr.io/catenax-ng/product-edc/edc-controlplane-memory:0.0.3
+        - image: ghcr.io/catenax-ng/product-edc/edc-controlplane-memory:{{ .Values.edc.version }}
           imagePullPolicy: Always
           name: control-plane
           ports:
@@ -155,14 +155,14 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /oem-edc-control/BPNL00000003COJN/(data)(/|$)(.*)
+          - path: /oem-edc-control/{{ .Values.dataspace.bpnOem }}/(data)(/|$)(.*)
             pathType: Prefix
             backend:
               service:
                 name: oem-control-plane
                 port:
                   number: 8181
-          - path: /oem-edc-control/BPNL00000003COJN/(api/v1/ids)(/|$)(.*)
+          - path: /oem-edc-control/{{ .Values.dataspace.bpnOem }}/(api/v1/ids)(/|$)(.*)
             pathType: Prefix
             backend:
               service:
