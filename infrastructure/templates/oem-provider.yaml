@@ -94,7 +94,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.ingress.host }}
-      secretName: tls-secret
+      secretName: tls-knowledge
   rules:
     - host: {{ .Values.ingress.host }}
       http:
