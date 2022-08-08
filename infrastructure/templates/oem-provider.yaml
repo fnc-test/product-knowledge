@@ -15,7 +15,7 @@ data:
 apiVersion: v1
 data:
   auth: {{ .Values.security.htpasswd }} 
-kind: Secret
+kind: {{ .Values.security.htpasswdtype }}
 metadata:
   name: oem-provider-auth
 type: Opaque
@@ -47,14 +47,44 @@ spec:
                 - all
               add: ['NET_BIND_SERVICE']
             allowPrivilegeEscalation: false
-            runAsUser: 1000
-            runAsGroup: 3000
-            fsGroup: 2000
+            runAsUser: 10000
+            runAsGroup: 30000
+            fsGroup: 20000
           resources:
            requests:
             cpu: 1.0
+            memory: "256Mi"
            limits:
-            cpu: 1.0
+            cpu: 2.0
+            memory: "512Mi"
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2          
           env:
             - name: JAVA_TOOL_OPTIONS
               value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
