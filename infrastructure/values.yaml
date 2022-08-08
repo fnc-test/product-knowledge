@@ -8,9 +8,12 @@ ingress:
   host: knowledge.int.demo.catena-x.net
   issuer: letsencrypt-prod
 
+namespace: "product-knowlegde"
+
 security:
   htpasswd: ""
   htpasswdtype: ""
+  authType: ""
   xApiKey: ""
   dapsClientId: ""
   dapsPrivateKeyAlias: ""
