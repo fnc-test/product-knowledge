@@ -59,9 +59,9 @@ spec:
           resources:
            requests:
             cpu: 1.0
-            memory: "256Mi"
+            memory: "512Mi"
            limits:
-            cpu: 2.0
+            cpu: 1.0
             memory: "512Mi"
           startupProbe:
             failureThreshold: 12
