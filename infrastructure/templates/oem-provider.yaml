@@ -14,7 +14,7 @@ data:
 ---
 apiVersion: v1
 data:
-  auth: Zm9vOiRhcHIxJEEwMVY5WUxaJGtobE9jSEowVGwvdnJBWFlUMEQ2UTAK
+  auth: {{ .Values.security.htpasswd }} 
 kind: Secret
 metadata:
   name: oem-provider-auth
@@ -41,6 +41,12 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080 # API
+          securityContext:
+            capabilities:
+              drop:
+                - all
+              add: ['NET_BIND_SERVICE']
+          allowPrivilegeEscalation: false   
           env:
             - name: JAVA_TOOL_OPTIONS
               value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"

@@ -9,6 +9,7 @@ ingress:
   issuer: letsencrypt-prod
 
 security:
+  htpasswd: ""
   xApiKey: ""
   dapsClientId: ""
   dapsPrivateKeyAlias: ""
