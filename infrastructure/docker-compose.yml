@@ -34,3 +34,17 @@ services:
       - ./provider/resources/dtc.obda:/input/dtc.obda
       - ./provider/resources/settings.properties:/input/settings.properties
       - ./provider/resources/portal.toml:/input/portal.toml
+
+  remoting-agent:
+    build:
+      dockerfile: Dockerfile
+      context: ../dataspace/agents/remoting
+    image: ghcr.io/catenax-ng/product-knowledge/dataspace/remoting-agent:0.5.2
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    ports:
+      - "8081:8080" # sparql endpoint
+      - "8091:8090" # debugging endpoint
+    environment:
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090
+    volumes:
+      - ./provider/resources/rdf4j:/var/rdf4j/server
