@@ -19,7 +19,8 @@
         "ts-node": "^10.9.1"
     },
     "workspaces": [
-        "skill_framework"
+        "skill_framework",
+        "skill_gym"
     ],
     "dependencies": {
         "node-fetch": "^3.2.9",

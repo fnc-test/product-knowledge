@@ -1,0 +1,40 @@
+{
+  "name": "skill-gym-modules",
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.es.js",
+  "description": "Catena-X Knowledge Agents User Experience UI components",
+  "homepage": "https://catena-x.net/",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:lib": "rollup -c"
+  },
+  "author": "The Catena-X Consortium Team Knowledge Agents",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.1",
+    "@types/react": "^18.0.17",
+    "react": "^18.2.0",
+    "rollup": "^2.77.2",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
+  },
+  "peerDependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.10.0",
+    "cx-portal-shared-components": "^0.5.1",
+    "react": "^18.2.0"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "types": "dist/index.d.ts"
+}
