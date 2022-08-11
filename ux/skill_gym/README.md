@@ -10,6 +10,12 @@ The Skill Gym uses the [Skill Framework](../skill_framework) and the [Knowledge 
 * see license file in the top folder
 * see authors file in the top folder
 
+## Available Scripts
+
+### `npm run build`
+
+Builds the modules and can be published after that to npm.
+When you work locally and want to see the changes in the knowledge explorer - please call this command as well.
 
 
 

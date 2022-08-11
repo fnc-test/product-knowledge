@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Catena-X Knowledge Agents (Hey Catena!) Knowledge Explorer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Knowledge Explorer is a set of UI components which allow an ad-hoc and speech-oriented interaction with Hey Catena! 
+
+The Knowledge Explorer uses the [Skill Framework](../skill_framework/) and the [Knowledge Explorer](../knowledge_explorer/)
+
+## Notice
+
+* see copyright notice in the top folder
+* see license file in the top folder
+* see authors file in the top folder
 
 ## Available Scripts
 
