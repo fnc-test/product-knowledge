@@ -5,20 +5,19 @@ import { terser } from 'rollup-plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
 import dts from "rollup-plugin-dts";
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-
-const packageJson = require('./package.json');
+import pkg from './package.json';
 
 export default [
   {
     input: 'src/index.ts',
     output: [
       {
-        file: packageJson.main,
+        file: pkg.main,
         format: "cjs",
         sourcemap: true
       },
       {
-        file: packageJson.module,
+        file: pkg.module,
         format: "esm",
         sourcemap: true
       }
@@ -28,9 +27,10 @@ export default [
       external(),
       resolve(),
       commonjs(),
-      typescript({ tsconfig: './tsconfig.json' }),
+      typescript({ tsconfig: './tsconfig.build.json' }),
       terser()
-    ]
+    ],
+    external: Object.keys(pkg.peerDependencies || {})
   },
   {
     input: 'dist/index.d.ts',
