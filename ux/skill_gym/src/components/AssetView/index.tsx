@@ -2,6 +2,7 @@ import { PageHeader, SharedThemeProvider } from 'cx-portal-shared-components';
 import AssetList from './AssetList';
 import { Box, Grid } from '@mui/material';
 import React from "react";
+import "./styles.sass"
 
 export const AssetView = () => {
   return (
