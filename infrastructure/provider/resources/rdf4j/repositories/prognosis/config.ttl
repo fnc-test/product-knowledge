@@ -1,0 +1,19 @@
+#
+# Rdf4j configuration for a function repository
+#
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rep: <http://www.openrdf.org/config/repository#>.
+@prefix sr: <http://www.openrdf.org/config/repository/sail#>.
+@prefix sail: <http://www.openrdf.org/config/sail#>.
+@prefix sp: <http://spinrdf.org/sp#>.
+
+[] a rep:Repository ;
+   rep:repositoryID "prognosis" ;
+   rdfs:label "Prognosis Function" ;
+   rep:repositoryImpl [
+      rep:repositoryType "openrdf:SailRepository" ;
+      sr:sailImpl [
+         sail:sailType "io.catenax.knowledge:Remoting" ;
+         sp:serviceURI "http://prognosis" ;
+      ]
+   ].
