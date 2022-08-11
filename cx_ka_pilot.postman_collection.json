@@ -24,9 +24,6 @@
 										}
 									},
 									"request": {
-										"auth": {
-											"type": "noauth"
-										},
 										"method": "POST",
 										"header": [
 											{
@@ -42,7 +39,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "PREFIX cx: <https://github.com/catenax-ng/product-knowledge/cx.ttl#>\nPREFIX cx-diag: <https://github.com/catenax-ng/product-knowledge/diagnosis.ttl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?reason ?code ?description ?version ?partend ?partcat ?partclass WHERE {\n  ?bp cx:BPNL \"BPNL00000003COJN\".\n  ?dtc rdf:type cx-diag:DTC.\n  ?dtc cx:provisionedBy ?bp.\n  ?dtc cx-diag:PossibleCauses ?reason.\n  FILTER contains(?reason,\"Kabelbaum\").\n  ?dtc cx-diag:Code ?code.\n  ?dtc cx-diag:Description ?description.\n  ?dtc cx-diag:Version ?version.\n  ?dtc cx-diag:affects ?part.\n  ?part cx-diag:Category ?partcat.\n  ?part cx-diag:EnDenomination ?partend.\n  ?part cx-diag:Classification ?partclass.\n  FILTER contains(?partclass,'Powertrain').\n} \n"
+											"raw": "PREFIX cx: <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#>\nPREFIX cx-diag: <https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?reason ?code ?description ?version ?partend ?partcat ?partclass WHERE {\n  ?bp cx:BPNL \"BPNL00000003COJN\".\n  ?dtc rdf:type cx-diag:DTC.\n  ?dtc cx:provisionedBy ?bp.\n  ?dtc cx-diag:PossibleCauses ?reason.\n  FILTER contains(?reason,\"Kabelbaum\").\n  ?dtc cx-diag:Code ?code.\n  ?dtc cx-diag:Description ?description.\n  ?dtc cx-diag:Version ?version.\n  ?dtc cx-diag:affects ?part.\n  ?part cx-diag:Category ?partcat.\n  ?part cx-diag:EnDenomination ?partend.\n  ?part cx-diag:Classification ?partclass.\n  FILTER contains(?partclass,'Powertrain').\n} LIMIT 40\n"
 										},
 										"url": {
 											"raw": "{{provisioningAgent}}/sparql",
@@ -57,7 +54,261 @@
 									"response": []
 								}
 							],
-							"description": "A Collection of API Calls Against the Data Provisioning Agents Directly Which Sits upon some Data Source."
+							"description": "A Collection of API Calls Against the Data Provisioning Agents Directly Which Sits upon some Data Source.",
+							"auth": {
+								"type": "basic",
+								"basic": [
+									{
+										"key": "password",
+										"value": "{{oemPassword}}",
+										"type": "string"
+									},
+									{
+										"key": "username",
+										"value": "{{oemUser}}",
+										"type": "string"
+									}
+								]
+							},
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "Remoting Agent (Intern)",
+							"item": [
+								{
+									"name": "Test the Remoting Agent",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true,
+										"disabledSystemHeaders": {
+											"accept": true
+										}
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/sparql-query",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "PREFIX cx: <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#>\nPREFIX cx-diag: <https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?reason ?code ?description ?version ?partend ?partcat ?partclass WHERE {\n  ?bp cx:BPNL \"BPNL00000003COJN\".\n  ?dtc rdf:type cx-diag:DTC.\n  ?dtc cx:provisionedBy ?bp.\n  ?dtc cx-diag:PossibleCauses ?reason.\n  FILTER contains(?reason,\"Kabelbaum\").\n  ?dtc cx-diag:Code ?code.\n  ?dtc cx-diag:Description ?description.\n  ?dtc cx-diag:Version ?version.\n  ?dtc cx-diag:affects ?part.\n  ?part cx-diag:Category ?partcat.\n  ?part cx-diag:EnDenomination ?partend.\n  ?part cx-diag:Classification ?partclass.\n  FILTER contains(?partclass,'Powertrain').\n} LIMIT 40\n"
+										},
+										"url": {
+											"raw": "{{remotingAgent}}/protocol",
+											"host": [
+												"{{remotingAgent}}"
+											],
+											"path": [
+												"protocol"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Query the Remoting Agent",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"accept": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/sparql-query",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "PREFIX cx: <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#> \nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \nPREFIX prognosis: <https://github.com/catenax-ng/product-knowledge/ontology/prognosis.ttl#>\n\nSELECT ?invocation ?output \nWHERE { \n  ?invocation a prognosis:Invocation;         \n              prognosis:input-1 \"1\"^^xsd:string; \n              prognosis:input-2 \"2\"^^xsd:string; \n              prognosis:output ?output. \n}"
+										},
+										"url": {
+											"raw": "{{remotingAgent}}/repositories/prognosis",
+											"host": [
+												"{{remotingAgent}}"
+											],
+											"path": [
+												"repositories",
+												"prognosis"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"description": "A Collection of API Calls Against the Data Provisioning Agents Directly Which Sits upon some Data Source.",
+							"auth": {
+								"type": "noauth"
+							},
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "EDC (Intern)",
+							"item": [
+								{
+									"name": "Create Asset",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"asset\": {\n    \"properties\": {\n      \"asset:prop:id\": \"urn:cx:graph:oem:Diagnosis2022\",\n      \"asset:prop:name\": \"Diagnostic Trouble Code Catalogue Version 2022\",\n      \"asset:prop:contenttype\": \"application/json;application/xml\",\n      \"asset:prop:policy-id\": \"research\",\n      \"asset:prop:cx:requesttype\": \"application/sparql\",\n      \"asset:prop:cx:apitype\": \"application/knowledge-agent-query\",\n      \"asset:prop:cx:ontology\": \"https://github.com/catenax-ng/product-knowledge/ontology#\",\n      \"asset:prop:cx:ontologyVersion\": \"https://github.com/catenax-ng/product-knowledge/tree/main\",\n      \"asset:prop:cx:shapesGraph\": \"@prefix : <urn:cx:graph:oem:Diagnosis2022> .\\n@prefix cx: <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#> .\\n@prefix cx-diag: <https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#> .\\n@prefix owl: <http://www.w3.org/2002/07/owl#> .\\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\\n@prefix sh: <http://www.w3.org/ns/shacl#> .\\n\\nOemDTC rdf:type sh:NodeShape ;\\n  sh:targetClass cx-diag:DTC ;\\n  sh:property [\\n        sh:path cx:provisionedBy ;\\n        sh:hasValue <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner/BPNL00000003COJN> ;\\n    ] ;\\n  sh:property [\\n        sh:path cx-diag:Version ;\\n        sh:hasValue 0^^xsd:long ;\\n    ] ;\\n  sh:property [\\n        sh:path cx-diag:Affects ;\\n        sh:class OemDiagnosedParts ;\\n    ] ;\\n\\nOemDiagnosedParts rdf:type sh:NodeShape ;\\n  sh:targetClass cx-diag:DiagnosedPart ;\\n  sh:property [\\n        sh:path cx:provisionedBy ;\\n        sh:hasValue <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner/BPNL00000003COJN> ;\\n    ] ;\\n\",\n      \"asset:prop:cx:isFederated\": true\n    }\n  },\n  \"dataAddress\": {\n    \"properties\": {\n      \"endpoint\": \"http://oem-provider-agent:8080/sparql\",\n      \"type\": \"HttpData\"\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{oemEdcControl}}/data/assets",
+											"host": [
+												"{{oemEdcControl}}"
+											],
+											"path": [
+												"data",
+												"assets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Assets",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{oemEdcControl}}/data/assets",
+											"host": [
+												"{{oemEdcControl}}"
+											],
+											"path": [
+												"data",
+												"assets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Show Catalogue",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{oemEdcControl}}/data/catalog?providerUrl={{oemEdcControl}}/api/v1/ids/data",
+											"host": [
+												"{{oemEdcControl}}"
+											],
+											"path": [
+												"data",
+												"catalog"
+											],
+											"query": [
+												{
+													"key": "providerUrl",
+													"value": "http://connector.cx-rel.edc.aws.bmw.cloud:8282/BPNL00000003AYRE/api/v1/ids/data",
+													"disabled": true
+												},
+												{
+													"key": "providerUrl",
+													"value": "{{oemEdcControl}}/api/v1/ids/data"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"auth": {
+								"type": "apikey",
+								"apikey": [
+									{
+										"key": "value",
+										"value": "{{oemEdcApiKey}}",
+										"type": "string"
+									},
+									{
+										"key": "key",
+										"value": "X-Api-Key",
+										"type": "string"
+									}
+								]
+							},
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
 						}
 					],
 					"description": "A Collection of API Calls Against the Provisioning Components of the Dataspace."
