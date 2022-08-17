@@ -18,11 +18,10 @@ services:
     build:
       dockerfile: Dockerfile
       context: ../dataspace/agents/provisioning
-    image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.1
+    image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.2
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8080:8080" # sparql endpoint
-      - "8090:8090" # debugging endpoint
     environment:
       JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090
       ONTOP_ONTOLOGY_FILE: /input/cx-ontology.xml
