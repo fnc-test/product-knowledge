@@ -95,6 +95,32 @@
 							"name": "Remoting Agent (Intern)",
 							"item": [
 								{
+									"name": "Test the Backend Service",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://api.agify.io?name=Schorsch",
+											"protocol": "https",
+											"host": [
+												"api",
+												"agify",
+												"io"
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "Schorsch"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
 									"name": "Test the Remoting Agent",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true,
@@ -155,7 +181,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "PREFIX cx: <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#> \nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \nPREFIX prognosis: <https://github.com/catenax-ng/product-knowledge/ontology/prognosis.ttl#>\n\nSELECT ?invocation ?output \nWHERE { \n  ?invocation a prognosis:Invocation;         \n              prognosis:input-1 \"1\"^^xsd:string; \n              prognosis:input-2 \"2\"^^xsd:string; \n              prognosis:output ?output. \n}"
+											"raw": "PREFIX cx: <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#> \nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \nPREFIX prognosis: <https://github.com/catenax-ng/product-knowledge/ontology/prognosis.ttl#>\n\nSELECT ?invocation ?prediction ?support\nWHERE { \n  ?invocation a prognosis:Prognosis;         \n              prognosis:name \"Schorsch\"^^xsd:string; \n              prognosis:prediction ?prediction; \n              prognosis:support ?support; \n}"
 										},
 										"url": {
 											"raw": "{{remotingAgent}}/repositories/prognosis",

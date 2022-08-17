@@ -7,8 +7,11 @@
 @prefix sr: <http://www.openrdf.org/config/repository/sail#>.
 @prefix sail: <http://www.openrdf.org/config/sail#>.
 @prefix sp: <http://spinrdf.org/sp#>.
-@prefix cxfx: <https://github.com/catenax-ng/product-knowledge/ontology/fx.ttl#>.
-@prefix cxprognosis: <https://github.com/catenax-ng/product-knowledge/ontology/prognosis.ttl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix cx-fx: <https://github.com/catenax-ng/product-knowledge/ontology/fx.ttl#>.
+@prefix cx-prognosis: <https://github.com/catenax-ng/product-knowledge/ontology/prognosis.ttl#>.
+@prefix cx-rt: <urn:io.catenax.knowledge.agents.remoting#>.
 
 [] rdf:type rep:Repository ;
    rep:repositoryID "prognosis" ;
@@ -17,20 +20,47 @@
       rep:repositoryType "openrdf:SailRepository" ;
       sr:sailImpl [
          sail:sailType "io.catenax.knowledge:Remoting" ;
-         cxfx:supportsInvocation cxprognosis:Prognosis;
+         cx-fx:supportsInvocation cx-rt:Test;
+         cx-fx:supportsInvocation cx-prognosis:Prognosis;
       ]
    ].
 
-cxprognosis:Prognosis rdf:type cxfx:Function;
-  cxfx:targetUri "class:io.catenax.knowledge.agents.remoting.TestFunction#test";
-  cxfx:input cxprognosis:input-1;
-  cxfx:input cxprognosis:input-2;
-  cxfx:output cxprognosis:output.
+cx-rt:Test rdf:type cx-fx:Function;
+  cx-fx:input cx-rt:input-1;
+  cx-fx:input cx-rt:input-2;
+  cx-fx:output cx-rt:output.
 
-cxprognosis:input-1 rdf:type cxfx:Argument;
-   cxfx:argumentName "arg0".
+cx-rt:input-1 rdf:type cx-fx:Argument;
+   cx-fx:argumentName "arg0".
 
-cxprognosis:input-2 rdf:type cxfx:Argument;
-   cxfx:argumentName "arg1".
+cx-rt:input-2 rdf:type cx-fx:Argument;
+   cx-fx:argumentName "arg1".
 
-cxprognosis:output rdf:type cxfx:ReturnValue.
+cx-rt:output rdf:type cx-fx:ReturnValue;
+   cx-fx:valuePath "";
+   cx-fx:dataType xsd:int.
+
+cx-prognosis:Prognosis rdf:type cx-fx:Function;
+  dcterms:description "Prognosis is a sample simulation function with input and output bindings."@en ;
+  dcterms:title "Prognosis" ;
+  cx-fx:targetUri "https://api.agify.io";
+  cx-fx:input cx-prognosis:name;
+  cx-fx:output cx-prognosis:prediction;
+  cx-fx:output cx-prognosis:support.
+
+cx-prognosis:name rdf:type cx-fx:Argument;
+  dcterms:description "Name is an argument to the Prognosis function."@en ;
+  dcterms:title "Name";
+  cx-fx:argumentName "name".
+
+cx-prognosis:prediction rdf:type cx-fx:ReturnValue;
+   dcterms:description "Prediction (Value) is an integer-based output of the Prognosis function."@en ;
+   dcterms:title "Prediction" ;
+   cx-fx:valuePath "age";
+   cx-fx:dataType xsd:int.
+
+cx-prognosis:support rdf:type cx-fx:ReturnValue;
+   dcterms:description "Support (Value) is another integer-based output of the Prognosis function."@en ;
+   dcterms:title "Support" ;
+   cx-fx:valuePath "count";
+   cx-fx:dataType xsd:int.
