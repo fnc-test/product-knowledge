@@ -1,8 +1,33 @@
-# Catena-X Knowledge Agents (Hey Catena!) Skill Gym
+# Catena-X Skill modules
 
-The Skill Gym is a set of UI components which allow to define and test new skills for Hey Catena! 
+The skill modules is a set of UI components which allow to define and test new skills for the [Skill Gym](../skill_gym) and the [Knowledge Explorer](../knowledge_explorer)! 
 
-The Skill Gym uses the [Skill Framework](../skill_framework).
+The modules uses the [Skill Framework](../skill_framework) and the [Catena-X shared component library](https://www.npmjs.com/package/cx-portal-shared-components).
+
+If you like to reuse the modules in your own project, do the following steps:
+
+First create a new react app and add dependencies for the library and Material UI.
+We are using npm and TypeScript, if you prefer yarn or JavaScript use those.
+
+    npm create react-app sample-skill-app --template typescript
+    npm install @catenax-ng/skill-modules
+
+
+Start the development server
+
+    
+    npm start
+
+
+Edit `src/index.tsx` and add one of the available modules like "AssetView" to it.
+
+    ReactDOM.render(
+      <React.StrictMode>
+        <AssetView />
+      </React.StrictMode>,
+      document.getElementById('app')
+    );
+
 
 ## Notice
 
