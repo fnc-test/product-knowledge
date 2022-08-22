@@ -11,28 +11,51 @@ version: "3.9"
 services:
 
   #
-  # Configures the provisioning agent image
+  # Configures the oem backend image
   #
-
-  provisioning-agent:
+  oem-backend:
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.backend
       context: ../dataspace/agents/provisioning
-    image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.1
+    image: ghcr.io/catenax-ng/product-knowledge/dataspace/dremio-oss:22.0
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    ports:
+      - "9047:9047" # Web-UI
+      - "31010:31010" # Zookeper
+      - "45678:45678" # Executor Protocol
+
+  #
+  # Configures the oem agent image
+  #
+  oem-agent:
+    build:
+      dockerfile: Dockerfile.agent
+      context: ../dataspace/agents/provisioning
+    image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.2
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8080:8080" # sparql endpoint
-      - "8090:8090" # debugging endpoint
+      #- "8082:8082" # possible second, third, ... sparql endpoint
     environment:
-      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090
-      ONTOP_ONTOLOGY_FILE: /input/cx-ontology.xml
-      ONTOP_MAPPING_FILE: /input/dtc.obda
+      # If you want to enable multiple endpoints, simply list them with spaces, like ONTOP_PORT: 8080 8082
+      ONTOP_PORT: 8080
+      # Uncomment to enable for debugging, please choose a different port for each endpoint
+      #JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8092
+      # If you want to enable multiple ontologies, simply list them with spaces, like ONTOP_ONTOLOGY_FILE: /input/cx-ontology.xml /input/cx-ontology2.xml 
+      ONTOP_ONTOLOGY_FILE: /input/cx-ontology.xml 
+      # If you want to enable multiple mappings, simply list them with spaces, like ONTOP_MAPPING_FILE: /input/dtc.obda /input/loadspectrum.obda 
+      ONTOP_MAPPING_FILE: /input/dtc.obda 
+      # If you want to enable multiple settings, simply list them with spaces, like ONTOP_PROPERTIES_FILE: /input/settings.properties /input/settings.dremio.properties
       ONTOP_PROPERTIES_FILE: /input/settings.properties
+      # If you want to enable multiple portals, simply list them with spaces, like ONTOP_PORTAL_FILE: /input/portal.toml /input/portal2.toml 
       ONTOP_PORTAL_FILE: /input/portal.toml
+      # If you want to enable different developer modes, simply list them with spaces, like NTOP_DEV_MODE: true false 
+      ONTOP_DEV_MODE: true
     volumes:
       - ./provider/resources/cx-ontology.xml:/input/cx-ontology.xml
       - ./provider/resources/dtc.obda:/input/dtc.obda
       - ./provider/resources/settings.properties:/input/settings.properties
+      - ./provider/resources/settings.dremio.properties:/input/settings.dremio.properties
       - ./provider/resources/portal.toml:/input/portal.toml
 
   remoting-agent:
