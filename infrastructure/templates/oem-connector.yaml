@@ -34,12 +34,12 @@ data:
     edc.ids.security.profile=base
     edc.ids.title=OEM Dataspace Connector
     
-    edc.oauth.client.id={{ .Values.security.dapsClientId }}
-    edc.oauth.private.key.alias={{ .Values.security.dapsPrivateKeyAlias }}
+    edc.oauth.client.id={{ .Values.dataspace.dapsClientIdOem }}
+    edc.oauth.private.key.alias={{ .Values.dataspace.privateKeyAliasOem }}
     edc.oauth.provider.audience=idsc:IDS_CONNECTORS_ALL
     
     edc.oauth.provider.jwks.url={{ .Values.security.dapsUrl }}/.well-known/jwks.json
-    edc.oauth.public.key.alias={{ .Values.security.dapsPublicKeyAlias }}
+    edc.oauth.public.key.alias={{ .Values.dataspace.publicKeyAliasOem }}
     edc.oauth.token.url={{ .Values.security.dapsUrl }}/token
     
     edc.receiver.http.auth-code=X-Api-Key
@@ -47,8 +47,8 @@ data:
     edc.receiver.http.endpoint=http://oem-agent-wrapper:9192/callback/endpoint-data-reference
 
     edc.transfer.proxy.endpoint=https://{{ .Values.ingress.host }}/oem-edc-data/{{ .Values.dataspace.bpnOem }}
-    edc.transfer.proxy.token.signer.privatekey.alias={{ .Values.security.tokenPrivateKeyAlias }}
-    edc.transfer.proxy.token.verifier.publickey.alias={{ .Values.security.tokenPublicKeyAlias }}
+    edc.transfer.proxy.token.signer.privatekey.alias={{ .Values.dataspace.privateKeyAliasOem }}
+    edc.transfer.proxy.token.verifier.publickey.alias={{ .Values.dataspace.publicKeyAliasOem }}
     
     edc.vault.clientid={{ .Values.security.vaultClientId }} 
     edc.vault.clientsecret={{ .Values.security.vaultClientSecret }}
