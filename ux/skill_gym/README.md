@@ -1,8 +1,8 @@
-# Catena-X Knowledge Agents (Hey Catena!) Knowledge Explorer
+# Catena-X Skill Gym
 
-The Knowledge Explorer is a set of UI components which allow an ad-hoc and speech-oriented interaction with Hey Catena! 
+The skill gym is a standalone app based on React and Material UI, which consumes several React modules from the skill_modules package.
 
-The Knowledge Explorer uses the [Skill Framework](../skill_framework/) and the [Knowledge Explorer](../knowledge_explorer/)
+The skill gym uses the [Ontology Viewer](../skill_modules/src/components/OntologyView/), the [Asset View](../skill_modules/src/components/AssetView/) and the [Query Editor](../skill_modules/src/components/QueryEditor/)
 
 ## Notice
 
