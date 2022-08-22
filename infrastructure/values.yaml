@@ -20,7 +20,7 @@ ingress:
   host: knowledge.int.demo.catena-x.net
   issuer: letsencrypt-prod
 
-namespace: "product-knowlegde"
+namespace: "product-knowledge"
 
 security:
   htpasswd: ""
