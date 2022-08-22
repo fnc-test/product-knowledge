@@ -8,7 +8,9 @@
     "scripts": {
         "compile": "tsc -b",
         "watch": "tsc -w",
-        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js" 
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+        "start:skillgym": "npm start --workspace=skill_gym",
+        "build:lib": "npm run build --workspace=skill_modules"
     },
     "devDependencies": {
         "@types/jest": "^28.1.6",
@@ -20,7 +22,9 @@
     },
     "workspaces": [
         "skill_framework",
-        "skill_gym"
+        "knowledge_explorer",
+        "skill_gym",
+        "skill_modules"
     ],
     "dependencies": {
         "node-fetch": "^3.2.9",

@@ -1,8 +1,8 @@
-import { PageHeader, SharedThemeProvider } from 'cx-portal-shared-components';
 import AssetList from './AssetList';
-import { Box, Grid } from '@mui/material';
-import React from "react";
+import React from "react"
 import "./styles.sass"
+import { Box, Grid } from '@mui/material';
+import { SharedThemeProvider, PageHeader } from 'cx-portal-shared-components';
 
 export const AssetView = () => {
   return (
