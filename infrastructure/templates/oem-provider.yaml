@@ -39,23 +39,23 @@ spec:
         app: oem-provider-agent
     spec:
       automountServiceAccountToken: false
+      securityContext:
+        capabilities:
+          drop:
+            - all
+          add: ['NET_BIND_SERVICE']
+        allowPrivilegeEscalation: false
+        runAsUser: 10000
+        runAsGroup: 30000
+        fsGroup: 20000
+        seccompProfile:
+           type: RuntimeDefault
       containers:
         - name: oem-provider-agent
           image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.1
           imagePullPolicy: Always
           ports:
             - containerPort: 8080 # API
-          securityContext:
-            capabilities:
-              drop:
-                - all
-              add: ['NET_BIND_SERVICE']
-            allowPrivilegeEscalation: false
-            runAsUser: 10000
-            runAsGroup: 30000
-            fsGroup: 20000
-            seccompProfile:
-               type: RuntimeDefault
           resources:
            requests:
             cpu: 1.0
