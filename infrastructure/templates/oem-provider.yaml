@@ -42,7 +42,7 @@ spec:
       securityContext:
         runAsUser: 10000
         runAsGroup: 30000
-        fsGroup: 20000
+        fsGroup: 30000
         seccompProfile:
            type: RuntimeDefault
       containers:
