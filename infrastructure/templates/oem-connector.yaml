@@ -94,7 +94,7 @@ spec:
         seccompProfile:
             type: RuntimeDefault
       containers:
-        - image: ghcr.io/catenax-ng/product-edc/edc-controlplane-memory:{{ .Values.edc.version }}
+        - image: {{ .Values.edc.repo }}/edc-controlplane-memory:{{ .Values.edc.version }}
           imagePullPolicy: Always
           name: control-plane
           ports:
