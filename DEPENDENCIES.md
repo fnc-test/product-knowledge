@@ -22,8 +22,8 @@
 | Dataspace | Provisioning Agent | [H2 Database](http://h2database.com/) | >=2.1 | Runtime | Mozilla Public License (2.0) and Eclipse Public License (1.0) | 
 | UX | * | [NodeJS](https://nodejs.org/en/) | >=14 | All | MIT (Main) + Various Extensions |
 | UX | * | [Typescript](https://www.typescriptlang.org/) | >=14 | Compile + Runtime | Apache License 2.0 |
-| UX | Skill Gym + Knowledge Explorer | [React](https://reactjs.org/) | >=18.2 | Compile + Runtime | MIT licence |
-| UX | Skill Gym + Knowledge Explorer | [Material UI](https://mui.com/) | >=5.10 | All | MIT licence |
+| UX | Skill Gym + Knowledge Explorer | [React](https://reactjs.org/) | >=17.0.2 | Compile + Runtime | MIT licence |
+| UX | Skill Gym + Knowledge Explorer | [Material UI](https://mui.com/) | >=5.4.4 | All | MIT licence |
 | UX | Skill Gym | [CX Portal Shared Components](https://www.npmjs.com/package/cx-portal-shared-components) | >=0.5.1 | All | Apache 2.0 |
 | UX | Skill Gym | [Rollup.js](https://rollupjs.org/) | >=2.77.2 | Compile | MIT licence |
 | * | * | Docker Engine | >=20.10.17 | Packaging + Provided | Apache License 2.0 |
