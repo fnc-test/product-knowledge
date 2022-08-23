@@ -115,34 +115,34 @@ spec:
            limits:
             cpu: 1.0
             memory: "512Mi"
-#          startupProbe:
-#            failureThreshold: 17
-#            httpGet:
-#              path: /api/check/startup
-#              port: 8080
-#              scheme: HTTP
-#            initialDelaySeconds: 90
-#            periodSeconds: 30
-#            successThreshold: 1
-#            timeoutSeconds: 5
-#          livenessProbe:
-#            failureThreshold: 4
-#            httpGet:
-#              path: /api/check/liveness
-#              port: 8080
-#              scheme: HTTP
-#            periodSeconds: 30
-#            successThreshold: 1
-#            timeoutSeconds: 5
-#          readinessProbe:
-#            failureThreshold: 3
-#            httpGet:
-#              path: /api/check/readiness
-#              port: 8080
-#              scheme: HTTP
-#            periodSeconds: 10
-#            successThreshold: 1
-#            timeoutSeconds: 1          
+          startupProbe:
+            failureThreshold: 17
+            httpGet:
+              path: /api/check/startup
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 5
+          livenessProbe:
+            failureThreshold: 4
+            httpGet:
+              path: /api/check/liveness
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/check/readiness
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 5          
           volumeMounts:
             - name: control-plane-config
               mountPath: /connector-config
@@ -221,3 +221,10 @@ spec:
                 name: oem-control-plane
                 port:
                   number: 8282
+          - path: /oem-edc-control/{{ .Values.dataspace.bpnOem }}/(api/check)(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: oem-control-plane
+                port:
+                  number: 8080
