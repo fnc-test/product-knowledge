@@ -4,16 +4,16 @@ edc:
 
 dataspace:
   bpnOem: BPNL00000003COJN
-  privateKeyAliasOem: "oem-daps-crt"
-  publicKeyAliasOem: "oem-daps-key"
+  privateKeyAliasOem: "oem-daps-key"
+  publicKeyAliasOem: "oem-daps-crt"
   dapsClientIdOem: ""
   bpnTier1: BPNL00000003CPIY
-  privateKeyAliasTier1: "tier1-daps-crt"
-  publicKeyAliasTier1: "tier1-daps-key"
+  privateKeyAliasTier1: "tier1-daps-key"
+  publicKeyAliasTier1: "tier1-daps-crt"
   dapsClientIdTier1: ""
   bpnCustomer: BPNL00000003CQI9
-  privateKeyAliasCustomer: "customer-daps-crt"
-  publicKeyAliasCustomer: "customer-daps-key"
+  privateKeyAliasCustomer: "customer-daps-key"
+  publicKeyAliasCustomer: "customer-daps-crt"
   dapsClientIdCustomer: ""
 
 ingress:
