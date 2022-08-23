@@ -1,0 +1,38 @@
+[PrefixDeclaration]
+cx:			https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#
+cx-diag:	https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xml:		http://www.w3.org/XML/1998/namespace
+xsd:		http://www.w3.org/2001/XMLSchema#
+obda:		https://w3id.org/obda/vocabulary#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+
+[MappingDeclaration] @collection [[
+mappingId	dtc-meta
+target		cx:BusinessPartner/{bpnl} rdf:type cx:BusinessPartner ; cx:BPNL {bpnl}^^xsd:string . 
+source		SELECT distinct "bpnl" FROM "dtc"."meta"
+
+mappingId	dtc-content
+target		cx-diag:DTC/{id} rdf:type cx-diag:DTC ; cx-diag:Code {code}^^xsd:string ; cx-diag:Description {description}^^xsd:string ; cx-diag:PossibleCauses {possible_causes}^^xsd:string ; cx-diag:Version {lock_version}^^xsd:long . 
+source		SELECT * FROM "dtc"."content"
+
+mappingId	dtc-meta-content
+target		cx-diag:DTC/{id} cx:provisionedBy cx:BusinessPartner/{bpnl}. 
+source		SELECT "bpnl","id" FROM "dtc"."content"
+
+mappingId	dtc-part
+target		cx-diag:DiagnosedPart/{entityGuid} rdf:type cx-diag:DTCPart ; cx-diag:EnDenomination {enDenomination}^^xsd:string ; cx-diag:Classification {classification}^^xsd:string ; cx-diag:Category {category}^^xsd:string.
+source		SELECT * FROM "dtc"."part"
+
+mappingId	dtc-part-content
+target		cx-diag:DTC/{dtc_id} cx-diag:affects cx-diag:DiagnosedPart/{part_entityGuid}. 
+source		SELECT "part_entityGuid","dtc_id" FROM "dtc"."content_part"
+
+mappingId	dtc-meta-part
+target		cx-diag:DiagnosedPart/{entityGuid} cx:provisionedBy cx:BusinessPartner/{bpnl}. 
+source		SELECT "bpnl","entityGuid" FROM "dtc"."part"
+
+
+]]
+

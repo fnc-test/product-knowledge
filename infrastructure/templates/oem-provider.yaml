@@ -1,0 +1,160 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oem-provider-agent-config
+  namespace: {{ .Values.namespace }}
+data:
+  cx-ontology.xml: |-
+{{- .Files.Get "provider/resources/cx-ontology.xml" | nindent 4 }}
+  dtc.obda: |-
+{{- .Files.Get "provider/resources/dtc.obda" | nindent 4 }}
+  settings.properties: |-
+{{- .Files.Get "provider/resources/settings.properties" | nindent 4 }}
+  portal.toml: |-
+{{- .Files.Get "provider/resources/portal.toml" | nindent 4 }}
+---
+apiVersion: v1
+data:
+  auth: {{ .Values.security.htpasswd }} 
+kind: {{ .Values.security.htpasswdtype }}
+metadata:
+  name: oem-provider-auth
+  namespace: {{ .Values.namespace }}
+type: Opaque
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oem-provider-agent
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: oem-provider-agent
+  template:
+    metadata:
+      labels:
+        app: oem-provider-agent
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: oem-provider-agent
+          image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080 # API
+          securityContext:
+            capabilities:
+              drop:
+                - all
+              add: ['NET_BIND_SERVICE']
+            allowPrivilegeEscalation: false
+            runAsUser: 10000
+            runAsGroup: 30000
+            fsGroup: 20000
+            seccompProfile:
+               type: RuntimeDefault
+          resources:
+           requests:
+            cpu: 1.0
+            memory: "512Mi"
+           limits:
+            cpu: 1.0
+            memory: "512Mi"
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2          
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
+            - name: ONTOP_ONTOLOGY_FILE 
+              value: "/input/cx-ontology.xml"
+            - name: ONTOP_MAPPING_FILE 
+              value: "/input/dtc.obda"
+            - name: ONTOP_PROPERTIES_FILE
+              value: "/input/settings.properties"
+            - name: ONTOP_PORTAL_FILE
+              value: "/input/portal.toml"
+          volumeMounts:
+            - name: oem-provider-agent-config
+              mountPath: /input
+      volumes:
+        - name: oem-provider-agent-config
+          configMap:
+            name: oem-provider-agent-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oem-provider-agent
+  namespace: {{ .Values.namespace }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: oem-provider-agent
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oem-provider-agent-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.issuer }}
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/x-forwarded-prefix: "/oem-provider-agent"
+    nginx.org/mergeable-ingress-type: master
+    # type of authentication
+    nginx.ingress.kubernetes.io/auth-type: basic
+    # name of the secret that contains the user/password definitions
+    nginx.ingress.kubernetes.io/{{ .Values.security.authType }}: oem-provider-auth
+    # message to display with an appropriate context why the authentication is required
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - OEM'
+spec:
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: tls-knowledge
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /oem-provider-agent(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: oem-provider-agent
+                port:
+                  number: 8080

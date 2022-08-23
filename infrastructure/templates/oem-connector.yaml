@@ -1,0 +1,222 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oem-control-plane-config
+  namespace: {{ .Values.namespace }}
+data:
+  configuration.properties: |-
+    web.http.default.port=8080
+    web.http.default.path=/api
+    web.http.data.port=8181
+    web.http.data.path=/data
+    web.http.validation.port=8182
+    web.http.validation.path=/validation
+    web.http.control.port=9999
+    web.http.control.path=/api/controlplane/control
+    web.http.ids.port=8282
+    web.http.ids.path=/api/v1/ids
+    web.http.metrics.port=9998
+    web.http.metrics.path=/metrics
+    
+    edc.api.auth.key={{ .Values.security.xApiKey }}
+    edc.api.control.auth.apikey.key=X-Api-Key
+    edc.api.control.auth.apikey.value={{ .Values.security.xApiKey }}
+    
+    edc.fs.config=/connector-config/configuration.properties
+    edc.hostname={{ .Values.ingress.host }}
+    
+    edc.ids.catalog.id=urn:catalog:catenax
+    edc.ids.curator=http://catenax.net
+    edc.ids.description=Eclipse Dataspace Connector for Knowledge Agents OEM
+    edc.ids.endpoint=http://oem-control-plane:8282/api/v1/ids
+    edc.ids.id=urn:connector:edc:oem
+    edc.ids.maintainer=http://catenax.net
+    edc.ids.security.profile=base
+    edc.ids.title=OEM Dataspace Connector
+    
+    edc.oauth.client.id={{ .Values.security.dapsClientId }}
+    edc.oauth.private.key.alias={{ .Values.security.dapsPrivateKeyAlias }}
+    edc.oauth.provider.audience=idsc:IDS_CONNECTORS_ALL
+    
+    edc.oauth.provider.jwks.url={{ .Values.security.dapsUrl }}/.well-known/jwks.json
+    edc.oauth.public.key.alias={{ .Values.security.dapsPublicKeyAlias }}
+    edc.oauth.token.url={{ .Values.security.dapsUrl }}/token
+    
+    edc.receiver.http.auth-code=X-Api-Key
+    edc.receiver.http.auth-key={{ .Values.security.xApiKey }}
+    edc.receiver.http.endpoint=http://oem-agent-wrapper:9192/callback/endpoint-data-reference
+
+    edc.transfer.proxy.endpoint=https://{{ .Values.ingress.host }}/oem-edc-data/{{ .Values.dataspace.bpnOem }}
+    edc.transfer.proxy.token.signer.privatekey.alias={{ .Values.security.tokenPrivateKeyAlias }}
+    edc.transfer.proxy.token.verifier.publickey.alias={{ .Values.security.tokenPublicKeyAlias }}
+    
+    edc.vault.clientid={{ .Values.security.vaultClientId }} 
+    edc.vault.clientsecret={{ .Values.security.vaultClientSecret }}
+    edc.vault.name={{ .Values.security.vaultName }}
+    edc.vault.tenantid={{ .Values.security.vaultTenant }}
+    
+    ids.webhook.address=https://{{ .Values.ingress.host }}/oem-edc-control/{{ .Values.dataspace.bpnOem }}
+  opentelemetry.properties: |-
+    otel.javaagent.enabled=false
+    otel.javaagent.debug=false
+  logging.properties: |-
+    .level=INFO
+    org.eclipse.dataspaceconnector.level=ALL
+    handlers=java.util.logging.ConsoleHandler
+    java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
+    java.util.logging.ConsoleHandler.level=ALL
+    java.util.logging.SimpleFormatter.format=[%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS] [%4$-7s] %5$s%6$s%n
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oem-control-plane
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: oem-control-plane
+  template:
+    metadata:
+      labels:
+        app: oem-control-plane
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - image: ghcr.io/catenax-ng/product-edc/edc-controlplane-memory:{{ .Values.edc.version }}
+          imagePullPolicy: Always
+          name: control-plane
+          ports:
+            - containerPort: 8080 # API
+            - containerPort: 8181 # DATA
+            - containerPort: 8182 # VALIDATION
+            - containerPort: 8282 # IDS
+            - containerPort: 9999 # CONTROL
+            - containerPort: 9998 # METRICS
+          securityContext:
+            capabilities:
+              drop:
+                - all
+              add: ['NET_BIND_SERVICE']
+            allowPrivilegeEscalation: false   
+            runAsUser: 10000
+            runAsGroup: 30000
+            fsGroup: 20000
+            seccompProfile:
+               type: RuntimeDefault
+          env:
+            - name:  EDC_FS_CONFIG
+              value: /connector-config/configuration.properties
+          resources:
+           requests:
+            cpu: 1.0
+            memory: "128Mi"
+           limits:
+            cpu: 1.0
+            memory: "128Mi"
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /api/check/startup
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/check/liveness
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/check/readiness
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1          
+          volumeMounts:
+            - name: control-plane-config
+              mountPath: /connector-config
+            - name: control-plane-config
+              mountPath: /app/configuration.properties
+              subPath: configuration.properties
+            - name: control-plane-config
+              mountPath: /app/opentelemetry.properties
+              subPath: opentelemetry.properties
+            - name: control-plane-config
+              mountPath: /app/logging.properties
+              subPath: logging.properties
+      volumes:
+        - name: control-plane-config
+          configMap:
+            name: oem-control-plane-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oem-control-plane
+  namespace: {{ .Values.namespace }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      name: api
+      targetPort: 8080
+    - port: 8181
+      name: data
+      targetPort: 8181
+    - port: 8182
+      name: validation
+      targetPort: 8182
+    - port: 8282
+      name: ids
+      targetPort: 8282
+    - port: 9999
+      name: control
+      targetPort: 9999
+    - port: 9998
+      name: metrics
+      targetPort: 9998
+  selector:
+    app: oem-control-plane
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oem-control-plane-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.issuer }}
+    nginx.ingress.kubernetes.io/rewrite-target: /$1$2$3
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/x-forwarded-prefix: "/oem-control-plane"
+    nginx.org/mergeable-ingress-type: minion
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /oem-edc-control/{{ .Values.dataspace.bpnOem }}/(data)(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: oem-control-plane
+                port:
+                  number: 8181
+          - path: /oem-edc-control/{{ .Values.dataspace.bpnOem }}/(api/v1/ids)(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: oem-control-plane
+                port:
+                  number: 8282

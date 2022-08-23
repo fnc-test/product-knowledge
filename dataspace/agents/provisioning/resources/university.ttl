@@ -12,7 +12,7 @@
 <http://example.org/voc#> rdf:type owl:Ontology .
 
 #################################################################
-# Sample Ontology from ontop-vkp
+#    Ontology as provided by Ontop Tutorials
 #################################################################
 
 ###  http://example.org/voc#attends

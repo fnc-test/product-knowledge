@@ -1,0 +1,7 @@
+---
+apiVersion: v2
+name: knowledge-agents
+description: EDC-Based Agent Architecture
+home: https://github.com/catenax-ng/product-knowledge/infrastructure
+type: application
+version: 0.5.1

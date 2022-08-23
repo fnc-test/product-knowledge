@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://github.com/catenax-ng/product-knowledge/ontology#"
+     xml:base="https://github.com/catenax-ng/product-knowledge/ontology#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="https://github.com/catenax-ng/product-knowledge/ontology#"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BPNLType -->
+
+
+    <rdfs:Datatype rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BPNLType"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#provisionedBy -->
+
+
+    <owl:ObjectProperty rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#provisionedBy">
+        <rdfs:domain rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#Asset"/>
+        <rdfs:range rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#affects -->
+
+
+    <owl:ObjectProperty rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#affects">
+        <rdfs:domain rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DTC"/>
+        <rdfs:range rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DiagnosedPart"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BPNL -->
+
+
+    <owl:DatatypeProperty rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BPNL">
+        <rdfs:domain rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner"/>
+        <rdfs:range rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BPNLType"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#Category -->
+
+
+    <owl:DatatypeProperty rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#Category">
+        <rdfs:domain rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DiagnosedPart"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#Classification -->
+
+
+    <owl:DatatypeProperty rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#Classification">
+        <rdfs:domain rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DiagnosedPart"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#Code -->
+
+
+    <owl:DatatypeProperty rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#Code">
+        <rdfs:domain rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DTC"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#Description -->
+
+
+    <owl:DatatypeProperty rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#Description">
+        <rdfs:domain rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DTC"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#EnDenomination -->
+
+
+    <owl:DatatypeProperty rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#EnDenomination">
+        <rdfs:domain rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DiagnosedPart"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#PossibleCauses -->
+
+
+    <owl:DatatypeProperty rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#PossibleCauses">
+        <rdfs:domain rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DTC"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#Version -->
+
+
+    <owl:DatatypeProperty rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#Version">
+        <rdfs:domain rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DTC"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#Asset -->
+
+
+    <owl:Class rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#Asset"/>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner -->
+
+
+    <owl:Class rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner"/>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DTC -->
+
+
+    <owl:Class rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DTC">
+        <rdfs:subClassOf rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#Asset"/>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DiagnosedPart -->
+
+
+    <owl:Class rdf:about="https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DiagnosedPart">
+        <rdfs:subClassOf rdf:resource="https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#Asset"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 5.1.20) https://github.com/owlcs/owlapi/ -->
+
+

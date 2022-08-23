@@ -1,7 +1,4 @@
-/*
- *  Sample SQL Script from ontop-vkp
- */
-
+/* Database initialisation script provided by Ontop Tutorials */
 DROP SCHEMA IF EXISTS "uni1" CASCADE;
 DROP SCHEMA IF EXISTS "uni2" CASCADE;
 
@@ -57,6 +54,7 @@ ADD FOREIGN KEY ("s_id") REFERENCES "uni1"."student"("s_id");
 
 
 CREATE SCHEMA "uni2";
+
 
 CREATE TABLE "uni2"."person" (
 "pid" INT NOT NULL PRIMARY KEY,
@@ -189,3 +187,16 @@ INSERT INTO "uni2"."registration" ("pid","cid") VALUES
 (3, 2),
 (3, 3),
 (9, 2);
+
+CREATE USER IF NOT EXISTS "role1" PASSWORD '1elor';
+CREATE USER IF NOT EXISTS "role2" PASSWORD '2elor';
+
+REVOKE ALL ON SCHEMA "uni1" FROM "role1";
+REVOKE ALL ON SCHEMA "uni2" FROM"role1";
+REVOKE ALL ON SCHEMA "uni1" FROM "role2";
+REVOKE ALL ON SCHEMA "uni2" FROM "role2";
+
+GRANT SELECT ON SCHEMA "uni1" TO "role1";
+GRANT SELECT ON SCHEMA "uni1" TO "role2";
+
+GRANT SELECT ON SCHEMA "uni2" TO "role1";

@@ -5,7 +5,6 @@
 // See license file in the top folder
 //
 
-import { url } from 'inspector';
 import fetch from 'node-fetch';
 
 // issue a module loading message
@@ -397,7 +396,7 @@ class RemoteConnector implements IConnector {
 
        console.log(`Listing Assets from Remote Connector ${finalproviderUrl} starts at ${start}.`);
 
-       const finalUrl = `${this.url}/data/catalog?providerUrl=${idsUrl}`
+       const finalUrl = `${this.url}/data/catalog?providerUrl=${idsUrl}`;
        // 👇️ const response: Response
        const response = await fetch(finalUrl, {
         method: 'GET',
