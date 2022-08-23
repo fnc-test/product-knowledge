@@ -60,7 +60,7 @@ data:
     otel.javaagent.enabled=false
     otel.javaagent.debug=false
   logging.properties: |-
-    .level=INFO
+    .level=FINEST
     org.eclipse.dataspaceconnector.level=ALL
     handlers=java.util.logging.ConsoleHandler
     java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
@@ -82,22 +82,22 @@ spec:
         app: oem-control-plane
     spec:
       automountServiceAccountToken: false
-#      securityContext:
-#        runAsUser: 10000
-#        runAsGroup: 30000
-#        fsGroup: 30000
-#        seccompProfile:
-#            type: RuntimeDefault
+      securityContext:
+        runAsUser: 10000
+        runAsGroup: 30000
+        fsGroup: 30000
+        seccompProfile:
+            type: RuntimeDefault
       containers:
         - image: {{ .Values.edc.repo }}/edc-controlplane-memory:{{ .Values.edc.version }}
           imagePullPolicy: Always
           name: control-plane
           securityContext:
-#            capabilities:
-#              drop:
-#                - all
-#              add: ['NET_BIND_SERVICE']
-#            allowPrivilegeEscalation: false   
+            capabilities:
+              drop:
+                - all
+              add: ['NET_BIND_SERVICE']
+            allowPrivilegeEscalation: false   
           ports:
             - containerPort: 8080 # API
             - containerPort: 8181 # DATA
@@ -116,24 +116,24 @@ spec:
             cpu: 1.0
             memory: "128Mi"
 #          startupProbe:
-#            failureThreshold: 12
+#            failureThreshold: 17
 #            httpGet:
 #              path: /api/check/startup
 #              port: 8080
 #              scheme: HTTP
-#            initialDelaySeconds: 60
-#            periodSeconds: 10
+#            initialDelaySeconds: 90
+#            periodSeconds: 30
 #            successThreshold: 1
-#            timeoutSeconds: 1
+#            timeoutSeconds: 5
 #          livenessProbe:
-#            failureThreshold: 3
+#            failureThreshold: 4
 #            httpGet:
 #              path: /api/check/liveness
 #              port: 8080
 #              scheme: HTTP
-#            periodSeconds: 10
+#            periodSeconds: 30
 #            successThreshold: 1
-#            timeoutSeconds: 1
+#            timeoutSeconds: 5
 #          readinessProbe:
 #            failureThreshold: 3
 #            httpGet:
