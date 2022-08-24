@@ -110,10 +110,10 @@ spec:
               value: /connector-config/configuration.properties
           resources:
            requests:
-            cpu: 1.0
+            cpu: 0.5
             memory: "512Mi"
            limits:
-            cpu: 1.0
+            cpu: 0.5
             memory: "512Mi"
           startupProbe:
             failureThreshold: 17

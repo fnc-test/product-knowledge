@@ -1,6 +1,6 @@
 edc:
   repo: ghcr.io/catenax-ng/product-knowledge/dataspace
-  version: 0.0.4-KA
+  version: 0.0.6-KA
 
 dataspace:
   bpnOem: BPNL00000003COJN
