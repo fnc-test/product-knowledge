@@ -52,16 +52,25 @@ services:
       # If you want to enable different developer modes, simply list them with spaces, like NTOP_DEV_MODE: true false 
       ONTOP_DEV_MODE: true
     volumes:
-      - ./provider/resources/cx-ontology.xml:/input/cx-ontology.xml
-      - ./provider/resources/dtc.obda:/input/dtc.obda
-      - ./provider/resources/settings.properties:/input/settings.properties
-      - ./provider/resources/settings.dremio.properties:/input/settings.dremio.properties
-      - ./provider/resources/portal.toml:/input/portal.toml
+      - ./oem/resources/cx-ontology.xml:/input/cx-ontology.xml
+      - ./oem/resources/dtc.obda:/input/dtc.obda
+      - ./oem/resources/settings.properties:/input/settings.properties
+      - ./oem/resources/settings.dremio.properties:/input/settings.dremio.properties
+      - ./oem/resources/portal.toml:/input/portal.toml
+
+  #
+  # Configures the tiera backend 
+  #
+  tiera-backend:
+    image: ghcr.io/catenax-ng/product-knowledge/backend/lifetime-prognosis-mock:latest
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    ports:
+      - "5005:5005" # API
 
   #
   # Configures the tier1 agent 
   #
-  tier1-agent:
+  tiera-agent:
     build:
       dockerfile: Dockerfile
       context: ../dataspace/agents/remoting
@@ -73,4 +82,4 @@ services:
     environment:
       JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090
     volumes:
-      - ./provider/resources/rdf4j:/var/rdf4j/server
+      - ./tiera/resources/rdf4j:/var/rdf4j/server

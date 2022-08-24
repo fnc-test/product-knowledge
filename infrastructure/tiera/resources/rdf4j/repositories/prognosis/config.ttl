@@ -11,6 +11,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix cx-fx: <https://github.com/catenax-ng/product-knowledge/ontology/fx.ttl#>.
 @prefix cx-prognosis: <https://github.com/catenax-ng/product-knowledge/ontology/prognosis.ttl#>.
+@prefix cx-lifetime: <https://github.com/catenax-ng/product-knowledge/ontology/lifetime.ttl#>.
 @prefix cx-rt: <urn:io.catenax.knowledge.agents.remoting#>.
 
 [] rdf:type rep:Repository ;
@@ -22,10 +23,12 @@
          sail:sailType "io.catenax.knowledge:Remoting" ;
          cx-fx:supportsInvocation cx-rt:Test;
          cx-fx:supportsInvocation cx-prognosis:Prognosis;
+         cx-fx:supportsInvocation cx-lifetime:LifetimePrognosis;
       ]
    ].
 
 cx-rt:Test rdf:type cx-fx:Function;
+  cx-fx:targetUri "class:io.catenax.knowledge.agents.remoting.TestFunction#test";
   cx-fx:input cx-rt:input-1;
   cx-fx:input cx-rt:input-2;
   cx-fx:output cx-rt:output.
@@ -64,3 +67,30 @@ cx-prognosis:support rdf:type cx-fx:ReturnValue;
    dcterms:title "Support" ;
    cx-fx:valuePath "count";
    cx-fx:dataType xsd:int.
+
+cx-lifetime:LifetimePrognosis rdf:type cx-fx:Function;
+  dcterms:description "Lifetime Prognosis is a simulation function operating on load collectives."@en ;
+  dcterms:title "Lifetime Prognosis" ;
+  cx-fx:targetUri "http://tiera-backend:5005/api/rul";
+  cx-fx:invocationMethod "POST-JSON-MF";
+  cx-fx:input cx-lifetime:loadCollective;
+  cx-fx:output cx-lifetime:remainingDistance;
+  cx-fx:output cx-lifetime:remainingTime.
+
+cx-lifetime:loadCollective rdf:type cx-fx:Argument;
+  dcterms:description "LoadCollective is an argument to the LifeTime Prognosis function."@en ;
+  dcterms:title "Load Collective";
+  cx-fx:argumentName "load_collective_file".
+
+cx-lifetime:remainingDistance rdf:type cx-fx:ReturnValue;
+   dcterms:description "Remaining Distance is an integer-based prediction of kilometers."@en ;
+   dcterms:title "Remaining Distance" ;
+   cx-fx:valuePath "RUL.RUL.remainingDistance.Value";
+   cx-fx:dataType xsd:int.
+
+cx-lifetime:remainingTime rdf:type cx-fx:ReturnValue;
+   dcterms:description "Remaining Time is an integer-based prediction of years."@en ;
+   dcterms:title "Remaining Time" ;
+   cx-fx:valuePath "RUL.RUL.remainingTime.Value";
+   cx-fx:dataType xsd:int.
+
