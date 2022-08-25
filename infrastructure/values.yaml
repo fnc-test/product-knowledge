@@ -1,26 +1,33 @@
 edc:
-  version: 0.0.4
+  repo: ghcr.io/catenax-ng/product-knowledge/dataspace
+  version: 0.0.6-KA
 
 dataspace:
   bpnOem: BPNL00000003COJN
+  privateKeyAliasOem: "oem-daps-key"
+  publicKeyAliasOem: "oem-daps-crt"
+  dapsClientIdOem: ""
+  bpnTier1: BPNL00000003CPIY
+  privateKeyAliasTier1: "tier1-daps-key"
+  publicKeyAliasTier1: "tier1-daps-crt"
+  dapsClientIdTier1: ""
+  bpnCustomer: BPNL00000003CQI9
+  privateKeyAliasCustomer: "customer-daps-key"
+  publicKeyAliasCustomer: "customer-daps-crt"
+  dapsClientIdCustomer: ""
 
 ingress:
   host: knowledge.int.demo.catena-x.net
   issuer: letsencrypt-prod
 
-namespace: "product-knowlegde"
+namespace: "product-knowledge"
 
 security:
   htpasswd: ""
   htpasswdtype: ""
   authType: ""
   xApiKey: ""
-  dapsClientId: ""
-  dapsPrivateKeyAlias: ""
-  dapsPublicKeyAlias: ""
   dapsUrl: "https://daps1.int.demo.catena-x.net"
-  tokenPrivateKeyAlias: ""
-  tokenPublicKeyAlias: ""
   vaultClientId: ""
   vaultClientSecret: ""
   vaultName: ""
