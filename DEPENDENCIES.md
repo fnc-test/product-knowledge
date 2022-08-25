@@ -25,5 +25,9 @@
 | UX | * | [Typescript](https://www.typescriptlang.org/) | >=4.7 | Compile + Runtime | Apache License 2.0 |
 | UX | * | [JEST](https://jestjs.io/) | >=28.1 | Test | MIT |
 | UX | Skill Framework | [node-fetch](https://github.com/node-fetch/node-fetch) | >=2.6 | All | MIT |
+| UX | Skill Gym + Knowledge Explorer | [React](https://reactjs.org/) | >=17.0.2 | Compile + Runtime | MIT licence |
+| UX | Skill Gym + Knowledge Explorer | [Material UI](https://mui.com/) | >=5.4.4 | All | MIT licence |
+| UX | Skill Gym | [CX Portal Shared Components](https://www.npmjs.com/package/cx-portal-shared-components) | >=0.5.1 | All | Apache 2.0 |
+| UX | Skill Gym | [Rollup.js](https://rollupjs.org/) | >=2.77.2 | Compile | MIT licence |
 | * | * | Docker Engine | >=20.10.17 | Packaging + Provided | Apache License 2.0 |
 | * | * | [kubernetes](https://kubernetes.io/de/)/[helm](https://helm.sh/) | >=1.20/3.9 | Provided | Apache License 2.0 |
