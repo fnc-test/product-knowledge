@@ -3,13 +3,30 @@
     <groupId>io.catenax</groupId>
     <artifactId>knowledge</artifactId>
     <packaging>pom</packaging>
-    <version>0.5.2-SNAPSHOT</version>
+    <version>0.5.3-SNAPSHOT</version>
     <name>Catena-X Knowledge Agents</name>
     <dependencies>
     </dependencies>
     <properties>
+       <com.azure.sdk.bom.version>1.2.2</com.azure.sdk.bom.version>
+        <!-- REPO -->
+        <repo>ghcr.io/catenax-ng/product-knowledge/dataspace/</repo>
+        <platform>linux/amd64</platform>
     </properties>
     <modules>
+        <!--<module>dataspace/edc/agentplane-azurevault</module>-->
         <module>ontology</module>
     </modules>
+    <dependencyManagement>
+      <dependencies>
+            <!-- BOMs -->
+            <dependency>
+                <groupId>com.azure</groupId>
+                <artifactId>azure-sdk-bom</artifactId>
+                <version>${com.azure.sdk.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+      </dependencies>
+    </dependencyManagement>
 </project>

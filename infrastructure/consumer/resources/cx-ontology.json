@@ -1,0 +1,16 @@
+
+{ 
+    "nodes":[
+      { "data": { "id": "https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#Asset", "category": "https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl", "label": "Asset" }, "position": { "x": 0, "y": 0 } },
+      { "data": { "id": "https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner", "category": "https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl", "label": "Business Partner" }, "position": { "x": 0, "y": 0 } },
+      { "data": { "id": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DTC", "category": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl", "label": "Diagnostic Trouble Code" }, "position": { "x": 0, "y": 0 } },
+      { "data": { "id": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DiagnosedPart", "category": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl", "label": "Diagnosed Part" }, "position": { "x": 0, "y": 0 } }],
+    "edges":[
+      { "data": { "source": "https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#Asset", "type":"relation", "target": "https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner", "category": "https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl", "label": "Provisioned By" } } ,
+    
+      { "data": { "source": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DTC", "type":"relation", "target": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DiagnosedPart", "category": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl", "label": "Affects" } } ,
+    
+      { "data": { "source": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DTC", "type":"subclass", "target": "https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#Asset", "category": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl", "label": "subclass" } } ,
+      { "data": { "source": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#DiagnosedPart", "type":"subclass", "target": "https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#Asset", "category": "https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl", "label": "subclass" } } ]
+}
+  
