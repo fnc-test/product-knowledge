@@ -18,6 +18,7 @@
         <platform>linux/amd64</platform>
     </properties>
     <modules>
+        <module>dataspace/agents/remoting</module>
         <module>dataspace/edc/agentplane-azurevault</module>
         <module>ontology</module>
     </modules>
