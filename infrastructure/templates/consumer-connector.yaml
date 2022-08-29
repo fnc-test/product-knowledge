@@ -285,7 +285,7 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /consumer-edc-data/{{ .Values.dataspace.bpnConsumer }}(/|$)(.*)
+          - path: /consumer-edc-data/{{ .Values.dataspace.bpnCustomer }}(/|$)(.*)
             pathType: Prefix
             backend:
               service:
