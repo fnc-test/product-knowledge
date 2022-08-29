@@ -3,7 +3,7 @@
   "version": "0.5.1",
   "private": true,
   "dependencies": {
-    "@catenax-ng/skill-modules": "^0.1.0",
+    "@catenax-ng/skill-modules": "^0.5.1",
     "@mui/icons-material": "5.8.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
