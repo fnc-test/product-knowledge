@@ -150,6 +150,8 @@ data:
     java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
     java.util.logging.ConsoleHandler.level=ALL
     java.util.logging.SimpleFormatter.format=[%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS] [%4$-7s] %5$s%6$s%n
+  agent.ttl: |-
+{{- .Files.Get "consumer/resources/agent.ttl" | nindent 4 }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -183,10 +185,9 @@ spec:
               add: ['NET_BIND_SERVICE']
             allowPrivilegeEscalation: false   
           ports:
-            - containerPort: 8080 # API
+            - containerPort: 8082 # API
             - containerPort: 8185 # PUBLIC
             - containerPort: 9999 # CONTROL
-            - containerPort: 58099 # DEBUG
           env:
             - name:  EDC_FS_CONFIG
               value: /connector-config/configuration.properties
@@ -200,8 +201,8 @@ spec:
           startupProbe:
             failureThreshold: 17
             httpGet:
-              path: /api/check/startup
-              port: 8080
+              path: /api/agent?query=SELECT * WHERE {VALUES ?test { "42" }}
+              port: 8082
               scheme: HTTP
             initialDelaySeconds: 90
             periodSeconds: 30
@@ -210,8 +211,8 @@ spec:
           livenessProbe:
             failureThreshold: 4
             httpGet:
-              path: /api/check/liveness
-              port: 8080
+              path: /api/agent?query=SELECT * WHERE {VALUES ?test { "42" }}
+              port: 8082
               scheme: HTTP
             periodSeconds: 30
             successThreshold: 1
@@ -219,40 +220,43 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /api/check/readiness
-              port: 8080
+              path: /api/agent?query=SELECT * WHERE {VALUES ?test { "42" }}
+              port: 8082
               scheme: HTTP
             periodSeconds: 60
             successThreshold: 1
             timeoutSeconds: 5          
           volumeMounts:
-            - name: oem-data-plane-config
+            - name: consumer-data-plane-config
               mountPath: /connector-config
-            - name: oem-data-plane-config
+            - name: consumer-data-plane-config
               mountPath: /app/configuration.properties
               subPath: configuration.properties
-            - name: oem-data-plane-config
+            - name: consumer-data-plane-config
               mountPath: /app/opentelemetry.properties
               subPath: opentelemetry.properties
-            - name: oem-data-plane-config
+            - name: consumer-data-plane-config
               mountPath: /app/logging.properties
               subPath: logging.properties
+            - name: consumer-data-plane-config
+              mountPath: /app/agent.ttl
+              subPath: agent.ttl
       volumes:
-        - name: oem-data-plane-config
+        - name: consumer-data-plane-config
           configMap:
-            name: oem-data-plane-config
+            name: consumer-data-plane-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: oem-data-plane
+  name: consumer-data-plane
   namespace: {{ .Values.namespace }}
 spec:
   type: ClusterIP
   ports:
-    - port: 8080
+    - port: 8082
       name: api
-      targetPort: 8080
+      targetPort: 8082
     - port: 8185
       name: public
       targetPort: 8185
@@ -265,26 +269,26 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: oem-data-plane-ingress
+  name: consumer-data-plane-ingress
   namespace: {{ .Values.namespace }}
   annotations:
     cert-manager.io/cluster-issuer: {{ .Values.ingress.issuer }}
-    nginx.ingress.kubernetes.io/rewrite-target: /api/public/$2
+    nginx.ingress.kubernetes.io/rewrite-target: /api/$2
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
-    nginx.ingress.kubernetes.io/x-forwarded-prefix: "/oem-control-plane"
+    nginx.ingress.kubernetes.io/x-forwarded-prefix: "/consumer-data-plane"
     nginx.org/mergeable-ingress-type: minion
 spec:
   rules:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /oem-edc-data/{{ .Values.dataspace.bpnOem }}(/|$)(.*)
+          - path: /consumer-edc-data/{{ .Values.dataspace.bpnConsumer }}(/|$)(.*)
             pathType: Prefix
             backend:
               service:
-                name: oem-data-plane
+                name: consumer-data-plane
                 port:
                   number: 8185
 
