@@ -170,34 +170,34 @@ spec:
            limits:
             cpu: 0.5
             memory: "512Mi"
-          startupProbe:
-            failureThreshold: 18
-            httpGet:
-              path: /rdf4j-server/protocol
-              port: 8081
-              scheme: HTTP
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
-          livenessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /rdf4j-server/protocol
-              port: 8081
-              scheme: HTTP
-            periodSeconds: 60
-            successThreshold: 1
-            timeoutSeconds: 5
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /rdf4j-server/protocol
-              port: 8081
-              scheme: HTTP
-            periodSeconds: 300
-            successThreshold: 1
-            timeoutSeconds: 5        
+#          startupProbe:
+#            failureThreshold: 18
+#            httpGet:
+#              path: /rdf4j-server/protocol
+#              port: 8081
+#              scheme: HTTP
+#            initialDelaySeconds: 60
+#            periodSeconds: 30
+#            successThreshold: 1
+#            timeoutSeconds: 5
+#          livenessProbe:
+#           failureThreshold: 3
+#            httpGet:
+#              path: /rdf4j-server/protocol
+#              port: 8081
+#              scheme: HTTP
+#            periodSeconds: 60
+#            successThreshold: 1
+#            timeoutSeconds: 5
+#          readinessProbe:
+#            failureThreshold: 3
+#            httpGet:
+#              path: /rdf4j-server/protocol
+#              port: 8081
+#              scheme: HTTP
+#            periodSeconds: 300
+#            successThreshold: 1
+#            timeoutSeconds: 5        
           env:
             - name: JAVA_TOOL_OPTIONS
               value: "" #"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
@@ -208,9 +208,6 @@ spec:
             - name: tiera-remoting-agent-config
               mountPath: /var/rdf4j/server/conf/logback.xml
               subPath: logback.xml
-            - name: tiera-remoting-agent-config
-              mountPath: /var/rdf4j/server/logs/no.log
-              subPath: no.log
       volumes:
         - name: tiera-remoting-agent-config
           configMap:
