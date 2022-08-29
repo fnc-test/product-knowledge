@@ -190,6 +190,8 @@ spec:
           env:
             - name:  EDC_FS_CONFIG
               value: /connector-config/configuration.properties
+            - name: FUSEKI_CONFIG
+              value: agent.ttl
           resources:
            requests:
             cpu: 0.5
@@ -289,5 +291,5 @@ spec:
               service:
                 name: consumer-data-plane
                 port:
-                  number: 8185
+                  number: 8082
 
