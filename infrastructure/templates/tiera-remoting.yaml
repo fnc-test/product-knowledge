@@ -125,6 +125,8 @@ data:
 {{- .Files.Get "tiera/resources/rdf4j/conf/application.properties" | nindent 4 }}
   proxy.properties.default: |-
 {{- .Files.Get "tiera/resources/rdf4j/conf/proxy.properties.default" | nindent 4 }}
+  no.log: |-
+{{- .Files.Get "tiera/resources/rdf4j/logs/no.log" | nindent 4 }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -216,6 +218,8 @@ spec:
                 path: "conf/application.properties"
               - key: "proxy.properties.default"
                 path: "conf/proxy.properties.default"
+              - key: "no.log"
+                path: "logs/no.log"
 ---
 apiVersion: v1
 kind: Service
