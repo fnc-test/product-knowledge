@@ -1,8 +1,12 @@
 import { Table } from 'cx-portal-shared-components';
 import { GridColDef  } from '@mui/x-data-grid'
 import React from 'react';
+import {getConnectorFactory} from '@knowledge-agents-ux/skill_framework/dist/src';
 
 function AssetList() {
+  const connector = getConnectorFactory().create();
+  connector.listAssets().then(r => console.log(r))
+
   const rows = [
     { id: 'urn:graph:bmw#DTC',
       name: 'Diagnose Codes aller BMW Plattformen',

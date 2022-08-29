@@ -10,7 +10,9 @@
         "watch": "tsc -w",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
         "start:skillgym": "npm start --workspace=skill_gym",
-        "build:lib": "npm run build --workspace=skill_modules"
+        "build:skillm": "npm run build --workspace=skill_modules",
+        "build:skillfw": "npm run compile --workspace=skill_framework",
+        "link:skillfw": "npm link --workspace skill_framework && npm link @knowledge-agents-ux/skill_framework --workspace skill_modules"
     },
     "devDependencies": {
         "@types/jest": "^28.1.6",
