@@ -83,7 +83,8 @@ services:
     environment:
       JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090
     volumes:
-      - ./tiera/resources/rdf4j:/var/rdf4j/server
+      - ./tiera/resources/rdf4j/conf:/var/rdf4j/server/conf
+      - ./tiera/resources/rdf4j/repositories:/var/rdf4j/server/repositories
 
   #
   # Configures the consumer data plane

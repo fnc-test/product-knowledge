@@ -199,46 +199,46 @@ spec:
            limits:
             cpu: 0.5
             memory: "512Mi"
-          startupProbe:
-            failureThreshold: 17
-            httpGet:
-              path: /api/agent?query=SELECT * WHERE {VALUES ?test { "42" }}
-              port: 8082
-              scheme: HTTP
-            initialDelaySeconds: 90
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
-          livenessProbe:
-            failureThreshold: 4
-            httpGet:
-              path: /api/agent?query=SELECT * WHERE {VALUES ?test { "42" }}
-              port: 8082
-              scheme: HTTP
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /api/agent?query=SELECT * WHERE {VALUES ?test { "42" }}
-              port: 8082
-              scheme: HTTP
-            periodSeconds: 60
-            successThreshold: 1
-            timeoutSeconds: 5          
+#          startupProbe:
+#            failureThreshold: 17
+#            httpGet:
+#              path: /api/agent?query=SELECT * WHERE {VALUES ?test { "42" }}
+#              port: 8082
+#              scheme: HTTP
+#            initialDelaySeconds: 90
+#            periodSeconds: 30
+#            successThreshold: 1
+#            timeoutSeconds: 5
+#          livenessProbe:
+#            failureThreshold: 4
+#            httpGet:
+#              path: /api/agent?query=SELECT * WHERE {VALUES ?test { "42" }}
+#              port: 8082
+#              scheme: HTTP
+#            periodSeconds: 30
+#            successThreshold: 1
+#            timeoutSeconds: 5
+#          readinessProbe:
+#            failureThreshold: 3
+#            httpGet:
+#              path: /api/agent?query=SELECT * WHERE {VALUES ?test { "42" }}
+#              port: 8082
+#              scheme: HTTP
+#            periodSeconds: 60
+#            successThreshold: 1
+#            timeoutSeconds: 5          
           volumeMounts:
-            - name: consumer-data-plane-config
-              mountPath: /connector-config
-            - name: consumer-data-plane-config
-              mountPath: /app/configuration.properties
-              subPath: configuration.properties
-            - name: consumer-data-plane-config
-              mountPath: /app/opentelemetry.properties
-              subPath: opentelemetry.properties
-            - name: consumer-data-plane-config
-              mountPath: /app/logging.properties
-              subPath: logging.properties
+            # - name: consumer-data-plane-config
+            #   mountPath: /connector-config
+            # - name: consumer-data-plane-config
+            #   mountPath: /app/configuration.properties
+            #   subPath: configuration.properties
+            # - name: consumer-data-plane-config
+            #   mountPath: /app/opentelemetry.properties
+            #   subPath: opentelemetry.properties
+            # - name: consumer-data-plane-config
+            #   mountPath: /app/logging.properties
+            #   subPath: logging.properties
             - name: consumer-data-plane-config
               mountPath: /app/agent.ttl
               subPath: agent.ttl
