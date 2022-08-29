@@ -214,8 +214,8 @@ spec:
                 path: "conf/logback.xml"
               - key: "application.properties"
                 path: "conf/application.properties"
-              - key: "proxies.properties.default"
-                path: "conf/proxies.properties.default"
+              - key: "proxy.properties.default"
+                path: "conf/proxy.properties.default"
 ---
 apiVersion: v1
 kind: Service
