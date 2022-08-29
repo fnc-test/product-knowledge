@@ -203,23 +203,15 @@ spec:
               value: "" #"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
           volumeMounts:
             - name: tiera-remoting-agent-config
-              mountPath: /var/rdf4j/server
+              mountPath: /var/rdf4j/server/repositories/prognosis/config.ttl
+              subPath: prognosis.ttl
+            - name: tiera-remoting-agent-config
+              mountPath: /var/rdf4j/server/repositories/conf/logback.xml
+              subPath: logback.xml
       volumes:
         - name: tiera-remoting-agent-config
           configMap:
             name: tiera-remoting-agent-config
-            # An array of keys from the ConfigMap to create as files
-            items:
-              - key: "prognosis.ttl"
-                path: "repositories/prognosis/config.ttl"
-              - key: "logback.xml"
-                path: "conf/logback.xml"
-              - key: "application.properties"
-                path: "conf/application.properties"
-              - key: "proxy.properties.default"
-                path: "conf/proxy.properties.default"
-              - key: "no.log"
-                path: "logs/no.log"
 ---
 apiVersion: v1
 kind: Service
