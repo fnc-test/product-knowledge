@@ -205,7 +205,7 @@ spec:
       volumes:
         - name: tiera-remoting-agent-config
           configMap:
-            name: oem-provider-agent-config
+            name: tiera-remoting-agent-config
             # An array of keys from the ConfigMap to create as files
             items:
               - key: "prognosis.ttl"
