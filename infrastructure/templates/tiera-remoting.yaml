@@ -206,8 +206,11 @@ spec:
               mountPath: /var/rdf4j/server/repositories/prognosis/config.ttl
               subPath: prognosis.ttl
             - name: tiera-remoting-agent-config
-              mountPath: /var/rdf4j/server/repositories/conf/logback.xml
+              mountPath: /var/rdf4j/server/conf/logback.xml
               subPath: logback.xml
+            - name: tiera-remoting-agent-config
+              mountPath: /var/rdf4j/server/logs/no.log
+              subPath: no.log
       volumes:
         - name: tiera-remoting-agent-config
           configMap:
