@@ -34,4 +34,22 @@
             </dependency>
       </dependencies>
     </dependencyManagement>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+        <repository> <!-- To be able to use edc patch "releases" -->
+            <id>ka-patches</id>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <url>https://maven.pkg.github.com/catenax/ka-product-edc</url>
+        </repository>
+    </repositories>
+
 </project>
