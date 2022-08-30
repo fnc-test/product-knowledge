@@ -55,7 +55,7 @@ jobs:
       - if: matrix.language == 'java' 
         name: Build Java via Maven
         run: |
-          ./mvnw -s settings.xml install -DskipTests
+          mvn -s settings.xml install -DskipTests
         env:
           GITHUB_PACKAGE_USERNAME: ${{ github.actor }}
           GITHUB_PACKAGE_PASSWORD: ${{ secrets.CXNG_GHCR_PAT }}
