@@ -11,6 +11,8 @@ data:
     web.http.default.path=/api
     web.http.public.port=8185
     web.http.public.path=/api/public
+    web.http.callback.port=8186
+    web.http.callback.path=/callback
     web.http.control.port=9999
     web.http.control.path=/api/dataplane/control
     
@@ -188,6 +190,7 @@ spec:
           ports:
             - containerPort: 8082 # API
             - containerPort: 8185 # PUBLIC
+            - containerPort: 8186 # AGREEMENT CALLBACK
             - containerPort: 9999 # CONTROL
           env:
             - name:  EDC_FS_CONFIG
@@ -266,6 +269,9 @@ spec:
     - port: 8185
       name: public
       targetPort: 8185
+    - port: 8186
+      name: callback
+      targetPort: 8186
     - port: 9999
       name: control
       targetPort: 9999
