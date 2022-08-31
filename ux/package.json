@@ -13,7 +13,8 @@
         "build:skillg": "npm run build --workspace=skill_gym",
         "build:skillm": "npm run build --workspace=skill_modules",
         "build:skillfw": "npm run compile --workspace=skill_framework",
-        "link:skillfw": "npm link --workspace skill_framework && npm link @knowledge-agents-ux/skill_framework --workspace skill_modules"
+        "link:skillfw": "npm link --workspace skill_framework && npm link @knowledge-agents-ux/skill_framework",
+        "link:skillm": "npm link --workspace skill_modules && npm link @catenax-ng/skill-modules"
     },
     "devDependencies": {
         "@types/jest": "^28.1.6",
@@ -28,9 +29,5 @@
         "knowledge_explorer",
         "skill_gym",
         "skill_modules"
-    ],
-    "dependencies": {
-        "node-fetch": "^3.2.9",
-        "typescript": "^4.7.4"
-    }
+    ]
 }
