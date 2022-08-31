@@ -272,7 +272,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"accessPolicyId\": \"231802-bb34-11ec-8422-0242ac120002\",\n  \"contractPolicyId\": \"231802-bb34-11ec-8422-0242ac120002\",\n  \"criteria\": []\n}",
+											"raw": "{\n  \"id\":\"catenax\",\n  \"accessPolicyId\": \"231802-bb34-11ec-8422-0242ac120002\",\n  \"contractPolicyId\": \"231802-bb34-11ec-8422-0242ac120002\",\n  \"criteria\": []\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -928,7 +928,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"accessPolicyId\": \"231802-aa34-11ec-8422-0242ac120002\",\n  \"contractPolicyId\": \"231802-aa34-11ec-8422-0242ac120002\",\n  \"criteria\": []\n}",
+											"raw": "{\n  \"id\":\"catenax\",\n  \"accessPolicyId\": \"231802-aa34-11ec-8422-0242ac120002\",\n  \"contractPolicyId\": \"231802-aa34-11ec-8422-0242ac120002\",\n  \"criteria\": []\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1336,7 +1336,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"accessPolicyId\": \"231802-cc34-11ec-8422-0242ac120002\",\n  \"contractPolicyId\": \"231802-cc34-11ec-8422-0242ac120002\",\n  \"criteria\": []\n}",
+											"raw": "{\n  \"id\":\"catenax\",\n  \"accessPolicyId\": \"231802-cc34-11ec-8422-0242ac120002\",\n  \"contractPolicyId\": \"231802-cc34-11ec-8422-0242ac120002\",\n  \"criteria\": []\n}",
 											"options": {
 												"raw": {
 													"language": "json"

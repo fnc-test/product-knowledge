@@ -7,7 +7,7 @@ data:
   configuration.properties: |-
     ids.webhook.address=http://consumer-data-plane:8080
     
-    web.http.default.port=8080
+    web.http.default.port=8082
     web.http.default.path=/api
     web.http.public.port=8185
     web.http.public.path=/api/public
