@@ -208,7 +208,7 @@ spec:
             failureThreshold: 17
             httpGet:
               path: /api/check/startup
-              port: 8080
+              port: 8082
               scheme: HTTP
             initialDelaySeconds: 90
             periodSeconds: 30
@@ -218,7 +218,7 @@ spec:
             failureThreshold: 4
             httpGet:
               path: /api/check/liveness
-              port: 8080
+              port: 8082
               scheme: HTTP
             periodSeconds: 60
             successThreshold: 1
@@ -227,7 +227,7 @@ spec:
             failureThreshold: 2
             httpGet:
               path: /api/check/readiness
-              port: 8080
+              port: 8082
               scheme: HTTP
             periodSeconds: 30
             successThreshold: 1
