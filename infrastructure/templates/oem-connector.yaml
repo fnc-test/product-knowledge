@@ -131,16 +131,16 @@ spec:
               path: /api/check/liveness
               port: 8080
               scheme: HTTP
-            periodSeconds: 30
+            periodSeconds: 60
             successThreshold: 1
             timeoutSeconds: 5
           readinessProbe:
-            failureThreshold: 3
+            failureThreshold: 2
             httpGet:
               path: /api/check/readiness
               port: 8080
               scheme: HTTP
-            periodSeconds: 60
+            periodSeconds: 30
             successThreshold: 1
             timeoutSeconds: 5          
           volumeMounts:
