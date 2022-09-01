@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AssetView } from '@catenax-ng/skill-modules';
 import "./index.css"
+import App from './App';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <AssetView />
+    <App />
   </React.StrictMode>,
   document.getElementById('app')
 );
