@@ -24,7 +24,14 @@
 | Dataspace | Provisioning Agent | [H2 Database](http://h2database.com/) | >=2.1 | Runtime | Mozilla Public License (2.0) and Eclipse Public License (1.0) | 
 | Dataspace | Remoting Agent | [Eclipse RDF4J](https://rdf4j.org/) | >=3.7 | All | Eclipse Public License (1.0) | 
 | Dataspace | Remoting Agent | [SLF4J](https://www.slf4j.org) | >=2.0.0 | All | MIT | 
-| Dataspace | EDC Agent Plane | [EDC](https://www.slf4j.org) | >=2.0.0 | All | MIT | 
+| Dataspace | Remoting Agent | [Jackson](https://github.com/FasterXML/jackson) | >=2.12 | All | Apache License 2.0 | 
+| Dataspace | EDC Agent Plane | [EDC](https://www.slf4j.org) | >=0.0.6 | All | Apache License 2.0 | 
+| Dataspace | EDC Agent Plane | [Apache Jena Fuseki](https://jena.apache.org/) | >=2.0.0 | All | Apache License 2.0 | 
+| Dataspace | EDC Agent Plane | [Jakarta RESTful Web Services](https://projects.eclipse.org/projects/ee4j.rest) | >=3.1.0 | All | Eclipse Public License (2.0) | 
+| Dataspace | EDC Agent Plane | [Javax Servlet API](https://de.wikipedia.org/wiki/Jakarta_Servlet) | >=4.0.1 | All | Common Development & Distribution License | 
+| Dataspace | EDC Agent Plane | [Jakarta Servlet API](https://projects.eclipse.org/projects/ee4j.servlet) | >=5.0.2 | All | Eclipse Public License (2.0) | 
+| Dataspace | EDC Agent Plane | [Java JWT](https://github.com/auth0/java-jwt) | >=4.0.0 | All | MIT | 
+| Dataspace | EDC Agent Plane | [Azure SDK for Java](https://github.com/Azure/azure-sdk-for-java) | >=1.5 | All | MIT | 
 | Ontology | Tools | [OWLApi](https://github.com/owlcs/owlapi) | >=5.1 | Compile + Test + Packaging | LGPL and Apache License | 
 | Ontology | Tools | [SLF4J](https://www.slf4j.org) | >=2.0.0 | Compile + Test + Packaging | MIT | 
 | Ontology | Tools | [Junit Jupiter](https://junit.org) | >=5 | Test | MIT | 
