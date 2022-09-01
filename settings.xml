@@ -11,15 +11,21 @@
     <servers>
         <!-- EDC Patch: Github Packages -->
         <server>
-            <id>ka-patches</id>
-            <username>${env.GITHUB_PACKAGE_USERNAME}</username>
-            <password>${env.GITHUB_PACKAGE_PASSWORD}</password>
+            <id>ka-edc-patches</id>
+            <username>${env.GITHUB_ACTOR}</username>
+            <password>${env.GITHUB_TOKEN}</password>
+        </server>
+        <!-- DSC Patch: Github Packages -->
+        <server>
+            <id>ka-dsc-patches</id>
+            <username>${env.GITHUB_ACTOR}</username>
+            <password>${env.GITHUB_TOKEN}</password>
         </server>
         <!-- Catena-X NG: Github Packages -->
         <server>
             <id>github</id>
-            <username>${env.GITHUB_PACKAGE_USERNAME}</username>
-            <password>${env.GITHUB_PACKAGE_PASSWORD}</password>
+            <username>${env.GITHUB_ACTOR}</username>
+            <password>${env.GITHUB_TOKEN}</password>
         </server>
     </servers>
 </settings>

@@ -32,8 +32,8 @@ These are the sub-modules of the Hey Catena! product (and their respective sub-f
 To interact with the required package and container registries, the following environment variables should be set
 
 ```console
-export GITHUB_PACKAGE_USERNAME=
-export GITHUB_PACKAGE_PASSWORD=
+export GITHUB_ACTOR=
+export GITHUB_TOKEN=
 ```
 
 ### Compile

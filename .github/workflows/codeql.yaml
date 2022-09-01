@@ -57,8 +57,8 @@ jobs:
         run: |
           mvn -s settings.xml install -DskipTests
         env:
-          GITHUB_PACKAGE_USERNAME: ${{ github.actor }}
-          GITHUB_PACKAGE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Scan Compiled and Iterpreted Languages
       - name: Perform CodeQL Analysis

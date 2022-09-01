@@ -48,7 +48,7 @@
             <url>https://repo1.maven.org/maven2</url>
         </repository>
         <repository> <!-- To be able to use edc patch "releases" -->
-            <id>ka-patches</id>
+            <id>ka-edc-patches</id>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -57,6 +57,23 @@
             </releases>
             <url>https://maven.pkg.github.com/catenax/ka-product-edc</url>
         </repository>
+        <repository> <!-- To be able to use edc patch "releases" -->
+            <id>ka-dsc-patches</id>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <url>https://maven.pkg.github.com/catenax/ka-DataspaceConnector</url>
+        </repository>
     </repositories>
+    <distributionManagement>
+     <repository>
+       <id>github</id>
+       <name>Catena-X Maven Repository on Github</name>
+       <url>https://maven.pkg.github.com/catenax-ng/product-knowledge</url>
+     </repository>
+    </distributionManagement>
 
 </project>
