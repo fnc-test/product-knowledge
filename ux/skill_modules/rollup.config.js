@@ -32,7 +32,7 @@ export default [
       typescript({ tsconfig: './tsconfig.build.json' }),
       terser()
     ],
-    external: Object.keys(pkg.peerDependencies || {})
+    external: [...Object.keys(pkg.peerDependencies || {}), 'node-fetch']
   },
   {
     input: 'dist/index.d.ts',
