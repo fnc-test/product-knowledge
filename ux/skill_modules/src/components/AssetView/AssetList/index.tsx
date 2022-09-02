@@ -8,7 +8,6 @@ function AssetList() {
   useEffect(() => {
     const connector = getConnectorFactory().create();
     connector.listAssets().then(catalogue => setAssetList(catalogue.contractOffers.map(offer => offer.asset.properties)));
-    console.log(process.env)
   }, [])
 
   const columns = [
