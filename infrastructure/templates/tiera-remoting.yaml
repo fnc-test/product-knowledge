@@ -122,7 +122,7 @@ data:
   prognosis.ttl: |-
 {{- .Files.Get "tiera/resources/rdf4j/repositories/prognosis/config.ttl" | nindent 4 }}
   logback.xml: |-
-{{- .Files.Get "tiera/resources/rdf4j/conf/lockback.xml" | nindent 4 }}
+{{- .Files.Get "tiera/resources/rdf4j/conf/logback.xml" | nindent 4 }}
 ---
 apiVersion: apps/v1
 kind: Deployment
