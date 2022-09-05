@@ -47,7 +47,6 @@ spec:
         fsGroup: 30000
         seccompProfile:
            type: RuntimeDefault
-        readOnlyRootFilesystem: true
       containers:
         - name: oem-provider-agent
           image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.3-SNAPSHOT
@@ -58,6 +57,7 @@ spec:
                 - all
               add: ['NET_BIND_SERVICE']
             allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
           ports:
             - containerPort: 8080 # API
           resources:

@@ -90,7 +90,6 @@ spec:
         fsGroup: 30000
         seccompProfile:
             type: RuntimeDefault
-        readOnlyRootFilesystem: true
       containers:
         - image: {{ .Values.edc.repo }}/edc-controlplane-memory:{{ .Values.edc.version }}
           imagePullPolicy: Always
@@ -101,6 +100,7 @@ spec:
                 - all
               add: ['NET_BIND_SERVICE']
             allowPrivilegeEscalation: false   
+            readOnlyRootFilesystem: true
           ports:
             - containerPort: 8080 # API
             - containerPort: 8181 # DATA
