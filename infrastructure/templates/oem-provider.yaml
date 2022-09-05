@@ -27,6 +27,8 @@ kind: Deployment
 metadata:
   name: oem-provider-agent
   namespace: {{ .Values.namespace }}
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/oem-provider-agent: default
 spec:
   replicas: 1
   revisionHistoryLimit: 1
@@ -45,6 +47,7 @@ spec:
         fsGroup: 30000
         seccompProfile:
            type: RuntimeDefault
+        readOnlyRootFilesystem: true
       containers:
         - name: oem-provider-agent
           image: ghcr.io/catenax-ng/product-knowledge/dataspace/provisioning-agent:0.5.3-SNAPSHOT

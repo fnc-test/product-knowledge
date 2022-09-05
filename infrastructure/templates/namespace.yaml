@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota
+  namespace: {{ .Values.namespace }}
+spec:
+  hard:
+    limits.cpu: "5"
+    limits.memory: 10Gi
+    requests.cpu: "5"
+    requests.memory: 10Gi
+    pods: "5"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: limit
+  namespace: {{ .Values.namespace }}
+spec:
+  limits:
+  - max:
+      cpu: 1
+      memory: 1Gi
+    min:
+      cpu: 0.5
+      memory: 256Mi
+    default:
+      cpu: 1
+      memory: 512Mi
+    defaultRequest:
+      cpu: 1
+      memory: 512Mi
+    type: Container

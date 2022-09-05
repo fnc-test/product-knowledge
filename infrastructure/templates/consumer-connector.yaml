@@ -161,6 +161,8 @@ kind: Deployment
 metadata:
   name: consumer-data-plane
   namespace: {{ .Values.namespace }}
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/consumer-data-plane: default
 spec:
   selector:
     matchLabels:
@@ -177,6 +179,7 @@ spec:
         fsGroup: 30000
         seccompProfile:
             type: RuntimeDefault
+        readOnlyRootFilesystem: true
       containers:
         - image: ghcr.io/catenax-ng/product-knowledge/dataspace/agentplane-azure-vault:0.5.3-SNAPSHOT
           imagePullPolicy: Always
@@ -235,21 +238,27 @@ spec:
           volumeMounts:
             - name: consumer-data-plane-config
               mountPath: /connector-config
+              readOnly: true
             - name: consumer-data-plane-config
               mountPath: /app/configuration.properties
               subPath: configuration.properties
+              readOnly: true
             - name: consumer-data-plane-config
               mountPath: /app/opentelemetry.properties
               subPath: opentelemetry.properties
+              readOnly: true
             - name: consumer-data-plane-config
               mountPath: /app/logging.properties
               subPath: logging.properties
+              readOnly: true
             - name: consumer-data-plane-config
               mountPath: /app/agent.ttl
               subPath: agent.ttl
+              readOnly: true
             - name: consumer-data-plane-config
               mountPath: /app/dataspace.ttl
               subPath: dataspace.ttl
+              readOnly: true
       volumes:
         - name: consumer-data-plane-config
           configMap:
