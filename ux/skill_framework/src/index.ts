@@ -9,7 +9,6 @@ import fetch from 'node-fetch';
 import { RequestInit } from 'node-fetch';
 import createHttpsProxyAgent from 'https-proxy-agent'; 
 import { HttpsProxyAgent } from 'https-proxy-agent'; 
-import { getTypeParameterOwner } from 'typescript';
 
 // issue a module loading message
 console.log("Debug: Loading skill_framework/index");
@@ -368,7 +367,6 @@ export class EnvironmentConnectorFactory implements IConnectorFactory {
     private environmentConnector: IConnector;
     
     constructor() {
-        
         if (process.env.SKILL_CONNECTOR_CONTROL != undefined && process.env.SKILL_CONNECTOR_DATA != undefined && process.env.SKILL_CONNECTOR_CONTROL != "" && process.env.SKILL_CONNECTOR_DATA != "") {
             this.environmentConnector = new RemoteConnector(process.env.SKILL_CONNECTOR_CONTROL,process.env.SKILL_CONNECTOR_DATA,undefined,process.env.SKILL_PROXY);
         } else {
