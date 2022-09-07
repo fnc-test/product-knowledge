@@ -44,7 +44,7 @@ data:
         # edc.contractnegotiationstore.cosmos.container-name=
         # edc.contractnegotiationstore.cosmos.database-name=
         # edc.contractnegotiationstore.cosmos.preferred-region=
-    edc.controlplane.validation-endpoint=http://consumer-control-plane:8182/validation/token
+    edc.dataplane.token.validation.endpoint=http://consumer-control-plane:8182/validation/token
         # edc.core.retry.backoff.max=
         # edc.core.retry.backoff.min=
         # edc.core.retry.retries.max=
@@ -180,7 +180,7 @@ spec:
         seccompProfile:
             type: RuntimeDefault
       containers:
-        - image: ghcr.io/catenax-ng/product-knowledge/dataspace/agentplane-azure-vault:0.5.3-SNAPSHOT
+        - image: ghcr.io/catenax-ng/product-knowledge/dataspace/agentplane-azure-vault:{{.Values.version}}
           imagePullPolicy: Always
           name: consumer-data-plane
           securityContext:
