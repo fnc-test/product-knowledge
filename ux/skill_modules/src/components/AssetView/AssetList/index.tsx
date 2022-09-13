@@ -1,62 +1,53 @@
-import { Table } from 'cx-portal-shared-components';
-import { GridColDef  } from '@mui/x-data-grid'
-import React from 'react';
+import {getConnectorFactory, AssetProperties} from '@knowledge-agents-ux/skill_framework/dist/src'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
 function AssetList() {
-  const rows = [
-    { id: 'urn:graph:bmw#DTC',
-      name: 'Diagnose Codes aller BMW Plattformen',
-      connector: 'http://connector.cx-rel.edc.aws.bmw.cloud:8282/BPNL00000003AYRE',
-      category: 'Diagnosis',
-      type: 'Skill',
-      contract: '82e4fe96-eb9f-4a18-863c-386f1fbe04da:319138e8-985c-498f-be6d-e109c860af04',
-      agreement: true,
-      offerer: 'BMW'
-    },
-    { id: 'urn:skill:zf#LifetimePrognosis',
-      name: 'Lebenserwartung Getriebe aus Lastkollektiven',
-      connector: 'https://knowledge.int.pdm-cloud-connector.com/provider/edc-control-plane/BPNL00000003COJN',
-      category: 'Prognosis',
-      type: 'Skill',
-      contract: '82e4fe96-eb9f-4a18-863c-386f1fbe04da:319138e8-985c-498f-be6d-e109c860af04',
-      agreement: true,
-      offerer: 'Catena-X'
-    },
-    { id: 'urn:graph:bmw:material',
-      name: 'Materialien Graph',
-      connector: 'https://knowledge.int.pdm-cloud-connector.com/provider/edc-control-plane/BPNL00000003CPIY',
-      category: 'Overview',
-      type: 'Graph',
-      contract: '82e4fe96-eb9f-4a18-863c-386f1fbe04da:319138e8-985c-498f-be6d-e109c860af04',
-      agreement: false,
-      offerer: 'Mercedes'
-    },
+  const [assetList, setAssetList] = useState<AssetProperties[]>([])
+
+  useEffect(() => {
+    const connector = getConnectorFactory().create();
+    connector.listAssets().then(catalogue => setAssetList(catalogue.contractOffers.map(offer => offer.asset.properties)));
+  }, [])
+
+  const columns = [
+    { key: 'asset:prop:id', name: 'ID', flex: 3 },
+    { key: 'asset:prop:name', name: 'Name', flex: 3 },
+    { key: 'ids:byteSize', name: 'Byte Size', flex: 3 },
+    { key: 'asset:prop:version', name: 'Version', flex: 2 },
+    { key: 'ids:fileName', name: 'Filename', flex: 2 },
+    { key: 'asset:prop:contenttype', name: 'Content Type', flex: 2 },
+    { key: 'asset:prop:policy-id', name: 'Policy ID', flex: 3},
   ];
 
-
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', flex: 3 },
-    { field: 'name', headerName: 'Name', flex: 3 },
-    { field: 'connector', headerName: 'Service/Connector', flex: 3 },
-    { field: 'offerer', headerName: 'Offerer', flex: 2 },
-    { field: 'category', headerName: 'Category', flex: 2 },
-    { field: 'type', headerName: 'Type', flex: 2 },
-    { field: 'contract', headerName: 'Contract', flex: 3},
-    { field: 'agreement', headerName: 'Agreement', flex: 1, type: 'boolean'},
-  ];
   return (
-    <Table
-      rowCount={rows.length}
-      title="Asset List"
-      toolbar={{onSearch: (input) => console.log(input)}}
-      disableSelectionOnClick={true}
-      disableColumnFilter={true}
-      disableColumnMenu={true}
-      disableColumnSelector={true}
-      disableDensitySelector={true}
-      rows={rows}
-      columns={columns}
-    />
+    <TableContainer>
+      <Table sx={{ minWidth: 650 }} aria-label="asset table">
+        <TableHead>
+          <TableRow>
+            {columns.map((col) => (
+              <TableCell key={col.key}>{col.name}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {assetList.map((asset) => (
+            <TableRow
+              key={asset['asset:prop:id']}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell>{asset['asset:prop:id']}</TableCell>
+              <TableCell>{asset['asset:prop:name']}</TableCell>
+              <TableCell>{asset['ids:byteSize']}</TableCell>
+              <TableCell>{asset['asset:prop:version']}</TableCell>
+              <TableCell>{asset['ids:fileName']}</TableCell>
+              <TableCell>{asset['asset:prop:contenttype']}</TableCell>
+              <TableCell>{asset['asset:prop:policy-id']}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 

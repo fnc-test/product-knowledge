@@ -11,7 +11,10 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "rootDirs": ["./src","./test"],
-        "outDir": "./bin",
+        "outDir": "./dist",
         "composite": true
     },
+    "include": [
+        "src/**/*"
+    ]
 }
