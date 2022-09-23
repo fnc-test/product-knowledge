@@ -137,6 +137,6 @@ services:
       #JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090
     volumes:
       - ./consumer/resources/dataplane.properties:/app/configuration.properties
-      - ./resources/dataspace.ttl:/app/dataspace.ttl
+      - ./resources/dataspace_local.ttl:/app/dataspace.ttl
       - ./resources/opentelemetry.properties:/app/opentelemetry.properties
       - ./resources/logging.properties:/app/logging.properties
