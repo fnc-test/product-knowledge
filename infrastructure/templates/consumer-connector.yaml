@@ -201,8 +201,6 @@ spec:
           env:
             - name:  EDC_FS_CONFIG
               value: /connector-config/configuration.properties
-            # - name: FUSEKI_CONFIG
-            #   value: agent.ttl
           resources:
            requests:
             cpu: 0.5
