@@ -16,7 +16,6 @@ export default function App(){
           variant="text"
         />
       </MainNavigation>
-      {/* <MainNavigation items={menu} component={NavLink} /> */}
       <Box sx={{marginRight: 10, marginLeft: 10}}>
         <Outlet />
       </Box>
