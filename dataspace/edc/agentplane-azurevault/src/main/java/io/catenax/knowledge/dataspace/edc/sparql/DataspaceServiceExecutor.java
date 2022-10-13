@@ -8,38 +8,37 @@ package io.catenax.knowledge.dataspace.edc.sparql;
 
 import io.catenax.knowledge.dataspace.edc.AgentConfig;
 import io.catenax.knowledge.dataspace.edc.AgreementController;
-import io.catenax.knowledge.dataspace.edc.http.HttpClientWrapper;
+import io.catenax.knowledge.dataspace.edc.http.HttpClientAdapter;
 import jakarta.ws.rs.WebApplicationException;
 import okhttp3.OkHttpClient;
-import org.apache.jena.atlas.logging.FmtLog;
 import org.apache.jena.atlas.logging.Log;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
-import org.apache.jena.http.HttpEnv;
-import org.apache.jena.http.RegistryHttpClient;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecException;
-import org.apache.jena.query.QueryFactory;
 import org.apache.jena.riot.out.NodeFmtLib;
 import org.apache.jena.sparql.algebra.Op;
 import org.apache.jena.sparql.algebra.OpAsQuery;
 import org.apache.jena.sparql.algebra.OpVars;
+import org.apache.jena.sparql.algebra.op.Op1;
+import org.apache.jena.sparql.algebra.op.Op2;
+import org.apache.jena.sparql.algebra.op.OpGraph;
 import org.apache.jena.sparql.algebra.op.OpService;
 import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.engine.ExecutionContext;
 import org.apache.jena.sparql.engine.QueryIterator;
 import org.apache.jena.sparql.engine.Rename;
 import org.apache.jena.sparql.engine.binding.Binding;
+import org.apache.jena.sparql.engine.binding.BindingBuilder;
 import org.apache.jena.sparql.engine.http.HttpParams;
 import org.apache.jena.sparql.engine.iterator.QueryIter;
 import org.apache.jena.sparql.engine.iterator.QueryIterCommonParent;
 import org.apache.jena.sparql.engine.iterator.QueryIterPlainWrapper;
 import org.apache.jena.sparql.engine.iterator.QueryIterSingleton;
+import org.apache.jena.sparql.engine.main.QC;
 import org.apache.jena.sparql.exec.RowSet;
 import org.apache.jena.sparql.exec.http.*;
 import org.apache.jena.sparql.service.single.ServiceExecutorHttp;
-import org.apache.jena.sparql.syntax.Element;
-import org.apache.jena.sparql.syntax.ElementSubQuery;
 import org.apache.jena.sparql.util.Context;
 import org.apache.jena.sparql.util.Symbol;
 import org.eclipse.dataspaceconnector.spi.monitor.Monitor;
@@ -70,8 +69,10 @@ public class DataspaceServiceExecutor extends ServiceExecutorHttp {
      * some constants
      */
     public final static Symbol authKey = Symbol.create("cx:authKey");
-    public final static Symbol authSecret = Symbol.create("cx:authSecret");
+    public final static Symbol authCode = Symbol.create("cx:authCode");
     public final static Pattern EDC_TARGET_ADDRESS = Pattern.compile("(?<protocol>edc|edcs)://(?<connector>[^#?]*)(#(?<asset>[^/?]*))?(\\?(?<params>.*))?");
+    public final static Symbol targetUrl = Symbol.create("cx:targetUrl");
+    public final static Symbol asset = Symbol.create("cx:asset");
 
     /**
      * create a new executor
@@ -83,9 +84,45 @@ public class DataspaceServiceExecutor extends ServiceExecutorHttp {
         this.monitor = monitor;
         this.agreementController = controller;
         this.config = config;
-        this.client=new HttpClientWrapper(client);
+        this.client=new HttpClientAdapter(client);
     }
 
+    /**
+     * derive unique asset name from embedded graph operators
+     * @param operator embedding operator
+     * @return unique graph asset found, null if there is none
+     */
+    protected String getUniqueGraph(Op operator, Binding binding) {
+        if(operator instanceof OpGraph) {
+            Node graphNode = ((OpGraph) operator).getNode();
+            if(graphNode.isVariable()) {
+                graphNode=binding.get((Var) graphNode);
+            }
+            if(!graphNode.isURI()) {
+                throw new QueryExecException(String.format("Could not derive asset name from graph operator %s which is not an uri.",operator));
+            } else {
+                return graphNode.getURI();
+            }
+        } else if(operator instanceof Op2) {
+            String asset=getUniqueGraph(((Op2) operator).getLeft(),binding);
+            String asset2=getUniqueGraph(((Op2) operator).getRight(),binding);
+            if(asset!=null) {
+                if(asset2!=null) {
+                    if(!(asset.equals(asset2))) {
+                        throw new QueryExecException(String.format("Only a single graph asset is allowed in EDC-Protocol Services. Found %s and %s.", asset, asset2));
+                    }
+                }
+                return asset;
+            }
+            return asset2;
+        } else if(operator instanceof Op1) {
+            // currently, we need to stop looking for graphes
+            // in remote services
+            if(!(operator instanceof OpService))
+                return getUniqueGraph(((Op1) operator).getSubOp(),binding);
+        }
+        return null;
+    }
 
     /**
      * (re-) implements the http service execution
@@ -100,12 +137,18 @@ public class DataspaceServiceExecutor extends ServiceExecutorHttp {
     @Override
     public QueryIterator createExecution(OpService opExecute, OpService opOriginal, Binding binding,
                                          ExecutionContext execCxt) {
+
+        // it maybe that a subselect has "masked" some input
+        // variables
+        BindingBuilder bb=Binding.builder();
+        binding.forEach( (var,node)-> bb.add(Var.alloc("/"+var.getVarName()),node));
+        opExecute= (OpService) QC.substitute(opExecute,bb.build());
+
         Context context = execCxt.getContext();
         if (!opExecute.getService().isURI())
             throw new QueryExecException("Service URI not bound: " + opExecute.getService());
 
         boolean silent = opExecute.getSilent();
-        OpService realOpExecute = opExecute;
 
         // check whether we need to route over EDC
         String target = opExecute.getService().getURI();
@@ -125,7 +168,10 @@ public class DataspaceServiceExecutor extends ServiceExecutorHttp {
             }
             String asset = edcMatcher.group("asset");
             if (asset == null || asset.length() == 0) {
-                asset = config.getDefaultAsset();
+                asset=getUniqueGraph(opExecute.getSubOp(),binding);
+                if(asset==null) {
+                    throw new QueryExecException("There is no graph asset under EDC-based service: " + target);
+                }
             }
             EndpointDataReference endpoint = agreementController.get(asset);
             if (endpoint == null) {
@@ -151,10 +197,10 @@ public class DataspaceServiceExecutor extends ServiceExecutorHttp {
                 context.put(Service.serviceParams, allServiceParams);
             }
             Map<String, List<String>> serviceParams = allServiceParams.computeIfAbsent(targetUrl, k -> new HashMap<>());
-            serviceParams.put("Accept",List.of("application/json"));
-            realOpExecute = new OpService(newServiceNode, opExecute.getSubOp(), opExecute.getServiceElement(), silent);
+            serviceParams.put("cx_accept",List.of("application/json"));
+            opExecute = new OpService(newServiceNode, opExecute.getSubOp(), opExecute.getServiceElement(), silent);
             execCxt.getContext().put(authKey, endpoint.getAuthKey());
-            execCxt.getContext().put(authSecret, endpoint.getAuthCode());
+            execCxt.getContext().put(authCode, endpoint.getAuthCode());
         } else {
             monitor.info(String.format("About to execute http target %s without dataspace", target));
         }
@@ -162,9 +208,9 @@ public class DataspaceServiceExecutor extends ServiceExecutorHttp {
         // http execute with headers and such
         try {
             // [QExec] Add getSubOpUnmodified();
-            String serviceURL = realOpExecute.getService().getURI();
+            String serviceURL = opExecute.getService().getURI();
 
-            Op opRemote = realOpExecute.getSubOp();
+            Op opRemote = opExecute.getSubOp();
 
             // This relies on the observation that the query was originally correct,
             // so reversing the scope renaming is safe (it merely restores the
@@ -186,7 +232,7 @@ public class DataspaceServiceExecutor extends ServiceExecutorHttp {
             Map<Var, Var> varMapping = null;
             if (!opRestored.equals(opRemote)) {
                 varMapping = new HashMap<>();
-                Set<Var> originalVars = OpVars.visibleVars(realOpExecute);
+                Set<Var> originalVars = OpVars.visibleVars(opExecute);
                 Set<Var> remoteVars = OpVars.visibleVars(opRestored);
 
                 for (Var v : originalVars) {
@@ -208,7 +254,7 @@ public class DataspaceServiceExecutor extends ServiceExecutorHttp {
 
             // -- Setup
             //boolean withCompression = context.isTrueOrUndef(httpQueryCompression);
-            long timeoutMillis = context.getLong(Service.httpQueryTimeout, -1);
+            long timeoutMillis = timeoutFromContext(context);
 
             // RegistryServiceModifier is applied by QueryExecHTTP
             Params serviceParams = getServiceParamsFromContext(serviceURL, context);
@@ -228,18 +274,21 @@ public class DataspaceServiceExecutor extends ServiceExecutorHttp {
                     .sendMode(querySendMode);
 
             if (context.isDefined(authKey)) {
-                qExecBuilder.httpHeader(context.get(authKey), context.get(authSecret));
+                String authKeyProp=context.get(authKey);
+                monitor.debug(String.format("About to use authentication header %s on http target %s", authKeyProp,serviceURL));
+                String authCodeProp=context.get(authCode);
+                qExecBuilder=qExecBuilder.httpHeader(authKeyProp,authCodeProp);
             }
 
-            QueryExecHTTP qExec = qExecBuilder.build();
-
-            // Detach from the network stream.
-            RowSet rowSet = qExec.select().materialize();
-            QueryIterator qIter = QueryIterPlainWrapper.create(rowSet);
-            if (requiresRemapping)
-                qIter = QueryIter.map(qIter, varMapping);
-            qIter = QueryIter.makeTracked(qIter, execCxt);
-            return new QueryIterCommonParent(qIter, binding, execCxt);
+            try(QueryExecHTTP qExec = qExecBuilder.build()) {
+                // Detach from the network stream.
+                RowSet rowSet = qExec.select().materialize();
+                QueryIterator qIter = QueryIterPlainWrapper.create(rowSet);
+                if (requiresRemapping)
+                    qIter = QueryIter.map(qIter, varMapping);
+                qIter = QueryIter.makeTracked(qIter, execCxt);
+                return new QueryIterCommonParent(qIter, binding, execCxt);
+            }
         } catch (RuntimeException ex) {
             if (silent) {
                 Log.warn(this, "SERVICE " + NodeFmtLib.strTTL(opExecute.getService()) + " : " + ex.getMessage());
@@ -270,33 +319,7 @@ public class DataspaceServiceExecutor extends ServiceExecutorHttp {
      * @return decided send mode
      */
     protected QuerySendMode chooseQuerySendMode(String serviceURL, Context context, QuerySendMode dftValue) {
-        if (context == null)
-            return dftValue;
-        Object querySendMode = context.get(Service.httpServiceSendMode, dftValue);
-        if (querySendMode == null)
-            return dftValue;
-
-        if (querySendMode instanceof QuerySendMode)
-            // handle enum type from Java API
-            return (QuerySendMode) querySendMode;
-
-        if (querySendMode instanceof String) {
-            String str = (String) querySendMode;
-            // Specials.
-            if ("POST".equalsIgnoreCase(str))
-                return QuerySendMode.asPost;
-            if ("GET".equalsIgnoreCase(str))
-                return QuerySendMode.asGetAlways;
-            try {
-                // "asGetWithLimitForm", "asGetWithLimitBody", "asGetAlways", "asPostForm", "asPost"
-                return QuerySendMode.valueOf((String) querySendMode);
-            } catch (IllegalArgumentException ex) {
-                throw new QueryExecException("Failed to interpret '" + querySendMode + "' as a query send mode");
-            }
-        }
-        FmtLog.warn(Service.class,
-                "Unrecognized object type '%s' as a query send mode - ignored", querySendMode.getClass().getSimpleName());
-        return dftValue;
+        return QuerySendMode.asPost;
     }
 
     /**

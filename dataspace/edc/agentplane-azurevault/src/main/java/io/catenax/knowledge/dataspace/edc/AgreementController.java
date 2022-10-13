@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.util.*;
 
 import org.eclipse.dataspaceconnector.spi.types.domain.transfer.TransferType;
-import org.jetbrains.annotations.Contract;
 
 /**
  * An endpoint/service that receives information from the control plane
@@ -185,7 +184,7 @@ public class AgreementController {
     /**
      * register a process
      * @param asset name
-     * @param agreement object
+     * @param process object
      */
     protected void registerProcess(String asset, TransferProcess process) {
         synchronized (processStore) {
@@ -202,7 +201,10 @@ public class AgreementController {
          *                                                    TODO make this federation aware: multiple assets, different policies
          */
     public EndpointDataReference createAgreement(String remoteUrl, String asset) throws WebApplicationException {
+        monitor.debug(String.format("About to create an agreement for asset %s at connector %s",asset,remoteUrl));
+
         activate(asset);
+
         Collection<ContractOffer> contractOffers;
 
         try {
@@ -219,6 +221,8 @@ public class AgreementController {
 
         // TODO implement a cost-based offer choice
         ContractOffer contractOffer = contractOffers.stream().findFirst().get();
+
+        monitor.debug(String.format("About to create an agreement for contract offer %s (for asset %s at connector %s)",contractOffer.getId(),asset,remoteUrl));
 
         // Initiate negotiation
         var policy = Policy.Builder.newInstance()
@@ -249,6 +253,8 @@ public class AgreementController {
             throw new InternalServerErrorException(String.format("Error when initiating negotation for offer %s through data management api.",contractOffer.getId()),ioe);
         }
 
+        monitor.debug(String.format("About to check negotiation %s for contract offer %s (for asset %s at connector %s)",negotiationId,contractOffer.getId(),asset,remoteUrl));
+
         // Check negotiation state
         ContractNegotiation negotiation = null;
 
@@ -256,7 +262,7 @@ public class AgreementController {
 
         try {
             while ((System.currentTimeMillis() - startTime < config.getNegotiationTimeout()) && (negotiation == null || !negotiation.getState().equals("CONFIRMED"))) {
-                Thread.sleep(config.getNegotiationPollinterval());
+                Thread.sleep(config.getNegotiationPollInterval());
                 negotiation = dataManagement.getNegotiation(
                         negotiationId
                 );
@@ -271,6 +277,8 @@ public class AgreementController {
             deactivate(asset);
             throw new InternalServerErrorException(String.format("Contract Negotiation %s for asset %s was not successful.", negotiationId, asset));
         }
+
+        monitor.debug(String.format("About to check agreement %s for contract offer %s (for asset %s at connector %s)",negotiation.getContractAgreementId(),contractOffer.getId(),asset,remoteUrl));
 
         ContractAgreement agreement;
 
@@ -310,6 +318,8 @@ public class AgreementController {
                 .transferType(transferType)
                 .build();
 
+        monitor.debug(String.format("About to initiate transfer for agreement %s (for asset %s at connector %s)",negotiation.getContractAgreementId(),asset,remoteUrl));
+
         String transferId;
 
         try {
@@ -319,6 +329,8 @@ public class AgreementController {
             throw new InternalServerErrorException(String.format("HttpProxy transfer for agreement %s could not be initiated.", agreement.getId()),ioe);
         }
 
+        monitor.debug(String.format("About to check transfer %s (for asset %s at connector %s)",transferId,asset,remoteUrl));
+
         // Check negotiation state
         TransferProcess process = null;
 
@@ -326,7 +338,7 @@ public class AgreementController {
 
         try {
             while ((System.currentTimeMillis() - startTime < config.getNegotiationTimeout()) && (process == null || !process.getState().equals("COMPLETED"))) {
-                Thread.sleep(config.getNegotiationPollinterval());
+                Thread.sleep(config.getNegotiationPollInterval());
                 process = dataManagement.getTransfer(
                         transferId
                 );
@@ -342,6 +354,25 @@ public class AgreementController {
             deactivate(asset);
             throw new InternalServerErrorException(String.format("Transfer process %s for agreement %s and asset %s could not be provisioned.", transferId, agreement.getId(), asset));
         }
+
+        // finally wait a bit for the endpoint data reference in case
+        // that the process was signalled earlier than the callbacks
+        startTime = System.currentTimeMillis();
+
+        EndpointDataReference reference=null;
+
+        try {
+            while ((System.currentTimeMillis() - startTime < config.getNegotiationTimeout()) && (reference == null)) {
+                Thread.sleep(config.getNegotiationPollInterval());
+                synchronized(endpointStore) {
+                    reference=endpointStore.get(asset);
+                }
+            }
+        } catch (InterruptedException e) {
+            monitor.info(String.format("Wait thread for reference to asset %s has been interrupted. Giving up.", asset),e);
+        }
+
+        // now delegate to the original getter
         return get(asset);
     }
 

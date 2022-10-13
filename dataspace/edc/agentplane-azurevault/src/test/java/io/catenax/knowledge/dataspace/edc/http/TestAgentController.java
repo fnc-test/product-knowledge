@@ -7,19 +7,19 @@
 package io.catenax.knowledge.dataspace.edc.http;
 
 import io.catenax.knowledge.dataspace.edc.AgentConfig;
+import io.catenax.knowledge.dataspace.edc.SkillStore;
 import io.catenax.knowledge.dataspace.edc.TestConfig;
+import io.catenax.knowledge.dataspace.edc.rdf.RDFStore;
 import io.catenax.knowledge.dataspace.edc.sparql.DataspaceServiceExecutor;
 import io.catenax.knowledge.dataspace.edc.sparql.SparqlQueryProcessor;
-import okhttp3.OkHttpClient;
+import okhttp3.*;
 import org.apache.jena.sparql.service.ServiceExecutorRegistry;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
@@ -59,8 +59,10 @@ public class TestAgentController {
     ServiceExecutorRegistry reg=new ServiceExecutorRegistry();
     OkHttpClient client=new OkHttpClient();
     DataspaceServiceExecutor exec=new DataspaceServiceExecutor(monitor,null,agentConfig,client);
-    SparqlQueryProcessor processor=new SparqlQueryProcessor(reg,monitor,agentConfig);
-    AgentController agentController=new AgentController(monitor,null,agentConfig,null,processor);
+    RDFStore store = new RDFStore(agentConfig,monitor);
+    SparqlQueryProcessor processor=new SparqlQueryProcessor(reg,monitor,agentConfig,store);
+    SkillStore skillStore=new SkillStore();
+    AgentController agentController=new AgentController(monitor,null,agentConfig,null,processor,skillStore);
 
     AutoCloseable mocks=null;
 
@@ -309,6 +311,28 @@ public class TestAgentController {
     }
 
     /**
+     * test canonical call with replacement binding which should not confuse the filtering
+     * @throws IOException in case of an error
+     */
+    @Test
+    public void testParameterizedQueryFilterContains() throws IOException {
+        String query="PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> SELECT ?so ?what WHERE { VALUES(?so ?what) {(\"@input1\"^^xsd:string \"@input2\"^^xsd:string)} FILTER CONTAINS(?so,?what) }";
+        String result=testExecute("GET",query,null,"*/*",
+                List.of(new AbstractMap.SimpleEntry<>("(input2","BAR"),
+                        new AbstractMap.SimpleEntry<>("input1","FOOBAR)"),
+                        new AbstractMap.SimpleEntry<>("(input2","BLUB"),
+                        new AbstractMap.SimpleEntry<>("input1","NOOB)")
+                ));
+        JsonNode root=mapper.readTree(result);
+        ArrayNode bindings=(ArrayNode) root.get("results").get("bindings");
+        assertEquals(1,bindings.size(),"Correct number of result bindings.");
+        JsonNode soBinding0=bindings.get(0).get("so");
+        assertEquals("FOOBAR",soBinding0.get("value").asText(),"Correct binding 0");
+        JsonNode whatBinding0=bindings.get(0).get("what");
+        assertEquals("BAR",whatBinding0.get("value").asText(),"Correct binding 0");
+    }
+
+    /**
      * test canonical call with simple replacement binding
      * @throws IOException in case of an error
      */
@@ -330,12 +354,48 @@ public class TestAgentController {
      */
     @Test
     @Tag("online")
-    public void testFederatedSkill() throws IOException {
+    public void testRemotingSkill() throws IOException {
         String query="PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> SELECT ?what WHERE { SERVICE<http://localhost:8080/sparql> { VALUES (?what) { (\"@input\"^^xsd:int)} } }";
         String asset="urn:cx:Skill:cx:Test";
         agentController.postSkill(query,asset);
         String result=testExecute("GET",null,asset,"*/*",List.of(new AbstractMap.SimpleEntry<>("input","84")));
         JsonNode root=mapper.readTree(result);
+        JsonNode whatBinding0=root.get("results").get("bindings").get(0).get("what");
+        assertEquals("84",whatBinding0.get("value").asText(),"Correct binding");
+    }
+
+    /**
+     * test federation call - will only work with a local oem provider running
+     * @throws IOException in case of an error
+     */
+    @Test
+    @Tag("online")
+    public void testFederatedGraph() throws IOException {
+        String query="PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> SELECT ?what WHERE { SERVICE<edc://localhost:8080/sparql> { " +
+                "GRAPH <urn:cx:Graph:4711> { VALUES (?what) { (\"42\"^^xsd:int)} } } }";
+        Request.Builder builder=new Request.Builder();
+        builder.url("http://localhost:8080");
+        builder.put(RequestBody.create(query, MediaType.parse("application/sparql-query")));
+        Response response=processor.execute(builder.build(),null,null,null,null);
+        JsonNode root=mapper.readTree(response.body().string());
+        JsonNode whatBinding0=root.get("results").get("bindings").get(0).get("what");
+        assertEquals("84",whatBinding0.get("value").asText(),"Correct binding");
+    }
+
+    /**
+     * test federation call - will only work with a local oem provider running
+     * @throws IOException in case of an error
+     */
+    @Test
+    @Tag("online")
+    public void testFederatedServiceChain() throws IOException {
+        String query="PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> SELECT ?what WHERE { VALUES (?chain1) { (<http://localhost:8080/sparql#urn:cs:Graph:1>)} SERVICE ?chain1 { " +
+                "VALUES (?chain2) { (<http://localhost:8080/sparql>)} SERVICE ?chain2 { VALUES (?what) { (\"42\"^^xsd:int)} } } }";
+        Request.Builder builder=new Request.Builder();
+        builder.url("http://localhost:8080");
+        builder.put(RequestBody.create(query, MediaType.parse("application/sparql-query")));
+        Response response=processor.execute(builder.build(),null,null,null,null);
+        JsonNode root=mapper.readTree(response.body().string());
         JsonNode whatBinding0=root.get("results").get("bindings").get(0).get("what");
         assertEquals("84",whatBinding0.get("value").asText(),"Correct binding");
     }

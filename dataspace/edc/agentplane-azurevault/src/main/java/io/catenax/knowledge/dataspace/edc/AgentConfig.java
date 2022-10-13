@@ -18,9 +18,8 @@ import java.util.Map;
 public class AgentConfig {
 
     public static String DEFAULT_ASSET_PROPERTY = "cx.agent.asset.default";
-    public static String DEFAULT_ASSET_NAME = "urn:graph:cx:Dataspace";
+    public static String DEFAULT_ASSET_NAME = "urn:x-arq:DefaultGraph";
     public static String ASSET_FILE_PROPERTY = "cx.agent.asset.file";
-    public static String DEFAULT_ASSET_FILE = "dataspace.ttl";
     public static String ACCESS_POINT_PROPERTY = "cx.agent.accesspoint.name";
     public static String VERBOSE_PROPERTY = "cx.agent.sparql.verbose";
     public static boolean DEFAULT_VERBOSE_PROPERTY = false;
@@ -35,6 +34,9 @@ public class AgentConfig {
     public static long DEFAULT_NEGOTIATION_TIMEOUT = 30000;
     public static String NEGOTIATION_POLLINTERVAL_PROPERTY = "cx.agent.negotiation.poll";
     public static long DEFAULT_NEGOTIATION_POLLINTERVAL = 1000;
+    public static String DATASPACE_SYNCINTERVAL_PROPERTY = "cx.agent.dataspace.synchronization";
+    public static long DEFAULT_DATASPACE_SYNCINTERVAL = -1;
+    public static String DATASPACE_SYNCCONNECTORS_PROPERTY = "cx.agent.dataspace.remotes";
 
     /**
      * references to EDC services
@@ -63,7 +65,7 @@ public class AgentConfig {
      * @return initial file to load
      */
     public String getAssetFile() {
-        return config.getString(ASSET_FILE_PROPERTY, DEFAULT_ASSET_FILE);
+        return config.getString(ASSET_FILE_PROPERTY,null);
     }
 
     /**
@@ -109,8 +111,26 @@ public class AgentConfig {
     /**
      * @return the default overall timeout when waiting for a negotation result
      */
-    public long getNegotiationPollinterval() {
+    public long getNegotiationPollInterval() {
         return config.getLong(NEGOTIATION_POLLINTERVAL_PROPERTY,DEFAULT_NEGOTIATION_POLLINTERVAL);
+    }
+
+    /**
+     * @return the synchronization interval between individual sync calls, -1 if no sync
+     */
+    public long getDataspaceSynchronizationInterval() {
+        return config.getLong(DATASPACE_SYNCINTERVAL_PROPERTY,DEFAULT_DATASPACE_SYNCINTERVAL);
+    }
+
+    /**
+     * @return array of connector urls to synchronize, null if no sync
+     */
+    public String[] getDataspaceSynchronizationConnectors() {
+        String[] connectors= config.getString(DATASPACE_SYNCCONNECTORS_PROPERTY,"").split(",");
+        if(connectors.length==1 && "".equals(connectors[0])) {
+            return null;
+        }
+        return connectors;
     }
 
     /**
