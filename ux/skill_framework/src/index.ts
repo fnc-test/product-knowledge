@@ -29,9 +29,8 @@ export interface IConnector {
      * the providerUrl is an optional parameter (means that we will look for the local catalogue)
      */
 
-    // beide nicht optional!
     listAssets: (providerUrl?:string) => Promise<Catalogue>
-    execute: (skill:string, vin:string, troubleCode:string) => Promise<BindingSet>
+    execute: (skill:string, queryVariables:any) => Promise<BindingSet>
 }
 
 /**
@@ -472,40 +471,25 @@ class EnvironmentRealmMapping implements IRealmMapping {
  }
 
 
- export interface BindingSet {
-
+ interface BindingSet {
     head: Head,
-    results:  Binding,
- 
+    results:  Binding
 }
 
-export interface Head {
-    /**
-     * the id of the catalogue
-     */
-    vars: string[],
+interface Head {
+    vars: string[];
 }
 
-export interface Binding {
-    /**
-     * the id of the catalogue
-     */
-     bindings: Entry[],
+interface Binding {
+     bindings: Entry[];
 }
 
-export interface Entry {
-
-   vin: Value,
-   troubleCode: Value,
-   partProg: Value,
-   distance: Value,
-   time: Value
-    
+interface Entry {
+   [key: string]: Value;
 }
 
-export interface Value {
-    value: string,
-    
+interface Value {
+    value: string;
 }
 
 
@@ -563,8 +547,23 @@ class RemoteConnector implements IConnector {
     }
 
     //Execute Query
-    public async execute(skill:string, vin:string, troubleCode:string) : Promise<BindingSet>  {
+    public async execute(skill:string, queryVariables:any) : Promise<BindingSet>  {
         
+        if(skill == 'Lifetime' && queryVariables.vin != undefined && queryVariables.troubleCode != undefined){   
+            return this.skill_1(skill, queryVariables.vin, queryVariables.troubleCode);
+        }
+
+        if(skill == 'TroubleCodeSearch' && queryVariables.reason != undefined && queryVariables.partClass != undefined){   
+            return this.skill_search(skill, queryVariables.reason, queryVariables.partClass);
+        }
+
+        var res:BindingSet = {head: {vars: ["result"]},results: {bindings: [{"result": {value: "No results"}}]}};
+
+        return res;
+    }
+
+    //Skill
+    async skill_1(skill:string, vin:string, troubleCode:string): Promise<BindingSet> {
         const start = new Date().getTime();
 
         var parameters ='/api/agent?asset=urn:skill:consumer:'+skill+'&vin=' + vin + '&troubleCode=' + troubleCode;
@@ -595,7 +594,51 @@ class RemoteConnector implements IConnector {
       
            return result;
     }
-}
+
+    //Skill
+    async skill_search(skill:string, reason:string, partClass:string): Promise<BindingSet> {
+
+        var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/sparql-query");
+            myHeaders.append("Accept", "application/json");
+            myHeaders.append("Authorization", "Basic Zm9vOmRQdz1aQzsqNUpcKw==");
+
+    
+        var raw = "PREFIX cx: <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#>\nPREFIX cx-diag: <https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT ?reason ?code ?description ?version ?partend ?partcat ?partclass WHERE {\n  # Select Business Partner\n  ?Oem cx:BPNL \"BPNL00000003COJN\".\n\n  # Search for Trouble Codes of the Business Partner\n  # related to a cause in the \"Kabelbaum\"\n  ?Dtc rdf:type cx-diag:DTC.\n  ?Dtc cx:provisionedBy ?Oem.\n  ?Dtc cx-diag:PossibleCauses ?reason.\n  FILTER contains(?reason,\"" + reason + "\").\n  ?Dtc cx-diag:Code ?code.\n  ?Dtc cx-diag:Description ?description.\n  ?Dtc cx-diag:Version ?version.\n\n  # Navigate to the affected parts\n  # and show only parts with a classification \"Powertrain\"\n  ?Dtc cx-diag:affects ?Part.\n  ?Part cx-diag:Category ?partcat.\n  ?Part cx-diag:EnDenomination ?partend.\n  ?Part cx-diag:Classification ?partclass.\n  FILTER contains(?partclass,'" + partClass +"').\n\n} LIMIT 40\n";
+
+        var hd:HeadersInit = {
+            "Content-Type": "application/sparql-query",
+            "Accept": "application/json",
+            "Authorization": "Basic Zm9vOmRQdz1aQzsqNUpcKw=="
+        } 
+
+        var requestOptions:RequestInit =  {
+            method: 'POST',
+            headers: hd,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        const response = await fetch("https://knowledge.int.demo.catena-x.net/oem-provider-agent/sparql", requestOptions);
+            //.then(response => response.text())
+            //.then(result => console.log(result))
+            //.catch(error => console.log('error', error));
+         // 👇️ const result: BindingSet
+
+         if (!response.ok) {
+            throw new Error(`Error! status: ${response.status}`);
+          }
+    
+         const result = (await response.json()) as BindingSet;
+
+        //console.log('result is: ', JSON.stringify(result, null, 4));
+
+        return result;
+
+    }
+
+
+} 
     
 /**
  * global factory variable

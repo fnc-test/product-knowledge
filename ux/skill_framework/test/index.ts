@@ -47,7 +47,9 @@ describe('testing skill framework', () => {
 
       console.log(`Got connector ${connector}.`);
 
-      var result = await connector.execute('Lifetime','WVA8984323420333','P0745');
+    var queryVariables = { vin:'WVA8984323420333', troubleCode:'P0745' };
+
+      var result = await connector.execute('Lifetime', queryVariables);
     
       result.results.bindings.map(function(entry) {
         console.log("Result as parsed JSON \n"+
@@ -57,6 +59,34 @@ describe('testing skill framework', () => {
            "  distance: " + entry.distance.value + "\n" +
            "  time: " + entry.time.value );
        });
+      
+    });
+});
+
+/**
+ * test: Search
+ */
+ describe('testing skill framework', () => {
+  jest.setTimeout(15000);
+  test('Troublecode search results should be returned', async () => {
+
+    var connector = getConnectorFactory().create();
+
+      console.log(`Got connector ${connector}.`);
+
+      var queryVariables = { reason:'Kabelbaum', partClass:'Powertrain' };
+
+      var result = await connector.execute('TroubleCodeSearch', queryVariables);
+    
+      var var_size = result.head.vars.length;
+      var vars = result.head.vars;
+      
+      console.log ("Query results")
+      result.results.bindings.map(function(entry) {
+          for (let i = 0; i < var_size; i++) {
+             console.log (entry[vars[i]].value);
+          }
+      });
       
     });
 });
