@@ -40,7 +40,7 @@ describe('testing skill framework', () => {
  * test: get lifetime
  */
  describe('testing skill framework', () => {
-  jest.setTimeout(15000);
+  jest.setTimeout(60000);
   test('lifetime should be returned ', async () => {
 
     var connector = getConnectorFactory().create();
@@ -67,14 +67,42 @@ describe('testing skill framework', () => {
  * test: Search
  */
  describe('testing skill framework', () => {
-  jest.setTimeout(15000);
+  jest.setTimeout(60000);
   test('Troublecode search results should be returned', async () => {
 
     var connector = getConnectorFactory().create();
 
       console.log(`Got connector ${connector}.`);
 
-      var queryVariables = { reason:'Kabelbaum', partClass:'Powertrain' };
+      var queryVariables = { vin:'WBAAL31029PZ00001', problemArea:'Getriebe', minVersion:1 };
+
+      var result = await connector.execute('TroubleCodeSearch', queryVariables);
+    
+      var var_size = result.head.vars.length;
+      var vars = result.head.vars;
+      
+      console.log ("Query results")
+      result.results.bindings.map(function(entry) {
+          for (let i = 0; i < var_size; i++) {
+             console.log (entry[vars[i]].value);
+          }
+      });
+      
+    });
+});
+
+/**
+ * test: Search 2
+ */
+ describe('testing skill framework', () => {
+  jest.setTimeout(60000);
+  test('Troublecode search results should be returned 2', async () => {
+
+    var connector = getConnectorFactory().create();
+
+      console.log(`Got connector ${connector}.`);
+
+      var queryVariables = { vin:'WBAAL31029PZ00001', problemArea:'Getriebe', minVersion:1 };
 
       var result = await connector.execute('TroubleCodeSearch', queryVariables);
     
