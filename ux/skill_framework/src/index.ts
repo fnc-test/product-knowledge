@@ -30,7 +30,7 @@ export interface IConnector {
      */
 
     listAssets: (providerUrl?:string) => Promise<Catalogue>
-    execute: (skill:string, queryVariables:any) => Promise<BindingSet>
+    execute: (skill:string, ...queryVariables:any[]) => Promise<BindingSet>
 }
 
 /**
@@ -492,6 +492,8 @@ interface Value {
     value: string;
 }
 
+interface SparqlParameters {
+}
 
 /**
  * Implementation of a remote connector
@@ -547,15 +549,23 @@ class RemoteConnector implements IConnector {
     }
 
     //Execute Query
-    public async execute(skill:string, queryVariables:any) : Promise<BindingSet>  {
+    public async execute(skill:string, ...queryVariables:any[]) : Promise<BindingSet>  {
 
         const start = new Date().getTime();
 
-        var parameters ='/api/agent?asset=urn:cx:Skill:consumer:' + skill; 
-        
-        Object.entries(queryVariables).forEach(([key, value]) => parameters = `${parameters}&${key}=${value}`);
+        var skillUrl = '/api/agent?asset=urn:cx:Skill:consumer:' + skill;
+        var parameters = "";
+        var parametersContainer = "";
 
-        var finalUrl = this.data_url + parameters;
+        
+        for(var queryVariable of queryVariables){
+            Object.entries(queryVariable).forEach(([key, value]) => parameters = `${parameters}&${key}=${value}`);
+            parameters = parameters.replace(/^&/,"");
+            parametersContainer = parametersContainer + "&(" + parameters + ")";
+            parameters ="";
+        }
+         
+        var finalUrl = this.data_url + skillUrl + parametersContainer;
 
         console.log(finalUrl);
 
@@ -565,7 +575,7 @@ class RemoteConnector implements IConnector {
             agent: this.proxy
            };
     
-           // 👇️ const response: Response
+           //Response
            const response = await fetch(finalUrl,fetchOpts);
            
            let elapsed = new Date().getTime() - start;
@@ -576,10 +586,8 @@ class RemoteConnector implements IConnector {
              throw new Error(`Error! status: ${response.status}`);
            }
       
-           // 👇️ const result: BindingSet
+           //result: BindingSet
            const result = (await response.json()) as BindingSet;
-      
-           //console.log('result is: ', JSON.stringify(result, null, 4));
       
            return result;
        

@@ -80,7 +80,7 @@ describe('testing skill framework', () => {
     
       var var_size = result.head.vars.length;
       var vars = result.head.vars;
-      
+    
       console.log ("Query results")
       result.results.bindings.map(function(entry) {
           for (let i = 0; i < var_size; i++) {
@@ -96,19 +96,21 @@ describe('testing skill framework', () => {
  */
  describe('testing skill framework', () => {
   jest.setTimeout(60000);
-  test('Troublecode search results should be returned 2', async () => {
+  test('Troublecode search results should be returned for multiple parameters', async () => {
 
     var connector = getConnectorFactory().create();
 
       console.log(`Got connector ${connector}.`);
 
       var queryVariables = { vin:'WBAAL31029PZ00001', problemArea:'Getriebe', minVersion:1 };
+      var queryVariables_1 = { vin:'WBAAL31029PZ00001', problemArea:'Getriebe', minVersion:1 }
+      
 
-      var result = await connector.execute('TroubleCodeSearch', queryVariables);
+      var result = await connector.execute('TroubleCodeSearch', queryVariables, queryVariables_1);
     
       var var_size = result.head.vars.length;
       var vars = result.head.vars;
-      
+    
       console.log ("Query results")
       result.results.bindings.map(function(entry) {
           for (let i = 0; i < var_size; i++) {
@@ -118,3 +120,4 @@ describe('testing skill framework', () => {
       
     });
 });
+
