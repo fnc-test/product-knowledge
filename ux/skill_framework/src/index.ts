@@ -29,9 +29,8 @@ export interface IConnector {
      * the providerUrl is an optional parameter (means that we will look for the local catalogue)
      */
 
-    // beide nicht optional!
     listAssets: (providerUrl?:string) => Promise<Catalogue>
-    execute: (skill:string, vin:string, troubleCode:string) => Promise<BindingSet>
+    execute: (skill:string, ...queryVariables:any[]) => Promise<BindingSet>
 }
 
 /**
@@ -472,42 +471,29 @@ class EnvironmentRealmMapping implements IRealmMapping {
  }
 
 
- export interface BindingSet {
-
+ interface BindingSet {
     head: Head,
-    results:  Binding,
- 
+    results:  Binding
 }
 
-export interface Head {
-    /**
-     * the id of the catalogue
-     */
-    vars: string[],
+interface Head {
+    vars: string[];
 }
 
-export interface Binding {
-    /**
-     * the id of the catalogue
-     */
-     bindings: Entry[],
+interface Binding {
+     bindings: Entry[];
 }
 
-export interface Entry {
-
-   vin: Value,
-   troubleCode: Value,
-   partProg: Value,
-   distance: Value,
-   time: Value
-    
+interface Entry {
+   [key: string]: Value;
 }
 
-export interface Value {
-    value: string,
-    
+interface Value {
+    value: string;
 }
 
+interface SparqlParameters {
+}
 
 /**
  * Implementation of a remote connector
@@ -563,13 +549,25 @@ class RemoteConnector implements IConnector {
     }
 
     //Execute Query
-    public async execute(skill:string, vin:string, troubleCode:string) : Promise<BindingSet>  {
-        
+    public async execute(skill:string, ...queryVariables:any[]) : Promise<BindingSet>  {
+
         const start = new Date().getTime();
 
-        var parameters ='/api/agent?asset=urn:skill:consumer:'+skill+'&vin=' + vin + '&troubleCode=' + troubleCode;
+        var skillUrl = '/api/agent?asset=urn:cx:Skill:consumer:' + skill;
+        var parameters = "";
+        var parametersContainer = "";
 
-        var finalUrl = this.data_url + parameters;
+        
+        for(var queryVariable of queryVariables){
+            Object.entries(queryVariable).forEach(([key, value]) => parameters = `${parameters}&${key}=${value}`);
+            parameters = parameters.replace(/^&/,"");
+            parametersContainer = parametersContainer + "&(" + parameters + ")";
+            parameters ="";
+        }
+         
+        var finalUrl = this.data_url + skillUrl + parametersContainer;
+
+        console.log(finalUrl);
 
         const fetchOpts:RequestInit= {
             method: 'GET',
@@ -577,7 +575,7 @@ class RemoteConnector implements IConnector {
             agent: this.proxy
            };
     
-           // 👇️ const response: Response
+           //Response
            const response = await fetch(finalUrl,fetchOpts);
            
            let elapsed = new Date().getTime() - start;
@@ -588,14 +586,13 @@ class RemoteConnector implements IConnector {
              throw new Error(`Error! status: ${response.status}`);
            }
       
-           // 👇️ const result: BindingSet
+           //result: BindingSet
            const result = (await response.json()) as BindingSet;
       
-           //console.log('result is: ', JSON.stringify(result, null, 4));
-      
            return result;
+       
     }
-}
+} 
     
 /**
  * global factory variable
