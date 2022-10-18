@@ -471,7 +471,7 @@ class EnvironmentRealmMapping implements IRealmMapping {
  }
 
 
- interface BindingSet {
+export interface BindingSet {
     head: Head,
     results:  Binding
 }
@@ -481,7 +481,7 @@ interface Head {
 }
 
 interface Binding {
-     bindings: Entry[];
+    bindings: Entry[];
 }
 
 interface Entry {
