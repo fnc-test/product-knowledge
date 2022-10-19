@@ -313,13 +313,13 @@ metadata:
 spec:
   tls:
     - hosts:
-        - {{ .Values.ingress.host }}
-      secretName: tls-knowledge
+        - {{ .Values.ingress.oemHost }}
+      secretName: tls-knowledge-oem
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{ .Values.ingress.oemHost }}
       http:
         paths:
-          - path: /oem-backend(/|$)(.*)
+          - path: (/|$)(.*)
             pathType: Prefix
             backend:
               service:
