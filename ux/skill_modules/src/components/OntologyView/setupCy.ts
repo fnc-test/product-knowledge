@@ -1,6 +1,6 @@
-import { use as cytoscapeUse } from "cytoscape";
+import { use as cytoscapeUse } from 'cytoscape';
 // @ts-ignore
-import dagre from "cytoscape-dagre";
+import dagre from 'cytoscape-dagre';
 
 export default function () {
   cytoscapeUse(dagre);

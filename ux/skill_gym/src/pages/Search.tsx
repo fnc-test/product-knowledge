@@ -1,16 +1,21 @@
-import { CustomSearch } from "@catenax-ng/skill-modules";
-import { Typography } from "cx-portal-shared-components";
-import { Grid } from "@mui/material";
-import { useState } from "react";
-import { BindingSet } from '@knowledge-agents-ux/skill_framework/dist/src'
+import { CustomSearch } from '@catenax-ng/skill-modules';
+import { Typography } from 'cx-portal-shared-components';
+import { Grid } from '@mui/material';
+import { useState } from 'react';
+import { BindingSet } from '@knowledge-agents-ux/skill_framework/dist/src';
 
-export default function Search(){
-  const [searchResult, setSearchResult] = useState<BindingSet>()
-  
-  return(
+export default function Search() {
+  const [searchResult, setSearchResult] = useState<BindingSet>();
+
+  return (
     <>
       <Typography
-        sx={{ mt: 3, mb: 3, fontFamily: 'LibreFranklin-Light', textAlign: 'center' }}
+        sx={{
+          mt: 3,
+          mb: 3,
+          fontFamily: 'LibreFranklin-Light',
+          textAlign: 'center',
+        }}
         variant="h4"
         className="section-title"
       >
@@ -25,5 +30,5 @@ export default function Search(){
         </Grid>
       </Grid>
     </>
-  )
+  );
 }
