@@ -463,7 +463,7 @@ class EnvironmentRealmMapping implements IRealmMapping {
  * global factory variable
  */
 let realmMappingFactory: IRealmMappingFactory =
-    new EnvironmentRealmMappingFactory();
+  new EnvironmentRealmMappingFactory();
 
 /**
  * @returns the global connector factory
@@ -577,14 +577,14 @@ class RemoteConnector implements IConnector {
     let parameters = '';
     let parametersContainer = '';
 
-    queryVariables.map(query => {
+    queryVariables.map((query) => {
       Object.entries(query).forEach(
         ([key, value]) => (parameters = `${parameters}&${key}=${value}`)
       );
       parameters = parameters.replace(/^&/, '');
       parametersContainer = parametersContainer + '&(' + parameters + ')';
       parameters = '';
-    })
+    });
 
     const finalUrl = this.data_url + skillUrl + parametersContainer;
 
