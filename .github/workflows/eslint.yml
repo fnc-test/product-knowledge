@@ -12,12 +12,3 @@ jobs:
       uses: Krizzu/eslint-check-action@v1.1.0
       with:
         ghToken: ${{ secrets.GITHUB_TOKEN }}
-        eslintFiles: "lib, scripts"
-        eslintConfig: "myConfigs/eslint.config.js",
-        eslintExt: "ts, tsx"
-    - name: Annotate Code Linting Results
-      uses: ataylorme/eslint-annotate-action@1.0.4
-      if: always()
-      with:
-        repo-token: '${{ secrets.GITHUB_TOKEN }}'
-        report-json: 'eslint_report.json'
