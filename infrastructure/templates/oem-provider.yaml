@@ -215,7 +215,7 @@ spec:
           ports:
             - containerPort: 9047   # Web
             - containerPort: 31010  # ZK
-            - containerPort: 945678 # Dremio Exec
+            - containerPort: 45678 # Dremio Exec
           resources:
            requests:
             cpu: 0.5
@@ -279,8 +279,8 @@ spec:
       targetPort: 9047
     - port: 31010
       targetPort: 31010
-    - port: 945678
-      targetPort: 945678
+    - port: 45678
+      targetPort: 45678
   selector:
     app: oem-backend
 ---
@@ -319,6 +319,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: oem-provider-agent
+                name: oem-backend
                 port:
                   number: 9047
