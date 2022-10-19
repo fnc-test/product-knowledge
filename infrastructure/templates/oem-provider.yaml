@@ -257,7 +257,7 @@ spec:
               value: "" #"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
           volumeMounts:
             - name: backups
-              mountPath: /mnt/dremio/backups
+              mountPath: /opt/dremio/data
       volumes:
         - name: backups
           csi:
