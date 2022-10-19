@@ -8,7 +8,17 @@ jobs:
       # Checkout action must run prior to eslint check
     - name: Checkout 
       uses: actions/checkout@v1
-    - name: Lint
-      uses: Krizzu/eslint-check-action@v1.1.0
+    - name: Run ESLint
+      run: npm run lint
+      # Continue to the next step even if this fails
+      continue-on-error: true
+    - name: Annotate Code Linting Results
+      uses: ataylorme/eslint-annotate-action@v2
       with:
-        ghToken: ${{ secrets.GITHUB_TOKEN }}
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        report-json: "eslint_report.json"
+    - name: Upload ESLint report
+      uses: actions/upload-artifact@v2
+      with:
+        name: eslint_report.json
+        path: eslint_report.json
