@@ -10,9 +10,6 @@ import { RequestInit } from 'node-fetch';
 import createHttpsProxyAgent from 'https-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
-// issue a module loading message
-console.log('skill_framework/index: Loading');
-
 /*
  * a connector factory
  */
@@ -466,7 +463,7 @@ class EnvironmentRealmMapping implements IRealmMapping {
  * global factory variable
  */
 let realmMappingFactory: IRealmMappingFactory =
-  new EnvironmentRealmMappingFactory();
+    new EnvironmentRealmMappingFactory();
 
 /**
  * @returns the global connector factory
@@ -580,14 +577,14 @@ class RemoteConnector implements IConnector {
     let parameters = '';
     let parametersContainer = '';
 
-    for (const queryVariable of queryVariables) {
-      Object.entries(queryVariable).forEach(
+    queryVariables.map(query => {
+      Object.entries(query).forEach(
         ([key, value]) => (parameters = `${parameters}&${key}=${value}`)
       );
       parameters = parameters.replace(/^&/, '');
       parametersContainer = parametersContainer + '&(' + parameters + ')';
       parameters = '';
-    }
+    })
 
     const finalUrl = this.data_url + skillUrl + parametersContainer;
 
