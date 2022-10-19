@@ -10,6 +10,7 @@
         "watch": "tsc -w",
         "test": "jest --ci --reporters=default --reporters=jest-junit",
         "lint": "eslint skill_framework skill_gym skill_modules",
+        "lint-fix": "eslint skill_framework skill_gym skill_modules --fix",
         "prettier-format": "prettier --write \"./skill*/src/**/*.{ts,tsx,js,jsx,json,css,sass,scss,xml,md}\" \"./skill*/test/**/*.ts\"",
         "init:dev": "npm install && npm run build:dev && npm run link:all",
         "start:skillgym": "npm start --workspace=skill_gym",

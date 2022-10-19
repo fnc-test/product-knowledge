@@ -14,9 +14,9 @@ import { jest } from '@jest/globals';
 describe('testing skill framework', () => {
   jest.setTimeout(15000);
   test('assets should be returned', async () => {
-    var connector = getConnectorFactory().create();
+    const connector = getConnectorFactory().create();
     console.log(`Got connector ${connector}.`);
-    var catalogue = await connector.listAssets();
+    const catalogue = await connector.listAssets();
     expect(catalogue.id).toBeDefined();
     console.log(`Found catalog ${catalogue.id}.`);
     expect(catalogue.contractOffers).toBeDefined();
@@ -46,13 +46,13 @@ describe('testing skill framework', () => {
 describe('testing skill framework', () => {
   jest.setTimeout(60000);
   test('lifetime should be returned ', async () => {
-    var connector = getConnectorFactory().create();
+    const connector = getConnectorFactory().create();
 
     console.log(`Got connector ${connector}.`);
 
-    var queryVariables = { vin: 'WVA8984323420333', troubleCode: 'P0745' };
+    const queryVariables = { vin: 'WVA8984323420333', troubleCode: 'P0745' };
 
-    var result = await connector.execute('Lifetime', queryVariables);
+    const result = await connector.execute('Lifetime', queryVariables);
 
     result.results.bindings.map(function (entry) {
       console.log(
@@ -82,20 +82,20 @@ describe('testing skill framework', () => {
 describe('testing skill framework', () => {
   jest.setTimeout(60000);
   test('Troublecode search results should be returned', async () => {
-    var connector = getConnectorFactory().create();
+    const connector = getConnectorFactory().create();
 
     console.log(`Got connector ${connector}.`);
 
-    var queryVariables = {
+    const queryVariables = {
       vin: 'WBAAL31029PZ00001',
       problemArea: 'Getriebe',
       minVersion: 1,
     };
 
-    var result = await connector.execute('TroubleCodeSearch', queryVariables);
+    const result = await connector.execute('TroubleCodeSearch', queryVariables);
 
-    var var_size = result.head.vars.length;
-    var vars = result.head.vars;
+    const var_size = result.head.vars.length;
+    const vars = result.head.vars;
 
     console.log('Query results');
     result.results.bindings.map(function (entry) {
@@ -112,29 +112,29 @@ describe('testing skill framework', () => {
 describe('testing skill framework', () => {
   jest.setTimeout(60000);
   test('Troublecode search results should be returned for multiple parameters', async () => {
-    var connector = getConnectorFactory().create();
+    const connector = getConnectorFactory().create();
 
     console.log(`Got connector ${connector}.`);
 
-    var queryVariables = {
+    const queryVariables = {
       vin: 'WBAAL31029PZ00001',
       problemArea: 'Getriebe',
       minVersion: 1,
     };
-    var queryVariables_1 = {
+    const queryVariables_1 = {
       vin: 'WBAAL31029PZ00001',
       problemArea: 'Getriebe',
       minVersion: 1,
     };
 
-    var result = await connector.execute(
+    const result = await connector.execute(
       'TroubleCodeSearch',
       queryVariables,
       queryVariables_1
     );
 
-    var var_size = result.head.vars.length;
-    var vars = result.head.vars;
+    const var_size = result.head.vars.length;
+    const vars = result.head.vars;
 
     console.log('Query results');
     result.results.bindings.map(function (entry) {

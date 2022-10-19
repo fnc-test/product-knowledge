@@ -136,7 +136,7 @@ export const OntologyView = ({ dataUrl }: OntologyViewType) => {
               cy={(cy) => {
                 cyRef.current = cy;
                 cy.on('click', 'node', (evt) => {
-                  var node = evt.target;
+                  const node = evt.target;
                   setActiveNode(node.data());
                 });
               }}

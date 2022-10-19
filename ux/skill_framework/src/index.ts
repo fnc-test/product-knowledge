@@ -453,7 +453,7 @@ class EnvironmentRealmMappingFactory implements IRealmMappingFactory {
 
 class EnvironmentRealmMapping implements IRealmMapping {
   public getHeaderAnnotation(targetDomain: string) {
-    var headers: any = {};
+    const headers: any = {};
     if (process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY != undefined) {
       headers[process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY ?? ''] =
         process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_VALUE;
@@ -465,7 +465,7 @@ class EnvironmentRealmMapping implements IRealmMapping {
 /**
  * global factory variable
  */
-var realmMappingFactory: IRealmMappingFactory =
+let realmMappingFactory: IRealmMappingFactory =
   new EnvironmentRealmMappingFactory();
 
 /**
@@ -551,7 +551,7 @@ class RemoteConnector implements IConnector {
     // 👇️ const response: Response
     const response = await fetch(finalUrl, fetchOpts);
 
-    let elapsed = new Date().getTime() - start;
+    const elapsed = new Date().getTime() - start;
 
     console.log(
       `Listing Assets from Remote Connector finished after ${elapsed} milliseconds.`
@@ -576,11 +576,11 @@ class RemoteConnector implements IConnector {
   ): Promise<BindingSet> {
     const start = new Date().getTime();
 
-    var skillUrl = '/api/agent?asset=urn:cx:Skill:consumer:' + skill;
-    var parameters = '';
-    var parametersContainer = '';
+    const skillUrl = '/api/agent?asset=urn:cx:Skill:consumer:' + skill;
+    let parameters = '';
+    let parametersContainer = '';
 
-    for (var queryVariable of queryVariables) {
+    for (const queryVariable of queryVariables) {
       Object.entries(queryVariable).forEach(
         ([key, value]) => (parameters = `${parameters}&${key}=${value}`)
       );
@@ -589,7 +589,7 @@ class RemoteConnector implements IConnector {
       parameters = '';
     }
 
-    var finalUrl = this.data_url + skillUrl + parametersContainer;
+    const finalUrl = this.data_url + skillUrl + parametersContainer;
 
     console.log(finalUrl);
 
@@ -602,7 +602,7 @@ class RemoteConnector implements IConnector {
     //Response
     const response = await fetch(finalUrl, fetchOpts);
 
-    let elapsed = new Date().getTime() - start;
+    const elapsed = new Date().getTime() - start;
 
     console.log(
       `Result from Remote Connector finished after ${elapsed} milliseconds.`
@@ -622,7 +622,7 @@ class RemoteConnector implements IConnector {
 /**
  * global factory variable
  */
-var connectorFactory: IConnectorFactory = new EnvironmentConnectorFactory();
+let connectorFactory: IConnectorFactory = new EnvironmentConnectorFactory();
 
 /**
  * @returns the global connector factory
