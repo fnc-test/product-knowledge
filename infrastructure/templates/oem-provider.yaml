@@ -266,7 +266,7 @@ spec:
              volumeAttributes:
                 secretName: oem-backend-storage  # required
                 shareName: {{ .Values.security.backupsShare }} # required
-                mountOptions: "dir_mode=0777,file_mode=0777,cache=strict,actimeo=30"  # optional
+                mountOptions: "dir_mode=0777,file_mode=0777,cache=strict,actimeo=30,uid=10000,gid=30000"  # optional
 ---
 apiVersion: v1
 kind: Service
