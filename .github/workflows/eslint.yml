@@ -11,7 +11,7 @@ jobs:
     - name: Run ESLint
       run: |
           cd ux
-          npm run lint
+          npm run lint:report
       # Continue to the next step even if this fails
       continue-on-error: true
     - name: Annotate Code Linting Results

@@ -94,14 +94,11 @@ describe('testing skill framework', () => {
 
     const result = await connector.execute('TroubleCodeSearch', queryVariables);
 
-    const var_size = result.head.vars.length;
-    const vars = result.head.vars;
-
     console.log('Query results');
     result.results.bindings.map(function (entry) {
-      for (let i = 0; i < var_size; i++) {
-        console.log(entry[vars[i]].value);
-      }
+      result.head.vars.map((elem) => {
+        console.log(entry[elem].value);
+      });
     });
   });
 });
@@ -133,14 +130,11 @@ describe('testing skill framework', () => {
       queryVariables_1
     );
 
-    const var_size = result.head.vars.length;
-    const vars = result.head.vars;
-
     console.log('Query results');
     result.results.bindings.map(function (entry) {
-      for (let i = 0; i < var_size; i++) {
-        console.log(entry[vars[i]].value);
-      }
+      result.head.vars.map((elem) => {
+        console.log(entry[elem].value);
+      });
     });
   });
 });
