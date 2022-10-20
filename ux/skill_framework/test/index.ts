@@ -100,6 +100,7 @@ describe('testing skill framework', () => {
     console.log('Query results');
     result.results.bindings.map(function (entry) {
       for (let i = 0; i < var_size; i++) {
+        console.log('test');
         console.log(entry[vars[i]].value);
       }
     });
