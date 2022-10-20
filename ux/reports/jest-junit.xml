@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="4" failures="0" errors="0" time="2.34">
-  <testsuite name="skill_framework\test\index.ts" errors="0" failures="0" skipped="0" timestamp="2022-10-18T07:06:50" time="2.212" tests="4">
-    <testcase classname="testing skill framework" name="assets should be returned" time="0.01">
+<testsuites name="jest tests" tests="4" failures="0" errors="0" time="2.777">
+  <testsuite name="skill_framework\test\index.ts" errors="0" failures="0" skipped="0" timestamp="2022-10-20T10:42:54" time="2.624" tests="4">
+    <testcase classname="testing skill framework" name="assets should be returned" time="0.02">
     </testcase>
-    <testcase classname="testing skill framework" name="lifetime should be returned " time="0.002">
+    <testcase classname="testing skill framework" name="lifetime should be returned " time="0.008">
     </testcase>
-    <testcase classname="testing skill framework" name="Troublecode search results should be returned" time="0.011">
+    <testcase classname="testing skill framework" name="Troublecode search results should be returned" time="0.025">
     </testcase>
-    <testcase classname="testing skill framework" name="Troublecode search results should be returned for multiple parameters" time="0.007">
+    <testcase classname="testing skill framework" name="Troublecode search results should be returned for multiple parameters" time="0.029">
     </testcase>
   </testsuite>
 </testsuites>

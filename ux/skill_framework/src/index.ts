@@ -484,7 +484,7 @@ interface Binding {
     bindings: Entry[];
 }
 
-interface Entry {
+export interface Entry {
    [key: string]: Value;
 }
 

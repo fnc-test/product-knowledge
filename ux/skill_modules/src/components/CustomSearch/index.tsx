@@ -1,5 +1,5 @@
 import { Box, Paper, Chip, Select, InputLabel, MenuItem, FormControl } from "@mui/material";
-import { Button, Input, Typography } from "cx-portal-shared-components";
+import { Button, Input } from "cx-portal-shared-components";
 import { useEffect, useState } from "react";
 import {BindingSet, getConnectorFactory} from '@knowledge-agents-ux/skill_framework/dist/src'
 import React from "react";
@@ -21,10 +21,10 @@ const defaultSkills = [
 ]
 
 interface CustomSearchProps{
-  onSearchResult: (result: BindingSet) => void
+  onSearch: (vin: string, result: BindingSet) => void
 }
 
-export const CustomSearch = ({onSearchResult}: CustomSearchProps) => {
+export const CustomSearch = ({onSearch}: CustomSearchProps) => {
   const [selectedSkill, setSelectedSkill] = useState<string>('')
   const [skillList, setSkillList] = useState<any[]>(defaultSkills)
   const [searchVin, setSearchVin] = useState<string>('')
@@ -32,6 +32,7 @@ export const CustomSearch = ({onSearchResult}: CustomSearchProps) => {
   const [errorVin, setErrorVin] = useState<boolean>(false)
   const [chipData, setChipData] = useState<ChipData[]>([]);
   const [disableButton, setDisableButton] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false)
 
   const onVinSearchChange = (value: string) => {
     setSearchVin(value)
@@ -57,19 +58,21 @@ export const CustomSearch = ({onSearchResult}: CustomSearchProps) => {
     setDisableButton(isDisabled)
   }, [selectedSkill, searchVin, chipData, keywordInput])
 
-  const onSearch = () => {
+  const onButtonClick = () => {
+    setLoading(true);
     let queryVars;
     if(hasNoValue(chipData)){
       queryVars = {vin: searchVin, problemArea: keywordInput, minVersion: 1}
     } else {
       queryVars = chipData.map(keyword => ({vin: searchVin, problemArea: keyword.label, minVersion: 1}))
     }
-    console.log(queryVars)
+
     const connector = getConnectorFactory().create();
     connector.execute(selectedSkill, queryVars)
       .then(result => {
         console.log(result);
-        onSearchResult(result);
+        onSearch(searchVin, result);
+        setLoading(false);
       });
   }
 
@@ -108,6 +111,7 @@ export const CustomSearch = ({onSearchResult}: CustomSearchProps) => {
                     label={data.label}
                     onDelete={() => onChipDelete(data)}
                     clickable={true}
+                    sx={{mr: 1}}
                   />
                 );
               })}
@@ -118,7 +122,7 @@ export const CustomSearch = ({onSearchResult}: CustomSearchProps) => {
               placeholder="Enter a key word"
             />
           </Box>
-          <Button disabled={disableButton} fullWidth onClick={onSearch}>Search Data</Button>
+          <Button disabled={disableButton || loading} fullWidth onClick={onButtonClick}>Search Data</Button>
         </>
       }
     </Paper>
