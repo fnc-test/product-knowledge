@@ -19,6 +19,7 @@ jobs:
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
         report-json: "ux/reports/eslint_report.json"
+      continue-on-error: true
     - name: Upload ESLint report
       uses: actions/upload-artifact@v2
       with:
