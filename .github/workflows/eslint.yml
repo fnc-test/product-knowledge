@@ -18,6 +18,7 @@ jobs:
         run: |
           cd ux
           npm run lint
+        continue-on-error: true
       - name: Save Code Linting Report JSON
         # npm script for ESLint
         # eslint --output-file eslint_report.json --format json src
