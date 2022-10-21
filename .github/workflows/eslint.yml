@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: 18
       - name: Install Node Dependencies
-        run: npm ci
+        run: npm install
         env:
           CI: TRUE
       - name: Test Code Linting
