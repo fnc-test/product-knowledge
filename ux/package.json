@@ -36,14 +36,6 @@
         "cx-portal-shared-components": "^0.6.1",
         "typescript": "^4.8.2"
     },
-    "peerDependencies": {
-        "@emotion/react": "^11.10.0",
-        "@emotion/styled": "^11.10.0",
-        "@mui/icons-material": "^5.8.4",
-        "@mui/material": "^5.10.0",
-        "react": ">=17.0.2",
-        "react-dom": ">=17.0.2"
-    },
     "workspaces": [
         "skill_framework",
         "knowledge_explorer",
