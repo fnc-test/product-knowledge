@@ -1,37 +1,39 @@
-import { BindingSet } from "@knowledge-agents-ux/skill_framework/dist/src";
-import { Table } from "cx-portal-shared-components";
+import { BindingSet, Entry } from "@knowledge-agents-ux/skill_framework/dist/src";
+import { Table, Typography } from "cx-portal-shared-components";
 import React from "react";
+import { GridColDef } from '@mui/x-data-grid'
+import { Box } from "@mui/material";
+import ErrorTwoToneIcon from '@mui/icons-material/ErrorTwoTone';
 
 export const DataList = ({vin, data}: {vin: String, data: BindingSet}) => {
   const tableTitle = `Results for ${vin}`
-  /* const resultToColumns = (result: string[]): Array<GridColDef> =>
+
+  const resultToColumns = (result: string[]): Array<GridColDef> =>
     result.map(item => ({
       field: item,
-      flex: 2
+      flex: 2,
+      valueGetter: ({ row }: { row: Entry }) =>
+        row[item].value ? row[item].value : 'No Value',
     }))
-
-  const resultToRows = (result: Entry[]) =>
-    result.map(item => {
-      console.log(item)
-      return item.value
-    })
-   */
+  
 
   return(
     <>
-      <Table title={tableTitle} columns={[]} rows={[]}      
+    {data.results.bindings.length > 0 ?
+      <Table
+        title={tableTitle}
+        rowsCount={data.results.bindings.length}
+        columns={resultToColumns(data.head.vars)}
+        rows={data.results.bindings}
+        getRowId={(row) => row.codeNumber.value}     
       />
-      {
-        data.results.bindings.map((value, i) => {
-          console.log(value);
-          return <div key={`${value.vin}_${i}`}>
-            <p><b>Vin:</b><span>{value.vin.value ? value.vin.value : 'No Value'}</span></p>
-            <p><b>Code Number:</b><span>{value.codeNumber.value ? value.codeNumber.value : 'No Value'}</span></p>
-            <p><b>Description:</b><span>{value.description.value ? value.description.value : 'No Value'}</span></p>
-            <p><b>Version:</b><span>{value.version.value ? value.version.value : 'No Value'}</span></p>
-          </div>
-        })
-      }
+    :
+      <Box textAlign="center" maxWidth="500px" ml="auto" mr="auto">
+        <ErrorTwoToneIcon color="warning" fontSize="large"/>
+        <Typography variant="h4">Empty search result</Typography>
+        <Typography>We could not find any data related to your search request. Please change your search input.</Typography>
+      </Box>
+    }
     </>
 
   )

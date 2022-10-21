@@ -16,7 +16,7 @@ export default function App(){
           variant="text"
         />
       </MainNavigation>
-      <Box sx={{marginRight: 10, marginLeft: 10}}>
+      <Box sx={{marginRight: 10, marginBottom: 10, marginLeft: 10}}>
         <Outlet />
       </Box>
     </Box>

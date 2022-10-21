@@ -7,6 +7,7 @@ import { BindingSet } from '@knowledge-agents-ux/skill_framework/dist/src'
 export default function Search(){
   const [searchResult, setSearchResult] = useState<BindingSet>()
   const [searchVin, setSearchVin] = useState<string>('')
+
   const onSearch = (vin: string, result: BindingSet) => {
     setSearchResult(result);
     setSearchVin(vin);
@@ -22,13 +23,14 @@ export default function Search(){
         Execute Skills
       </Typography>
       <Grid container justifyContent="center"spacing={3}>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <CustomSearch onSearch={onSearch} />
         </Grid>
-        <Grid item xs={12}>
-          {searchResult && <DataList vin={searchVin} data={searchResult} />
-          }
-        </Grid>
+        {searchResult &&
+          <Grid item xs={12}>
+            <DataList vin={searchVin} data={searchResult} />
+          </Grid>
+        }
       </Grid>
     </>
   )

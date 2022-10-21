@@ -1,13 +1,9 @@
-import { Box, Paper, Chip, Select, InputLabel, MenuItem, FormControl } from "@mui/material";
+import { Box, Paper, Chip, Select, InputLabel, MenuItem, FormControl, Grid } from "@mui/material";
 import { Button, Input } from "cx-portal-shared-components";
 import { useEffect, useState } from "react";
 import {BindingSet, getConnectorFactory} from '@knowledge-agents-ux/skill_framework/dist/src'
 import React from "react";
-
-interface ChipData {
-  key: number;
-  label: string;
-}
+import { ChipData, ChipList } from "./components/ChipList";
 
 const defaultSkills = [
   {
@@ -28,8 +24,8 @@ export const CustomSearch = ({onSearch}: CustomSearchProps) => {
   const [selectedSkill, setSelectedSkill] = useState<string>('')
   const [skillList, setSkillList] = useState<any[]>(defaultSkills)
   const [searchVin, setSearchVin] = useState<string>('')
+  const [searchVersion, setSearchVersion] = useState<string>('')
   const [keywordInput, setKeywordInput] = useState<string>('')
-  const [errorVin, setErrorVin] = useState<boolean>(false)
   const [chipData, setChipData] = useState<ChipData[]>([]);
   const [disableButton, setDisableButton] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false)
@@ -54,19 +50,19 @@ export const CustomSearch = ({onSearch}: CustomSearchProps) => {
   const hasNoValue = (item: any) => item.length === 0
 
   useEffect(() => {
-    const isDisabled = hasNoValue(selectedSkill) || hasNoValue(searchVin) || (hasNoValue(chipData) && hasNoValue(keywordInput));
+    const isDisabled = hasNoValue(selectedSkill) || hasNoValue(searchVin) || hasNoValue(searchVersion) || (hasNoValue(chipData) && hasNoValue(keywordInput));
     setDisableButton(isDisabled)
-  }, [selectedSkill, searchVin, chipData, keywordInput])
+  }, [selectedSkill, searchVin, chipData, keywordInput, searchVersion])
 
   const onButtonClick = () => {
     setLoading(true);
     let queryVars;
     if(hasNoValue(chipData)){
-      queryVars = {vin: searchVin, problemArea: keywordInput, minVersion: 1}
+      queryVars = {vin: searchVin, problemArea: keywordInput, minVersion: searchVersion}
     } else {
-      queryVars = chipData.map(keyword => ({vin: searchVin, problemArea: keyword.label, minVersion: 1}))
+      queryVars = chipData.map(keyword => ({vin: searchVin, problemArea: keyword.label, minVersion: searchVersion}))
     }
-
+    console.log(queryVars)
     const connector = getConnectorFactory().create();
     connector.execute(selectedSkill, queryVars)
       .then(result => {
@@ -86,6 +82,7 @@ export const CustomSearch = ({onSearch}: CustomSearchProps) => {
           value={selectedSkill}
           label="Select a skill"
           onChange={(e) => setSelectedSkill(e.target.value)}
+          disabled={loading}
         >
           {skillList.map(skill =>
             <MenuItem key={skill.value} value={skill.value}>{skill.title}</MenuItem>
@@ -94,32 +91,33 @@ export const CustomSearch = ({onSearch}: CustomSearchProps) => {
       </FormControl>
       {selectedSkill &&
         <>
-          <Input
-            error={errorVin}
-            helperText="The entered VIN does not match a VIN format."
-            value={searchVin}
-            onChange={(e) => onVinSearchChange(e.target.value)}
-            placeholder="VIN"
-          />
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={10}>
+              <Input
+                helperText="Please enter a valid VIN."
+                value={searchVin}
+                onChange={(e) => onVinSearchChange(e.target.value)}
+                placeholder="VIN"
+                disabled={loading}
+              />
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Input
+                value={searchVersion}
+                onChange={(e) => setSearchVersion(e.target.value)}
+                placeholder="Version"
+                type="number"
+                disabled={loading}
+              />
+            </Grid>
+          </Grid>
           <Box mt={2} mb={3}>
-            <Box mb={2}>
-              {chipData.map((data) => {
-                return (
-                  <Chip
-                    color="primary"
-                    key={data.key}
-                    label={data.label}
-                    onDelete={() => onChipDelete(data)}
-                    clickable={true}
-                    sx={{mr: 1}}
-                  />
-                );
-              })}
-            </Box>
+            <ChipList chipData={chipData} onChipDelete={onChipDelete}/>
             <Input
               value={keywordInput}
               onChange={(e) => onKeywordInputChange(e.target.value)}
               placeholder="Enter a key word"
+              disabled={loading}
             />
           </Box>
           <Button disabled={disableButton || loading} fullWidth onClick={onButtonClick}>Search Data</Button>
