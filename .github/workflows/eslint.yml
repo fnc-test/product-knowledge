@@ -11,7 +11,9 @@ jobs:
         with:
           node-version: 18
       - name: Install Node Dependencies
-        run: npm install
+        run: |
+          cd ux
+          npm install
       - name: Test Code Linting
         run: npm run lint
       - name: Save Code Linting Report JSON
