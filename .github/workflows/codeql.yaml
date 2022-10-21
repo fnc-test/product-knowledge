@@ -62,7 +62,7 @@ jobs:
         run: |
           cd ux
           npm install -g jest
-          npm run init:ci
+          npm run init:dev
           npm test
 
       - if: success() || failure()
