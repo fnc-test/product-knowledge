@@ -1,20 +1,10 @@
-import { Box, Paper, Chip, Select, InputLabel, MenuItem, FormControl, Grid } from "@mui/material";
+import { Box, Paper, Chip, Select, InputLabel, MenuItem, FormControl, Grid, SelectChangeEvent } from "@mui/material";
 import { Button, Input } from "cx-portal-shared-components";
 import { useEffect, useState } from "react";
 import {BindingSet, getConnectorFactory} from '@knowledge-agents-ux/skill_framework/dist/src'
 import React from "react";
 import { ChipData, ChipList } from "./components/ChipList";
-
-const defaultSkills = [
-  {
-    title: 'Trouble Code Search',
-    value: 'TroubleCodeSearch'
-  },
-  {
-    title: 'Example Skill',
-    value: 'example'
-  }
-]
+import { SkillSelect } from "./components/SkillSelect";
 
 interface CustomSearchProps{
   onSearch: (vin: string, result: BindingSet) => void
@@ -22,7 +12,6 @@ interface CustomSearchProps{
 
 export const CustomSearch = ({onSearch}: CustomSearchProps) => {
   const [selectedSkill, setSelectedSkill] = useState<string>('')
-  const [skillList, setSkillList] = useState<any[]>(defaultSkills)
   const [searchVin, setSearchVin] = useState<string>('')
   const [searchVersion, setSearchVersion] = useState<string>('')
   const [keywordInput, setKeywordInput] = useState<string>('')
@@ -74,21 +63,11 @@ export const CustomSearch = ({onSearch}: CustomSearchProps) => {
 
   return(
     <Paper elevation={3} sx={{padding: 3}}>
-      <FormControl fullWidth sx={{mb: 3}}>
-        <InputLabel id="skill-select-label">Select a skill</InputLabel>
-        <Select
-          labelId="skill-select-label"
-          id="skill-select"
-          value={selectedSkill}
-          label="Select a skill"
-          onChange={(e) => setSelectedSkill(e.target.value)}
-          disabled={loading}
-        >
-          {skillList.map(skill =>
-            <MenuItem key={skill.value} value={skill.value}>{skill.title}</MenuItem>
-          )}
-        </Select>
-      </FormControl>
+      <SkillSelect 
+        value={selectedSkill}
+        onChange={(e) => setSelectedSkill(e.target.value)}
+        disabled={loading}
+      />
       {selectedSkill &&
         <>
           <Grid container spacing={1}>
