@@ -113,8 +113,10 @@ describe('testing skill framework', () => {
 
     console.log(`Got connector ${connector}.`);
 
-    const queryVariables = [{ vin:'WBAAL31029PZ00001', problemArea:'Getriebe', minVersion:1 }, { vin:'WBAAL31029PZ00001', problemArea:'Getriebe', minVersion:1 }];
-      
+    const queryVariables = [
+      { vin: 'WBAAL31029PZ00001', problemArea: 'Getriebe', minVersion: 1 },
+      { vin: 'WBAAL31029PZ00001', problemArea: 'Getriebe', minVersion: 1 },
+    ];
 
     const result = await connector.execute('TroubleCodeSearch', queryVariables);
 
