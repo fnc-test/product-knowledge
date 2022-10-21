@@ -198,8 +198,7 @@ export interface Action {
 /**
  * TODO need to define constraints
  */
-export interface Constraint {
-}
+export interface Constraint {}
 
 /**
  * this is an asset description
@@ -213,22 +212,22 @@ export interface Asset {
  * the different types of endpoints/data planes supported
  */
 export declare enum DataAddressEndpointType {
-    /** http data plane */
-    HttpData = "HttpData",
-    /** Sparql subprotocol */
-    Sparql = "urn:cx:Protocol:w3c:Http#SPARQL"
+  /** http data plane */
+  HttpData = 'HttpData',
+  /** Sparql subprotocol */
+  Sparql = 'urn:cx:Protocol:w3c:Http#SPARQL',
 }
 
 /**
  * the flexible properties of an asset
  */
 export interface AssetProperties {
-    /** clear name of the asset  */
-    'asset:prop:name'?: string | null;
-    /** content type TODO use enum or media type  */
-    'asset:prop:contenttype': string;
-    /** optional size */
-    'ids:byteSize'?: number | null;
+  /** clear name of the asset  */
+  'asset:prop:name'?: string | null;
+  /** content type TODO use enum or media type  */
+  'asset:prop:contenttype': string;
+  /** optional size */
+  'ids:byteSize'?: number | null;
   /** version of the asset descriptor */
   'asset:prop:version'?: string | null;
   /** id of the asset */
@@ -271,7 +270,6 @@ export interface DataAddress {
   properties: DataAddressProperties;
 }
 
-
 /**
  * the flexible properties of a data address
  */
@@ -288,117 +286,119 @@ export interface DataAddressProperties {
 class MockConnector implements IConnector {
   public listAssets(providerUrl?: string): Promise<Catalogue> {
     return Promise.resolve({
-      "id": "catenax",
-            "contractOffers": [
-                {
-                    "id": "oemOffer:64640ec6-5566-353f-97c2-f82013f6956e",
-                    "policy": {
-                        "permissions": [
-                            {
-                                "edctype": "dataspaceconnector:permission",
-                                "uid": null,
-                                "target": "urn:cx:Graph:oem:Diagnosis2022",
-                                "action": {
-                                    "type": ActionType.USE,
+      id: 'catenax',
+      contractOffers: [
+        {
+          id: 'oemOffer:64640ec6-5566-353f-97c2-f82013f6956e',
+          policy: {
+            permissions: [
+              {
+                edctype: 'dataspaceconnector:permission',
+                uid: null,
+                target: 'urn:cx:Graph:oem:Diagnosis2022',
+                action: {
+                  type: ActionType.USE,
                   includedIn: null,
-                  "constraint": null
-                                },
-                                "assignee": null,
-                                "assigner": null,
-                                "constraints": [],
-                                "duties": []
-                            }
-                        ],
-                        "prohibitions": [],
-                        "obligations": [],
+                  constraint: null,
+                },
+                assignee: null,
+                assigner: null,
+                constraints: [],
+                duties: [],
+              },
+            ],
+            prohibitions: [],
+            obligations: [],
             extensibleProperties: {},
-            "inheritsFrom": null,
-                        "assigner": null,
-                        "assignee": null,
-                        "target": "urn:cx:Graph:oem:Diagnosis2022",
+            inheritsFrom: null,
+            assigner: null,
+            assignee: null,
+            target: 'urn:cx:Graph:oem:Diagnosis2022',
             '@type': {
-              "@policytype": PolicyType.set
-                        }
-                    },
-                    "asset": {
-                        "id": "urn:cx:Graph:oem:Diagnosis2022",
-                        "createdAt": 1665051075480,
-                        "properties": {
+              '@policytype': PolicyType.set,
+            },
+          },
+          asset: {
+            id: 'urn:cx:Graph:oem:Diagnosis2022',
+            createdAt: 1665051075480,
+            properties: {
               'asset:prop:byteSize': null,
-              "asset:prop:name": "Diagnostic Trouble Code Catalogue Version 2022",
-                            "cx:isFederated": true,
+              'asset:prop:name':
+                'Diagnostic Trouble Code Catalogue Version 2022',
+              'cx:isFederated': true,
               'asset:prop:description':
                 'A sample graph asset/offering referring to a specific diagnosis resource.',
-              "asset:prop:contenttype": "application/json, application/xml",
+              'asset:prop:contenttype': 'application/json, application/xml',
               'rdfs:isDefinedBy':
                 'https://github.com/catenax-ng/product-knowledge/ontology/diagnosis_ontology.ttl',
-              "cx:shape": "@prefix : <urn:cx:Graph:oem:Diagnosis2022> .\n@prefix cx: <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#> .\n@prefix cx-diag: <https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#> .\n@prefix owl: <http://www.w3.org/2002/07/owl#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n@prefix sh: <http://www.w3.org/ns/shacl#> .\n\nOemDTC rdf:type sh:NodeShape ;\n  sh:targetClass cx-diag:DTC ;\n  sh:property [\n        sh:path cx:provisionedBy ;\n        sh:hasValue <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner/BPNL00000003COJN> ;\n    ] ;\n  sh:property [\n        sh:path cx-diag:Version ;\n        sh:hasValue 0^^xsd:long ;\n    ] ;\n  sh:property [\n        sh:path cx-diag:Affects ;\n        sh:class OemDiagnosedParts ;\n    ] ;\n\nOemDiagnosedParts rdf:type sh:NodeShape ;\n  sh:targetClass cx-diag:DiagnosedPart ;\n  sh:property [\n        sh:path cx:provisionedBy ;\n        sh:hasValue <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner/BPNL00000003COJN> ;\n    ] ;\n",
+              'cx:shape':
+                '@prefix : <urn:cx:Graph:oem:Diagnosis2022> .\n@prefix cx: <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#> .\n@prefix cx-diag: <https://github.com/catenax-ng/product-knowledge/ontology/diagnosis.ttl#> .\n@prefix owl: <http://www.w3.org/2002/07/owl#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n@prefix sh: <http://www.w3.org/ns/shacl#> .\n\nOemDTC rdf:type sh:NodeShape ;\n  sh:targetClass cx-diag:DTC ;\n  sh:property [\n        sh:path cx:provisionedBy ;\n        sh:hasValue <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner/BPNL00000003COJN> ;\n    ] ;\n  sh:property [\n        sh:path cx-diag:Version ;\n        sh:hasValue 0^^xsd:long ;\n    ] ;\n  sh:property [\n        sh:path cx-diag:Affects ;\n        sh:class OemDiagnosedParts ;\n    ] ;\n\nOemDiagnosedParts rdf:type sh:NodeShape ;\n  sh:targetClass cx-diag:DiagnosedPart ;\n  sh:property [\n        sh:path cx:provisionedBy ;\n        sh:hasValue <https://github.com/catenax-ng/product-knowledge/ontology/cx.ttl#BusinessPartner/BPNL00000003COJN> ;\n    ] ;\n',
               'cx:protocol': undefined,
-              "asset:prop:version": "0.5.5-SNAPSHOT",
+              'asset:prop:version': '0.5.5-SNAPSHOT',
               'asset:prop:id': 'urn:cx:Graph:oem:Diagnosis2022',
-              "asset:prop:fileName": null,
+              'asset:prop:fileName': null,
               'rdf:type':
                 'https://github.com/catenax-ng/product-knowledge/ontology/common_ontology.ttl#GraphAsset',
-            }
-                    },
-                    "assetId": null,
-                    "provider": "urn:connector:provider",
-                    "consumer": "urn:connector:consumer",
-                    "offerStart": null,
-                    "offerEnd": null,
-                    "contractStart": null,
-                    "contractEnd": null
-                }
-            ]
-        });
+            },
+          },
+          assetId: null,
+          provider: 'urn:connector:provider',
+          consumer: 'urn:connector:consumer',
+          offerStart: null,
+          offerEnd: null,
+          contractStart: null,
+          contractEnd: null,
+        },
+      ],
+    });
   }
 
   //execute
-    public execute(): Promise<BindingSet> {
+  public execute(): Promise<BindingSet> {
     return Promise.resolve({
-      "head": {
-                "vars": [
-                    "vin",
+      head: {
+        vars: [
+          'vin',
           'troubleCode',
-          "description",
-                    "partProg",
+          'description',
+          'partProg',
           'distance',
-          "time"
-                ]
-            },
-            "results": {
+          'time',
+        ],
+      },
+      results: {
         bindings: [
           {
             vin: {
-              "type": "literal",
-                            "value": "WVA8984323420333"
-                        },
-                        "troubleCode": {
-                            "type": "literal",
-                            "value": "P0745"
-                        },
-                        "description": {
-                            "type": "literal",
-                            "value": "Getriebeöldruck-Magnetventil - Fehlfunktion Stromkreis"
-                        },
-                        "partProg": {
-                            "type": "literal",
-                            "value": "\"GearOil\""
-                        },
+              type: 'literal',
+              value: 'WVA8984323420333',
+            },
+            troubleCode: {
+              type: 'literal',
+              value: 'P0745',
+            },
+            description: {
+              type: 'literal',
+              value: 'Getriebeöldruck-Magnetventil - Fehlfunktion Stromkreis',
+            },
+            partProg: {
+              type: 'literal',
+              value: '"GearOil"',
+            },
             distance: {
-              "type": "literal",
-                            "datatype": "http://www.w3.org/2001/XMLSchema#int",
-                            "value": "150"
-                        },
-                        "time": {
-                            "type": "literal",
-                            "datatype": "http://www.w3.org/2001/XMLSchema#int",
+              type: 'literal',
+              datatype: 'http://www.w3.org/2001/XMLSchema#int',
+              value: '150',
+            },
+            time: {
+              type: 'literal',
+              datatype: 'http://www.w3.org/2001/XMLSchema#int',
               value: '2',
-            }
-                    }
-                ]
-            }
-        });
+            },
+          },
+        ],
+      },
+    });
   }
 }
 
@@ -407,18 +407,23 @@ class MockConnector implements IConnector {
  */
 export class EnvironmentConnectorFactory implements IConnectorFactory {
   private environmentConnector: IConnector;
-    
-    constructor() {
+
+  constructor() {
     if (
       process.env.REACT_APP_SKILL_CONNECTOR_CONTROL != undefined &&
       process.env.REACT_APP_SKILL_CONNECTOR_DATA != undefined &&
       process.env.REACT_APP_SKILL_CONNECTOR_CONTROL != '' &&
       process.env.REACT_APP_SKILL_CONNECTOR_DATA != ''
-      this.environmentConnector = new RemoteConnector(process.env.REACT_APP_SKILL_CONNECTOR_CONTROL,process.env.REACT_APP_SKILL_CONNECTOR_DATA,undefined,process.env.REACT_APP_SKILL_PROXY);
+    ) {
+      this.environmentConnector = new RemoteConnector(
+        process.env.REACT_APP_SKILL_CONNECTOR_CONTROL,
+        process.env.REACT_APP_SKILL_CONNECTOR_DATA,
+        undefined,
+        process.env.REACT_APP_SKILL_PROXY
       );
     } else {
       this.environmentConnector = new MockConnector();
-        }
+    }
   }
 
   public create() {
@@ -435,24 +440,24 @@ interface IRealmMapping {
 }
 
 class EnvironmentRealmMappingFactory implements IRealmMappingFactory {
-  private environmentRealmMapping:IRealmMapping;
+  private environmentRealmMapping: IRealmMapping;
 
   constructor() {
-        this.environmentRealmMapping = new EnvironmentRealmMapping();
-    }
+    this.environmentRealmMapping = new EnvironmentRealmMapping();
+  }
 
   public create() {
-        return this.environmentRealmMapping;
-    }
+    return this.environmentRealmMapping;
+  }
 }
 
 class EnvironmentRealmMapping implements IRealmMapping {
-
-    public getHeaderAnnotation(targetDomain:string) {
-        let headers:any={};
-        if(process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY != undefined) {
-            headers[ process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY ?? "" ] =  process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_VALUE;
-        }
+  public getHeaderAnnotation(targetDomain: string) {
+    const headers: any = {};
+    if (process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY != undefined) {
+      headers[process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY ?? ''] =
+        process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_VALUE;
+    }
     return headers;
   }
 }
@@ -460,24 +465,24 @@ class EnvironmentRealmMapping implements IRealmMapping {
 /**
  * global factory variable
  */
-var realmMappingFactory:IRealmMappingFactory = new EnvironmentRealmMappingFactory();
+let realmMappingFactory: IRealmMappingFactory =
+  new EnvironmentRealmMappingFactory();
 
 /**
  * @returns the global connector factory
  */
-export const getRealmMappingFactory = function() {
+export const getRealmMappingFactory = function () {
   return realmMappingFactory;
 };
- 
- /**
+
+/**
  * sets
  * @param factory the new global factory
  */
 
-export const setRealmMappingFactory = function( factory: IRealmMappingFactory) {
-   realmMappingFactory=factory;
- }
-
+export const setRealmMappingFactory = function (factory: IRealmMappingFactory) {
+  realmMappingFactory = factory;
+};
 
 export interface BindingSet {
   head: Head;
@@ -500,110 +505,120 @@ interface Value {
   value: string;
 }
 
-interface SparqlParameters {
-}
+interface SparqlParameters {}
 
 /**
  * Implementation of a remote connector
  */
 class RemoteConnector implements IConnector {
-  private url:string;
+  private url: string;
   private data_url: string;
-  private realmMapping:IRealmMapping;
+  private realmMapping: IRealmMapping;
   private proxy?: HttpsProxyAgent;
 
-  constructor(url:string, data_url:string, realmMapping?:IRealmMapping, proxy?:string) {
-        this.url=url;
-        this.data_url= data_url;
-        this.realmMapping=realmMapping ?? getRealmMappingFactory().create();
-        if(proxy) {
-            this.proxy=createHttpsProxyAgent(proxy);
-        } 
+  constructor(
+    url: string,
+    data_url: string,
+    realmMapping?: IRealmMapping,
+    proxy?: string
+  ) {
+    this.url = url;
+    this.data_url = data_url;
+    this.realmMapping = realmMapping ?? getRealmMappingFactory().create();
+    if (proxy) {
+      this.proxy = createHttpsProxyAgent(proxy);
     }
-    
-    //List Asset
-    public async listAssets(providerUrl?: string) : Promise<Catalogue> {
+  }
+
+  //List Asset
+  public async listAssets(providerUrl?: string): Promise<Catalogue> {
     const start = new Date().getTime();
     const finalproviderUrl = providerUrl ?? this.url;
-       const idsUrl = `${finalproviderUrl}/api/v1/ids/data`;
+    const idsUrl = `${finalproviderUrl}/api/v1/ids/data`;
 
-    console.log(`Listing Assets from Remote Connector ${finalproviderUrl} starts at ${start}.`);
+    console.log(
+      `Listing Assets from Remote Connector ${finalproviderUrl} starts at ${start}.`
+    );
 
     const finalUrl = `${this.url}/data/catalog?providerUrl=${idsUrl}`;
 
-    const fetchOpts:RequestInit= {
-        method: 'GET',
-        headers: this.realmMapping.getHeaderAnnotation(this.url),
-        agent: this.proxy
-       };
+    const fetchOpts: RequestInit = {
+      method: 'GET',
+      headers: this.realmMapping.getHeaderAnnotation(this.url),
+      agent: this.proxy,
+    };
 
     // 👇️ const response: Response
-       const response = await fetch(finalUrl,fetchOpts);
-       
-       const elapsed = new Date().getTime() - start;
+    const response = await fetch(finalUrl, fetchOpts);
 
-    console.log(`Listing Assets from Remote Connector finished after ${elapsed} milliseconds.`);
+    const elapsed = new Date().getTime() - start;
+
+    console.log(
+      `Listing Assets from Remote Connector finished after ${elapsed} milliseconds.`
+    );
 
     if (!response.ok) {
-         throw new Error(`Error! status: ${response.status}`);
-       }
-  
-       // 👇️ const result: GetUsersResponse
-       const result = (await response.json()) as Catalogue;
-  
-       //console.log('result is: ', JSON.stringify(result, null, 4));
-  
-       return result;
+      throw new Error(`Error! status: ${response.status}`);
     }
 
-  //Execute Query
-    public async execute(skill:string, queryVariable:any) : Promise<BindingSet>  {
+    // 👇️ const result: GetUsersResponse
+    const result = (await response.json()) as Catalogue;
 
+    //console.log('result is: ', JSON.stringify(result, null, 4));
+
+    return result;
+  }
+
+  //Execute Query
+  public async execute(skill: string, queryVariable: any): Promise<BindingSet> {
     const start = new Date().getTime();
 
-    var skillUrl = '/api/agent?asset=urn:cx:Skill:consumer:' + skill;
-        let parameters = "";
-        let parametersContainer = "";
-        let queryVariables: any[] = [];
+    const skillUrl = '/api/agent?asset=urn:cx:Skill:consumer:' + skill;
+    let parameters = '';
+    let parametersContainer = '';
+    let queryVariables: any[] = [];
 
-    if(Array.isArray(queryVariable)){
-            queryVariables = queryVariable
-        } else {
-            queryVariables = [queryVariable]
-        }
-        
-        for(var queryVariable of queryVariables){
+    if (Array.isArray(queryVariable)) {
+      queryVariables = queryVariable;
+    } else {
+      queryVariables = [queryVariable];
+    }
+
+    for (var queryVariable of queryVariables) {
       Object.entries(queryVariable).forEach(
         ([key, value]) => (parameters = `${parameters}&${key}=${value}`)
-      parameters = parameters.replace(/^&/,"");
-            parametersContainer = parametersContainer + "&(" + parameters + ")";
-            parameters ="";
-        }
-         
-        let finalUrl = this.data_url + skillUrl + parametersContainer;
+      );
+      parameters = parameters.replace(/^&/, '');
+      parametersContainer = parametersContainer + '&(' + parameters + ')';
+      parameters = '';
+    }
+
+    const finalUrl = this.data_url + skillUrl + parametersContainer;
 
     console.log(finalUrl);
 
-    const fetchOpts:RequestInit= {
-            method: 'GET',
+    const fetchOpts: RequestInit = {
+      method: 'GET',
       headers: this.realmMapping.getHeaderAnnotation(this.url),
-      agent: this.proxy
+      agent: this.proxy,
     };
 
     //Response
     const response = await fetch(finalUrl, fetchOpts);
 
-    let elapsed = new Date().getTime() - start;
-    
-           console.log(`Result from Remote Connector finished after ${elapsed} milliseconds.`);
+    const elapsed = new Date().getTime() - start;
+
+    console.log(
+      `Result from Remote Connector finished after ${elapsed} milliseconds.`
     );
+
     if (!response.ok) {
-             throw new Error(`Error! status: ${response.status}`);
-           }
-      
-           //result: BindingSet
-           const result = (await response.json()) as BindingSet;
-      
+      throw new Error(`Error! status: ${response.status}`);
+    }
+
+    //result: BindingSet
+    const result = (await response.json()) as BindingSet;
+
     return result;
   }
 }
@@ -611,20 +626,20 @@ class RemoteConnector implements IConnector {
 /**
  * global factory variable
  */
-var connectorFactory:IConnectorFactory = new EnvironmentConnectorFactory();
+let connectorFactory: IConnectorFactory = new EnvironmentConnectorFactory();
 
 /**
-  * @returns the global connector factory
-  */
- export const getConnectorFactory = function() {
-     return connectorFactory;
- };
- 
- /**
-  * sets 
-  * @param factory the new global factory
-  */
- 
- export const setConnectorFactory = function( factory: IConnectorFactory) {
-   connectorFactory=factory;
- }
+ * @returns the global connector factory
+ */
+export const getConnectorFactory = function () {
+  return connectorFactory;
+};
+
+/**
+ * sets
+ * @param factory the new global factory
+ */
+
+export const setConnectorFactory = function (factory: IConnectorFactory) {
+  connectorFactory = factory;
+};
