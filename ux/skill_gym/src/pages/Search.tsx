@@ -1,13 +1,19 @@
-import { CustomSearch } from '@catenax-ng/skill-modules';
-import { Typography } from 'cx-portal-shared-components';
-import { Grid } from '@mui/material';
-import { useState } from 'react';
-import { BindingSet } from '@knowledge-agents-ux/skill_framework/dist/src';
+import { CustomSearch, DataList } from "@catenax-ng/skill-modules";
+import { Typography } from "cx-portal-shared-components";
+import { Grid } from "@mui/material";
+import { useState } from "react";
+import { BindingSet } from '@knowledge-agents-ux/skill_framework/dist/src'
 
-export default function Search() {
-  const [searchResult, setSearchResult] = useState<BindingSet>();
+export default function Search(){
+  const [searchResult, setSearchResult] = useState<BindingSet>()
+  const [searchVin, setSearchVin] = useState<string>('')
 
-  return (
+  const onSearch = (vin: string, result: BindingSet) => {
+    setSearchResult(result);
+    setSearchVin(vin);
+  }
+
+  return(
     <>
       <Typography
         sx={{
@@ -21,13 +27,15 @@ export default function Search() {
       >
         Execute Skills
       </Typography>
-      <Grid container justifyContent="center">
-        <Grid item xs={6}>
-          <CustomSearch onSearchResult={setSearchResult} />
+      <Grid container justifyContent="center"spacing={3}>
+        <Grid item xs={5}>
+          <CustomSearch onSearch={onSearch} />
         </Grid>
-        <Grid item xs={12}>
-          {searchResult && console.log(searchResult)}
-        </Grid>
+        {searchResult &&
+          <Grid item xs={12}>
+            <DataList vin={searchVin} data={searchResult} />
+          </Grid>
+        }
       </Grid>
     </>
   );

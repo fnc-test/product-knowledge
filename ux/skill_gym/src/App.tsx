@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 
 export default function App() {
   const menu = [
-    { to: '/skill-gym', title: 'Skill Gym' },
+    { to: '/skill-gym', title: "Skill Gym" },
     { to: '/custom-search', title: 'Custom Search' },
   ];
 
@@ -13,7 +13,7 @@ export default function App() {
       <MainNavigation items={menu} component={NavLink}>
         <Logo altText="Logo CatenaX" variant="text" />
       </MainNavigation>
-      <Box sx={{ marginRight: 10, marginLeft: 10 }}>
+      <Box sx={{marginRight: 10, marginBottom: 10, marginLeft: 10}}>
         <Outlet />
       </Box>
     </Box>
