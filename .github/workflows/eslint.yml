@@ -9,8 +9,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          cache: 'npm'
+          node-version: 18
       - name: Install Node Dependencies
         run: npm ci
         env:
