@@ -25,6 +25,7 @@ export const DataList = ({vin, data}: {vin: String, data: BindingSet}) => {
         rowsCount={data.results.bindings.length}
         columns={resultToColumns(data.head.vars)}
         rows={data.results.bindings}
+        //
         getRowId={(row) => row.codeNumber.value}     
       />
     :
