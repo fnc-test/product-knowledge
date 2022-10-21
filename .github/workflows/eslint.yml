@@ -12,8 +12,6 @@ jobs:
           node-version: 18
       - name: Install Node Dependencies
         run: npm install
-        env:
-          CI: TRUE
       - name: Test Code Linting
         run: npm run lint
       - name: Save Code Linting Report JSON
