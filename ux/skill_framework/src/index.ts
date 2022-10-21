@@ -584,14 +584,14 @@ class RemoteConnector implements IConnector {
       queryVariables = [queryVariable];
     }
 
-    for (var queryVariable of queryVariables) {
-      Object.entries(queryVariable).forEach(
+    queryVariables.forEach((query) => {
+      Object.entries(query).forEach(
         ([key, value]) => (parameters = `${parameters}&${key}=${value}`)
       );
       parameters = parameters.replace(/^&/, '');
       parametersContainer = parametersContainer + '&(' + parameters + ')';
       parameters = '';
-    }
+    });
 
     const finalUrl = this.data_url + skillUrl + parametersContainer;
 
