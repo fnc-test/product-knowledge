@@ -104,18 +104,29 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: Build/Deploy Java via Maven
+      - name: Login to GitHub Container Registry
+        if: ${{ github.repository == 'catenax-ng/product-knowledge' && github.ref == 'refs/heads/main' }}
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy Java via Maven
+        if: ${{ github.repository == 'catenax-ng/product-knowledge' && github.ref == 'refs/heads/main' }}
         run: |
-          if [[ "$GITHUB_REPOS" != "catenax-ng/product-knowledge" ]] || [[ "$GITHUB_BRNCH" != "refs/heads/main" ]]; then
-            mvn -s settings.xml install
-          else
-            mvn -s settings.xml deploy -Pwith-docker-image
-          fi
+          mvn -s settings.xml deploy -Pwith-docker-image
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOS: ${{ github.repository }}
-          GITHUB_BRNCH: ${{ github.ref }}
+
+      - name: Build Java via Maven
+        if: ${{ github.repository != 'catenax-ng/product-knowledge' || github.ref != 'refs/heads/main' }}
+        run: |
+          mvn -s settings.xml install
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - if: success() || failure()
         name: Java Test Report
