@@ -20,7 +20,7 @@ jobs:
         should_skip: ${{ steps.skip_check.outputs.should_skip }}
       steps:
         - id: skip_check
-          uses: fkirc/skip-duplicate-actions@v4
+          uses: fkirc/skip-duplicate-actions@v5
           with:
             # All of these options are optional, so you can remove them if you are happy with the defaults
             concurrent_skipping: 'same_content'
@@ -106,7 +106,7 @@ jobs:
 
       - name: Build/Deploy Java via Maven
         run: |
-          if [[ "$GITHUB_REPOS" != "catenax-ng/product-knowledge" ]] || [[ "$GITHUB_BRCH" != "main" ]]; then
+          if [[ "$GITHUB_REPOS" != "catenax-ng/product-knowledge" ]] || [[ "$GITHUB_BRCH" != "refs/heads/main" ]]; then
             mvn -s settings.xml install
           else
             mvn -s settings.xml deploy -Pwith-docker-image
