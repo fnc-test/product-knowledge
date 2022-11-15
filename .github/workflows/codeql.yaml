@@ -115,7 +115,7 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOS: ${{ github.repository }}
-          GITHUB_BRNCH: ${{ github.branch }}
+          GITHUB_BRNCH: ${{ github.ref }}
 
       - if: success() || failure()
         name: Java Test Report
