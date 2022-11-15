@@ -115,7 +115,7 @@ jobs:
       - name: Deploy Java via Maven
         if: ${{ github.repository == 'catenax-ng/product-knowledge' && github.ref == 'refs/heads/main' }}
         run: |
-          mvn -s settings.xml deploy -Pwith-docker-image
+          mvn -s settings.xml deploy
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
