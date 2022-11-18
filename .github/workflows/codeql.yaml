@@ -81,6 +81,7 @@ jobs:
   analyze_java:
     name: Analyze Java
     runs-on: ubuntu-latest
+    permissions: write-all
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     strategy:
