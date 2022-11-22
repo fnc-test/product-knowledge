@@ -106,6 +106,8 @@ spec:
               value: "/input/settings.properties"
             - name: ONTOP_PORTAL_FILE
               value: "/input/portal.toml"
+            - name: ONTOP_DEV_MODE
+              value: "false"
           volumeMounts:
             - name: oem-provider-agent-config
               mountPath: /input
