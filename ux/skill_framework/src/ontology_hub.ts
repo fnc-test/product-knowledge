@@ -47,7 +47,7 @@ class OntologyHub implements IOntologyHub {
       const body = (await response.json()) as OntologyContainer;
       const result: OntologyResult[] = [];
       body.forEach((ontology) => {
-        if (ontology.name.includes('_ontology')) {
+        if (ontology.name.endsWith('_ontology.ttl')) {
           const ontolgyName = ontology.name.replace('.ttl', '');
           let items: string[] = ontolgyName.split('_');
           items = items.map((item) => {
