@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-import { RequestInit } from 'node-fetch';
 import createHttpsProxyAgent from 'https-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
@@ -24,6 +23,9 @@ interface OntologyResult {
   name: string;
   download_url: string;
   vowl: string;
+  type: string;
+  version: string;
+  status: string;
 }
 
 class OntologyHub implements IOntologyHub {
@@ -59,6 +61,9 @@ class OntologyHub implements IOntologyHub {
             vowl: ontology.download_url
               .replace('.ttl', '.json')
               .replace(ontolgyName, ontolgyName + '_vowl'),
+            type: 'OWL',
+            status: 'DRAFT',
+            version: '0.6.4',
           };
           result.push(entry);
         }
@@ -77,108 +82,162 @@ class MockOntologyHub implements IOntologyHub {
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/address_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/address_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Common Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/common_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/common_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Contact Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/contact_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/contact_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'CX Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/cx_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/cx_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Diagnosis Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/diagnosis_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/diagnosis_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Encoding Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/encoding_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/encoding_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Error Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/error_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/error_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Load Spectrum Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/load_spectrum_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/load_spectrum_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Material Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/material_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/material_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Part Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/part_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/part_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Person Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/person_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/person_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Prognosis Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/prognosis_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/prognosis_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Vehicle Component Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_component_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_component_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Vehicle Information Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_information_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_information_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Vehicle Lifecycle Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_lifecycle_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_lifecycle_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Vehicle Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Vehicle Safety Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_safety_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_safety_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
       {
         name: 'Vehicle Usage Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_usage_ontology.ttl',
         vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_usage_ontology_vowl.json',
+        type: 'OWL',
+        status: 'DRAFT',
+        version: '0.6.4',
       },
     ]);
   }
