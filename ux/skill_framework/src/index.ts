@@ -207,7 +207,6 @@ export interface Asset {
   /** just a flexible property container */
   properties: AssetProperties;
 }
-
 /**
  * the different types of endpoints/data planes supported
  */
@@ -526,7 +525,10 @@ class RemoteConnector implements IConnector {
     this.data_url = data_url;
     this.realmMapping = realmMapping ?? getRealmMappingFactory().create();
     if (proxy) {
-      this.proxy = createHttpsProxyAgent(proxy);
+      this.proxy = createHttpsProxyAgent({
+        host: 'sia-lb.telekom.de',
+        port: 8080,
+      });
     }
   }
 
