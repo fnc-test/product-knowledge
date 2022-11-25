@@ -207,7 +207,6 @@ export interface Asset {
   /** just a flexible property container */
   properties: AssetProperties;
 }
-
 /**
  * the different types of endpoints/data planes supported
  */
