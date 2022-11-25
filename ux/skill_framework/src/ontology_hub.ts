@@ -19,7 +19,7 @@ interface Ontology {
 
 type OntologyContainer = Array<Ontology>;
 
-interface OntologyResult {
+export interface OntologyResult {
   name: string;
   download_url: string;
   vowl: string;
@@ -35,7 +35,10 @@ class OntologyHub implements IOntologyHub {
   constructor(url: string, proxy: string) {
     this.url = url;
     if (proxy) {
-      this.proxy = createHttpsProxyAgent(proxy);
+      this.proxy = createHttpsProxyAgent({
+        host: 'sia-lb.telekom.de',
+        port: 8080,
+      });
     }
   }
   public async getOntologies(): Promise<OntologyResult[]> {

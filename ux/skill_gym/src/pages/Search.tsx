@@ -2,7 +2,7 @@ import { CustomSearch, DataList } from "@catenax-ng/skill-modules";
 import { Typography } from "cx-portal-shared-components";
 import { Grid } from "@mui/material";
 import { useState } from "react";
-import { BindingSet } from '@knowledge-agents-ux/skill_framework/dist/src'
+import { BindingSet } from "@catenax-ng/skill-framework/dist/src"
 
 export default function Search(){
   const [searchResult, setSearchResult] = useState<BindingSet>()

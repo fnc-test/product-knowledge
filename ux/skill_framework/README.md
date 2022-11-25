@@ -7,7 +7,8 @@ The Skill Framework is a library to build Apps that interact with Hey Catena! an
 In order to use the Knowledge Agents Skill Framework, you should first add it to your dependencies
 
 ```console
-npm install @knowledge-agents-ux/skill_framework
+npm install @catenax-ng/skill_framework
+
 ```
 
 ## General Interaction
@@ -19,7 +20,8 @@ factories.
 For example, to access or exchange the realm mapping factory, you would
 
 ```typescript
-import {getRealmMappingFactory, setRealmMappingFactory, IRealmMappingFactory} from '@knowledge-agents-ux/skill_framework';
+import {getRealmMappingFactory, setRealmMappingFactory, IRealmMappingFactory} from '@catenax-ng/skill_framework';
+
 
 class MyRealmMappingFactory implements IRealmMappingFactory {
   ...
@@ -32,7 +34,8 @@ setRealmMappingFactory(new MyRealmMappingFactory());
 For example, to access or exchange the connector factory, you would
 
 ```typescript
-import {getConnectorFactory, setConnectorFactory, IConnectorFactory} from '@knowledge-agents-ux/skill_framework';
+import {getConnectorFactory, setConnectorFactory, IConnectorFactory} from '@catenax-ng/skill_framework';
+
 
 class MyConnectorFactory implements IConnectorFactory {
   ...
@@ -49,7 +52,8 @@ to a target domain. By calling the `getHeaderAnnotation` method, you would be re
 should be joined/extended in order to attach to any outgoing request to that domain.
 
 ```typescript
-import { getRealmMappingFactory } from '@knowledge-agents-ux/skill_framework';
+import { getRealmMappingFactory } from '@catenax-ng/skill_framework';
+
 
 var additionalHeaders = getRealmMappingFactory()
   .create()
@@ -65,7 +69,8 @@ The skill framework has the ability to interact with the tenant's dataspace conn
 to list the assets of the connector itself or some remote connector by the 'listAssets' method.
 
 ```typescript
-import {getConnectorFactory, Catalogue} from '@knowledge-agents-ux/skill_framework';
+import {getConnectorFactory, Catalogue} from '@catenax-ng/skill_framework';
+
 
 # we must await for the asynchronous result
 var catalogue:Catalogue = await getConnectorFactory().create().listAssets();

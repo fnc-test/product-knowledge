@@ -9,6 +9,7 @@ import fetch from 'node-fetch';
 import { RequestInit } from 'node-fetch';
 import createHttpsProxyAgent from 'https-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
+export { getOntologyHubFactory, OntologyResult } from './ontology_hub';
 
 // issue a module loading message
 console.log('skill_framework/index: Loading');

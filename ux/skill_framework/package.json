@@ -1,10 +1,17 @@
 {
-  "name": "@knowledge-agents-ux/skill_framework",
-  "version": "0.5.1",
+  "name": "@catenax-ng/skill-framework",
+  "version": "0.6.5",
   "description": "Catena-X Knowledge Agents Skill Framework",
   "author": "The Catena-X Consortium Team Knowledge Agents",
   "license": "Apache-2.0",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/catenax-ng/product-knowledge.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "types": "dist/index.d.ts",
   "files": [
     "/dist"
@@ -26,7 +33,7 @@
     "@types/node": "^18.0.6",
     "@types/node-fetch": "^2.6.2",
     "node-fetch": "^2.6.1",
-    "https-proxy-agent": "^5.0.1",
+    "https-proxy-agent": "5.0.0",
     "typescript": "^4.7.4",
     "ts-node": "^10.9.1"
   }

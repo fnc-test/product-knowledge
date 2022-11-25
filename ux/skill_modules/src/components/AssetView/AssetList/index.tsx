@@ -1,7 +1,8 @@
 import {
-  getConnectorFactory,
   AssetProperties,
-} from '@knowledge-agents-ux/skill_framework/dist/src';
+  getConnectorFactory,
+  getOntologyHubFactory,
+} from '@catenax-ng/skill-framework/dist/src';
 import {
   TableContainer,
   Table,
