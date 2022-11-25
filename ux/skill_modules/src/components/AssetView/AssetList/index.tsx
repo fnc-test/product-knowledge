@@ -1,7 +1,6 @@
 import {
   AssetProperties,
   getConnectorFactory,
-  getOntologyHubFactory,
 } from '@catenax-ng/skill-framework/dist/src';
 import {
   TableContainer,
@@ -15,7 +14,6 @@ import React, { useEffect, useState } from 'react';
 
 function AssetList() {
   const [assetList, setAssetList] = useState<AssetProperties[]>([]);
-
   useEffect(() => {
     const connector = getConnectorFactory().create();
     connector
