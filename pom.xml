@@ -175,6 +175,10 @@
             <id>ka-dsc-patches</id>
             <url>https://maven.pkg.github.com/catenax/ka-DataspaceConnector</url>
         </repository>
+        <repository> <!-- webvowl -->
+		      <id>jitpack.io</id>
+		      <url>https://jitpack.io</url>
+	      </repository>
         <repository> <!-- runtime meta-model -->
             <id>oss</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
