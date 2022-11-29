@@ -4,7 +4,7 @@ metadata:
   name: oem-provider-agent-config
   namespace: {{ .Values.namespace }}
 data:
-  settings.local.properties: |-‚
+  settings.local.properties: |-
 {{- .Files.Get "oem/resources/settings.local.properties" | nindent 4 }}
   settings.dremio.properties: |-
     # Use the Data Virtualization backend
