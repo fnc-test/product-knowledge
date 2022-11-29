@@ -4,24 +4,24 @@ metadata:
   name: oem-provider-agent-config
   namespace: {{ .Values.namespace }}
 data:
-  asettings.local.properties: |-
-{{- .Files.Get "resources/settings.local.properties" | nindent 4 }}
-  bsettings.dremio.properties: |-
+  settings.local.properties: |-‚
+{{- .Files.Get "oem/resources/settings.local.properties" | nindent 4 }}
+  settings.dremio.properties: |-
     # Use the Data Virtualization backend
     jdbc.url=jdbc\:dremio\:direct\=oem-backend\:31010;schema=HI_TEST_OEM
     jdbc.driver=com.dremio.jdbc.Driver
     jdbc.user={{ .Values.security.backendUser }} 
     jdbc.password={{ .Values.security.backendPwd }} 
     ontop.cardinalityMode=STRICT
-  cportal.toml: |-
+  portal.toml: |-
 {{- .Files.Get "oem/resources/portal.toml" | nindent 4 }}
-  ddtc.obda: |-
+  dtc.obda: |-
 {{- .Files.Get "oem/resources/dtc.obda" | nindent 4 }}
-  ehi.obda: |-
+  hi.obda: |-
 {{- .Files.Get "oem/resources/hi.obda" | nindent 4 }}
-  fcx-ontology.xml: |-
+  cx-ontology.xml: |-
 {{- .Files.Get "resources/cx-ontology.xml" | nindent 4 }}
-  gcx-ontology.ttl: |-
+  cx-ontology.ttl: |-
 {{- .Files.Get "resources/cx-ontology.ttl" | nindent 4 }}
 ---
 apiVersion: v1
@@ -111,13 +111,13 @@ spec:
             - name: JAVA_TOOL_OPTIONS
               value: "" #"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
             - name: ONTOP_ONTOLOGY_FILE 
-              value: "/input/gcx-ontology.ttl /input/fcx-ontology.xml"
+              value: "/input/cx-ontology.ttl /input/cx-ontology.xml"
             - name: ONTOP_MAPPING_FILE 
-              value: "/input/ehi.obda /input/ddtc.obda"
+              value: "/input/hi.obda /input/dtc.obda"
             - name: ONTOP_PROPERTIES_FILE
-              value: "/input/bsettings.dremio.properties /input/asettings.local.properties"
+              value: "/input/settings.dremio.properties /input/settings.local.properties"
             - name: ONTOP_PORTAL_FILE
-              value: "/input/cportal.toml /input/cportal.toml"
+              value: "/input/portal.toml /input/portal.toml"
             - name: ONTOP_DEV_MODE
               value: "false false"
             - name: ONTOP_PORT
