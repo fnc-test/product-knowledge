@@ -36,6 +36,23 @@ export GITHUB_ACTOR=
 export GITHUB_TOKEN=
 ```
 
+### Prepare
+A suitable [conda](https://conda.io/) environment named `tempo` can be created
+and activated with:
+
+```
+conda env create -f environment.yaml
+conda activate knowledgeagents
+```
+
+### Ontology Merge
+Creating a subset ontology may be done by invoking
+
+```
+python -m ontology.ontology_tools.merge_ontology vehicle_ontology.ttl load_spectrum_ontology.ttl vehicle_information_ontology.ttl part_ontology.json vehicle_component.ttl
+```
+
+
 ### Compile
 
 To build all compilation artifacts (without tests), you can invoke

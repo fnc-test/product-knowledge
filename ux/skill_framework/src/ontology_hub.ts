@@ -32,7 +32,7 @@ class OntologyHub implements IOntologyHub {
   private url: string;
   private proxy?: HttpsProxyAgent;
 
-  constructor(url: string, proxy: string) {
+  constructor(url: string, proxy?: string) {
     this.url = url;
     if (proxy) {
       this.proxy = createHttpsProxyAgent(proxy);
@@ -59,8 +59,8 @@ class OntologyHub implements IOntologyHub {
             name: ontolgyTitle,
             download_url: ontology.download_url,
             vowl: ontology.download_url
-              .replace('.ttl', '.json')
-              .replace(ontolgyName, ontolgyName + '_vowl'),
+              .replace('/ontology/', '/ontology/vowl/')
+              .replace('.ttl', '.json'),
             type: 'OWL',
             status: 'DRAFT',
             version: '0.6.4',
@@ -81,7 +81,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Address Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/address_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/address_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/address_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -90,7 +90,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Common Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/common_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/common_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/common_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -99,7 +99,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Contact Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/contact_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/contact_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/contact_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -108,7 +108,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'CX Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/cx_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/cx_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/cx_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -117,7 +117,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Diagnosis Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/diagnosis_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/diagnosis_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/diagnosis_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -126,7 +126,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Encoding Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/encoding_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/encoding_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/encoding_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -135,7 +135,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Error Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/error_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/error_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/error_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -144,7 +144,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Load Spectrum Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/load_spectrum_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/load_spectrum_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/load_spectrum_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -153,7 +153,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Material Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/material_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/material_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/material_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -162,7 +162,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Part Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/part_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/part_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/part_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -171,7 +171,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Person Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/person_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/person_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/person_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -180,7 +180,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Prognosis Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/prognosis_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/prognosis_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/prognosis_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -189,7 +189,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Vehicle Component Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_component_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_component_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/vehicle_component_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -198,7 +198,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Vehicle Information Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_information_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_information_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/vehicle_information_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -207,7 +207,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Vehicle Lifecycle Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_lifecycle_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_lifecycle_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/vehicle_lifecycle_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -216,7 +216,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Vehicle Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/vehicle_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -225,7 +225,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Vehicle Safety Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_safety_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_safety_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/vehicle_safety_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -234,7 +234,7 @@ class MockOntologyHub implements IOntologyHub {
         name: 'Vehicle Usage Ontology',
         download_url:
           'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_usage_ontology.ttl',
-        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vehicle_usage_ontology_vowl.json',
+        vowl: 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/vowl/vehicle_usage_ontology.json',
         type: 'OWL',
         status: 'DRAFT',
         version: '0.6.4',
@@ -250,8 +250,7 @@ export class EnvironmentOntologyHubFactory implements IOntologyHubFactory {
 
   constructor() {
     if (
-      process.env.REACT_APP_SKILL_GITHUB_ONTOLOGYHUB != undefined &&
-      process.env.REACT_APP_SKILL_PROXY != undefined
+      process.env.REACT_APP_SKILL_GITHUB_ONTOLOGYHUB != undefined
     ) {
       this.environmentOntologyHub = new OntologyHub(
         process.env.REACT_APP_SKILL_GITHUB_ONTOLOGYHUB,

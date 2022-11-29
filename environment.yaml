@@ -1,0 +1,9 @@
+name: knowledgeagents
+channels:
+  - defaults
+dependencies:
+  - python
+  - pip
+  - pip:
+    - rdflib
+
