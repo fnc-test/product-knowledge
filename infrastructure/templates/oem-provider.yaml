@@ -10,8 +10,8 @@ data:
     # Use the Data Virtualization backend
     jdbc.url=jdbc\:dremio\:direct\=oem-backend\:31010;schema=HI_TEST_OEM
     jdbc.driver=com.dremio.jdbc.Driver
-    jdbc.user={{ .Values.security.backendUser }} 
-    jdbc.password={{ .Values.security.backendPwd }} 
+    jdbc.user={{ .Values.security.backendUser }}
+    jdbc.password={{ .Values.security.backendPwd }}
     ontop.cardinalityMode=STRICT
   portal.toml: |-
 {{- .Files.Get "oem/resources/portal.toml" | nindent 4 }}
