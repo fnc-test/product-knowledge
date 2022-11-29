@@ -20,4 +20,5 @@ CREATE TABLE $scratch.CX_RUL_AssemblyPartRelationship AS (
          ) JSON
          WHERE JSON.json IS NOT NULL) CHILDREN
 );
+DROP VIEW "HI_TEST_OEM".CX_RUL_AssemblyPartRelationship;
 CREATE VIEW "HI_TEST_OEM".CX_RUL_AssemblyPartRelationship AS SELECT * FROM $scratch.CX_RUL_AssemblyPartRelationship;
