@@ -139,10 +139,10 @@ spec:
   type: ClusterIP
   ports:
     - port: 8080
-      name: DTC
+      name: diagnosis
       targetPort: 8080
     - port: 8081
-      name: HI
+      name: healthindicator
       targetPort: 8081
   selector:
     app: oem-provider-agent
@@ -306,7 +306,7 @@ spec:
       name: web
       targetPort: 9047
     - port: 31010
-      name: JDBC
+      name: jdbc
       targetPort: 31010
     - port: 45678
       name: execute
