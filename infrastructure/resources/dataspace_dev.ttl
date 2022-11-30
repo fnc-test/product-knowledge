@@ -17,19 +17,19 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @base <urn:cx:Graph:local:Dataspace> .
 
-<urn:cx:BusinessPartner:oem> cx:hasLongBusinessPartnerNumber "BPNL00000003COJN"^^xsd:string;
+<bpn:long:BPNL00000003AYRE> cx:hasLongBusinessPartnerNumber "BPNL00000003COJN"^^xsd:string;
                              cx:hasLongBusinessPartnerNumber "BPNL00000003AYRE"^^xsd:string;
                              cx:isIssuerOfVehicleIdentificationNumber "WBAAL31029PZ00001"^^xsd:string;
                              cx:isIssuerOfVehicleIdentificationNumber "WBAAL31029PZ00002"^^xsd:string;
                              cx:isIssuerOfVehicleIdentificationNumber "WBAAL31029PZ00003"^^xsd:string;
                              cx:hasConnector <edcs://knowledge.dev.demo.catena-x.net/oem-edc-control/BPNL00000003COJN>.
 
-<urn:cx:BusinessPartner:tiera> cx:hasLongBusinessPartnerNumber "BPNL00000003CPIY"^^xsd:string;
-                               cx:hasLongBusinessPartnerNumber "BPNL00000003B2OM"^^xsd:string;
-                               cx:hasConnector <edcs://knowledge.dev.demo.catena-x.net/tiera-edc-control/BPNL00000003CPIY>.
+<bpn:long:BPNL00000003B2OM> cx:hasLongBusinessPartnerNumber "BPNL00000003CPIY"^^xsd:string;
+                            cx:hasLongBusinessPartnerNumber "BPNL00000003B2OM"^^xsd:string;
+                            cx:hasConnector <edcs://knowledge.dev.demo.catena-x.net/tiera-edc-control/BPNL00000003CPIY>.
 
-<urn:cx:BusinessPartner:consumer> cx:hasLongBusinessPartnerNumber "BPNL00000003CQI9"^^xsd:string;
-                               cx:hasConnector <edcs://knowledge.dev.demo.catena-x.net/consumer-edc-control/BPNL00000003CQI9>.
+<bpn:long:BPNL00000003CQI9>  cx:hasLongBusinessPartnerNumber "BPNL00000003CQI9"^^xsd:string;
+                             cx:hasConnector <edcs://knowledge.dev.demo.catena-x.net/consumer-edc-control/BPNL00000003CQI9>.
 
 <urn:cx:AnonymousVehicle#10000ZP92013LAABW> cx:isAnonymousVehicle "WBAAL31029PZ00001"^^xsd:string;
                                             cx:hasRegistration "{ \"Value\": 20220624,  \"Unit\": \"yyyymmdd\" }"^^json:Object;
@@ -69,17 +69,17 @@
 
 <urn:cx:AnonymousSerializedPart#GB4711> cx:isComponentOf <urn:cx:AnonymousVehicle#10000ZP92013LAABW>;
                                         cx:hasPartType "engine control module"^^xsd:string;
-                                        cx:hasSupplier <urn:cx:BusinessPartner:tiera>;
+                                        cx:hasSupplier <bpn:long:BPNL00000003B2OM>;
                                         cx:hasName "Gear Box"^^xsd:string.
 
 <urn:cx:AnonymousSerializedPart#GB4712> cx:isComponentOf <urn:cx:AnonymousVehicle#20000ZP92013LAABW>;
                                         cx:hasPartType "clutch"^^xsd:string;
-                                        cx:hasSupplier <urn:cx:BusinessPartner:tiera>;
+                                        cx:hasSupplier <bpn:long:BPNL00000003B2OM>;
                                         cx:hasName "Gear Oil"^^xsd:string.
 
 <urn:cx:AnonymousSerializedPart#GB4713> cx:isComponentOf <urn:cx:AnonymousVehicle#30000ZP92013LAABW>;
                                         cx:hasPartType "wiring harness"^^xsd:string;
-                                        cx:hasSupplier <urn:cx:BusinessPartner:tiera>;
+                                        cx:hasSupplier <bpn:long:BPNL00000003B2OM>;
                                         cx:hasName "Wiring Harness"^^xsd:string.
 
 <urn:cx:LoadCollective#30000ZP92013LAABW> cx-telematics:hasFile "{  \"Type\": \"ZF_load_collective\", \"Version\": \"1.7\"  }"^^json:Object;

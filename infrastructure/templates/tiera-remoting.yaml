@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tiera-backend
+  name: service-backend
   namespace: {{ .Values.namespace }}
   annotations:
     container.apparmor.security.beta.kubernetes.io/tiera-backend: default
@@ -10,11 +10,11 @@ spec:
   revisionHistoryLimit: 1
   selector:
     matchLabels:
-      app: tiera-backend
+      app: service-backend
   template:
     metadata:
       labels:
-        app: tiera-backend
+        app: service-backend
     spec:
       automountServiceAccountToken: false
       securityContext:
@@ -77,7 +77,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tiera-backend
+  name: service-backend
   namespace: {{ .Values.namespace }}
 spec:
   type: ClusterIP
@@ -85,7 +85,7 @@ spec:
     - port: 5005
       targetPort: 5005
   selector:
-    app: tiera-backend
+    app: service-backend
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -112,7 +112,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: tiera-backend
+                name: service-backend
                 port:
                   number: 5005
 ---
