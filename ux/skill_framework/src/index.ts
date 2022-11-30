@@ -526,10 +526,7 @@ class RemoteConnector implements IConnector {
     this.data_url = data_url;
     this.realmMapping = realmMapping ?? getRealmMappingFactory().create();
     if (proxy) {
-      this.proxy = createHttpsProxyAgent({
-        host: 'sia-lb.telekom.de',
-        port: 8080,
-      });
+      this.proxy = createHttpsProxyAgent(proxy);
     }
   }
 

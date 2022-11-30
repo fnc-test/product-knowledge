@@ -57,7 +57,7 @@ cx:contactId a owl:DatatypeProperty ;
     rdfs:isDefinedBy <https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/contact_ontology.ttl> ;
     rdfs:range xsd:string ;
     rdfs:subPropertyOf cx:identifier ;
-    skos:example "12345.0"@en ;
+    skos:example "12345"@en ;
     skos:prefLabel "Kontakt Id"@de,
         "Contact Id"@en .
 
@@ -255,40 +255,7 @@ cx:Contact a owl:Class ;
             owl:onProperty cx:email ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:email ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:linkedIn ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:email ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:email ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:mobileNumber ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:website ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:contactChannel ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:contactId ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
             owl:onProperty cx:telephoneNumber ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:affiliation ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:contactHours ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:contactLanguage ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:contactHours ;
@@ -300,19 +267,16 @@ cx:Contact a owl:Class ;
             owl:onProperty cx:email ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:isWrittenIn ;
-            owl:someValuesFrom cx:VCard ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:email ;
+            owl:onProperty cx:contactHours ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:contactName ;
+            owl:onProperty cx:linkedIn ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:contactChannel ;
+            owl:onProperty cx:contactLanguage ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:email ;
+            owl:onProperty cx:website ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:hasStreetAddress ;
@@ -321,7 +285,19 @@ cx:Contact a owl:Class ;
             owl:onProperty cx:contactHours ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:telephoneNumber ;
+            owl:onProperty cx:affiliation ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:contactChannel ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:contactLanguage ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:isWrittenIn ;
+            owl:someValuesFrom cx:VCard ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:email ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:email ;
@@ -330,20 +306,44 @@ cx:Contact a owl:Class ;
             owl:onProperty cx:telephoneNumber ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
+            owl:onProperty cx:contactId ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:email ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:email ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:hasLocation ;
+            owl:someValuesFrom cx:Place ],
+        [ a owl:Restriction ;
             owl:onProperty cx:telephoneNumber ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:contactHours ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:contactLanguage ;
+            owl:onProperty cx:contactName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:faxNumber ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:hasLocation ;
-            owl:someValuesFrom cx:Place ],
+            owl:onProperty cx:mobileNumber ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:telephoneNumber ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:contactChannel ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:email ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:contactHours ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:email ;
+            owl:someValuesFrom xsd:string ],
         cx:Information ;
     skos:altLabel "Kontaktdaten"@de,
         "Kontaktinformation"@de,
@@ -357,7 +357,7 @@ cx:Contact a owl:Class ;
 
 <https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/contact_ontology.ttl> a owl:Ontology ;
     dc:creator "Zazralt Magic" ;
-    dc:date "2022-11-10"^^xsd:date ;
+    dc:date "2022-11-28"^^xsd:date ;
     dc:title "Contact Ontology" ;
     owl:imports <https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/address_ontology.ttl>,
         <https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/common_ontology.ttl> ;

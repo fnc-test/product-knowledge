@@ -25,7 +25,7 @@ jobs:
             # All of these options are optional, so you can remove them if you are happy with the defaults
             concurrent_skipping: 'same_content'
             skip_after_successful_duplicate: 'true'
-            do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+            do_not_skip: '["push", "pull_request", "workflow_dispatch", "schedule"]'
 
   analyze_javascript:
     name: Analyze JavaScript

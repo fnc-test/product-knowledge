@@ -40,7 +40,7 @@ cx:apartmentNumber a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     rdfs:subPropertyOf cx:number ;
     skos:altLabel "unit number"@en ;
-    skos:example "123.0"@en ;
+    skos:example "123"@en ;
     skos:note "optional"@en ;
     skos:prefLabel "Wohnungsnummer"@de,
         "Apartment Number"@en .
@@ -60,7 +60,7 @@ cx:buildingNumber a owl:DatatypeProperty ;
     rdfs:isDefinedBy <https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/address_ontology.ttl> ;
     rdfs:range xsd:string ;
     rdfs:subPropertyOf cx:number ;
-    skos:example "123.0"@en ;
+    skos:example "123"@en ;
     skos:note "optional"@en ;
     skos:prefLabel "Gebäudenummer"@de,
         "Building Number"@en .
@@ -120,7 +120,7 @@ cx:houseNumber a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     rdfs:seeAlso <https://en.wikipedia.org/wiki/House_numbering> ;
     rdfs:subPropertyOf cx:number ;
-    skos:example "1.0"@en ;
+    skos:example "1"@en ;
     skos:prefLabel "Hausnummer"@de,
         "Number"@en .
 
@@ -268,14 +268,14 @@ cx:hasReturnAddress a owl:ObjectProperty ;
     skos:prefLabel "has return address"@en .
 
 cx:Delivery rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cx:hasReturnAddress ;
-            owl:someValuesFrom cx:ReturnAddress ],
+            owl:onProperty cx:hasDeliveryAddress ;
+            owl:someValuesFrom cx:DeliveryAddress ],
         [ a owl:Restriction ;
             owl:onProperty cx:hasPostOfficeBox ;
             owl:someValuesFrom cx:PostOfficeBox ],
         [ a owl:Restriction ;
-            owl:onProperty cx:hasDeliveryAddress ;
-            owl:someValuesFrom cx:DeliveryAddress ] .
+            owl:onProperty cx:hasReturnAddress ;
+            owl:someValuesFrom cx:ReturnAddress ] .
 
 cx:Mail rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cx:hasReturnAddress ;
@@ -288,11 +288,11 @@ cx:Mail rdfs:subClassOf [ a owl:Restriction ;
             owl:someValuesFrom cx:PostOfficeBox ] .
 
 cx:Person rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cx:hasAddress ;
-            owl:someValuesFrom cx:Address ],
-        [ a owl:Restriction ;
             owl:onProperty cx:hasBusinessAddress ;
             owl:someValuesFrom cx:BusinessAddress ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:hasAddress ;
+            owl:someValuesFrom cx:Address ],
         [ a owl:Restriction ;
             owl:onProperty cx:hasPrivateAddress ;
             owl:someValuesFrom cx:PrivateAddress ] .
@@ -363,7 +363,7 @@ cx:buildingLevel a owl:DatatypeProperty ;
         "Geschoß"@de,
         "floor"@en,
         "story"@en ;
-    skos:example "2.0"@en ;
+    skos:example "2"@en ;
     skos:note "optional"@en ;
     skos:prefLabel "Stockwerk"@de,
         "Building Level"@en .
@@ -400,7 +400,7 @@ cx:postalCode a owl:DatatypeProperty ;
         "post code"@en,
         "postcode"@en,
         "zip code"@en ;
-    skos:example "12345.0"@en ;
+    skos:example "12345"@en ;
     skos:prefLabel "Postleitzahl"@de,
         "Postal Code"@en .
 
@@ -427,28 +427,25 @@ cx:StreetAddress a owl:Class ;
     rdfs:seeAlso <https://en.wikipedia.org/wiki/Address>,
         schema:streetAddress ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cx:receiverFullName ;
+            owl:onProperty cx:fullStreetAddress ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:county ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:streetName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:houseNumber ;
+            owl:onProperty cx:country ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:fullStreetAddress ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:buildingNumber ;
+            owl:onProperty cx:postalCode ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:city ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:streetName ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:buildingLevel ;
+            owl:onProperty cx:postalCode ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:postalCode ;
@@ -460,25 +457,13 @@ cx:StreetAddress a owl:Class ;
             owl:onProperty cx:streetName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:postalCode ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
             owl:onProperty cx:streetName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:postalCode ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:streetName ;
+            owl:onProperty cx:buildingLevel ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:postalCode ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:county ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:streetName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:postalCode ;
@@ -487,55 +472,58 @@ cx:StreetAddress a owl:Class ;
             owl:onProperty cx:buildingLevel ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
+            owl:onProperty cx:postalCode ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:receiverLastName ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
             owl:onProperty cx:streetName ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:buildingLevel ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:postalCode ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:postalCode ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:receiverFullName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:isLocatedIn ;
             owl:someValuesFrom cx:Country ],
         [ a owl:Restriction ;
+            owl:onProperty cx:postalCode ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
             owl:onProperty cx:streetName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:country ;
+            owl:onProperty cx:city ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:buildingLevel ;
+            owl:onProperty cx:postalCode ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:receiverFirstName ;
+            owl:onProperty cx:streetName ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:buildingNumber ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:streetName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:apartmentNumber ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:buildingLevel ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
             owl:onProperty cx:buildingName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:streetName ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:postalCode ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:postalCode ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:streetName ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:fullStreetAddress ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:postalCode ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:postalCode ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:streetName ;
+            owl:onProperty cx:buildingLevel ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:streetName ;
@@ -544,25 +532,37 @@ cx:StreetAddress a owl:Class ;
             owl:onProperty cx:city ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:postalCode ;
+            owl:onProperty cx:streetName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:postalCode ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:city ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:postalCode ;
+            owl:onProperty cx:streetName ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:county ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
+            owl:onProperty cx:receiverFirstName ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
             owl:onProperty cx:district ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
-            owl:onProperty cx:receiverLastName ;
+            owl:onProperty cx:houseNumber ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:streetName ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:postalCode ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:fullStreetAddress ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cx:streetName ;
             owl:someValuesFrom xsd:string ],
         cx:PhysicalAddress ;
     skos:altLabel "Hausadresse"@de,
@@ -577,7 +577,7 @@ cx:StreetAddress a owl:Class ;
 
 <https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/address_ontology.ttl> a owl:Ontology ;
     dc:creator "Zazralt Magic" ;
-    dc:date "2022-11-10"^^xsd:date ;
+    dc:date "2022-11-28"^^xsd:date ;
     dc:title "Address Ontology" ;
     owl:imports <https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/common_ontology.ttl> ;
     owl:versionInfo "0.0.1" .
