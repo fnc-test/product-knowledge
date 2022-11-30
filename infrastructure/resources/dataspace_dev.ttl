@@ -18,12 +18,14 @@
 @base <urn:cx:Graph:local:Dataspace> .
 
 <urn:cx:BusinessPartner:oem> cx:hasLongBusinessPartnerNumber "BPNL00000003COJN"^^xsd:string;
+                             cx:hasLongBusinessPartnerNumber "BPNL00000003AYRE"^^xsd:string;
                              cx:isIssuerOfVehicleIdentificationNumber "WBAAL31029PZ00001"^^xsd:string;
                              cx:isIssuerOfVehicleIdentificationNumber "WBAAL31029PZ00002"^^xsd:string;
                              cx:isIssuerOfVehicleIdentificationNumber "WBAAL31029PZ00003"^^xsd:string;
                              cx:hasConnector <edcs://knowledge.dev.demo.catena-x.net/oem-edc-control/BPNL00000003COJN>.
 
 <urn:cx:BusinessPartner:tiera> cx:hasLongBusinessPartnerNumber "BPNL00000003CPIY"^^xsd:string;
+                               cx:hasLongBusinessPartnerNumber "BPNL00000003B2OM"^^xsd:string;
                                cx:hasConnector <edcs://knowledge.dev.demo.catena-x.net/tiera-edc-control/BPNL00000003CPIY>.
 
 <urn:cx:BusinessPartner:consumer> cx:hasLongBusinessPartnerNumber "BPNL00000003CQI9"^^xsd:string;
