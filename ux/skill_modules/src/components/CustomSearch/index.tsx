@@ -1,20 +1,10 @@
-import {
-  Box,
-  Paper,
-  Chip,
-  Select,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Grid,
-  SelectChangeEvent,
-} from '@mui/material';
+import { Box, Paper, Grid } from '@mui/material';
 import { Button, Input } from 'cx-portal-shared-components';
 import { useEffect, useState } from 'react';
 import {
   BindingSet,
   getConnectorFactory,
-} from '@knowledge-agents-ux/skill_framework/dist/src';
+} from '@catenax-ng/skill-framework/dist/src';
 import React from 'react';
 import { ChipData, ChipList } from './components/ChipList';
 import { SkillSelect } from './components/SkillSelect';

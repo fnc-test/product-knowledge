@@ -1,7 +1,4 @@
-import {
-  BindingSet,
-  Entry,
-} from '@knowledge-agents-ux/skill_framework/dist/src';
+import { BindingSet, Entry } from '@catenax-ng/skill-framework/dist/src';
 import { Table, Typography } from 'cx-portal-shared-components';
 import React from 'react';
 import { GridColDef } from '@mui/x-data-grid';
