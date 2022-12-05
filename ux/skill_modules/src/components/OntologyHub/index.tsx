@@ -15,7 +15,6 @@ export function OntologyHub({ onOntologySelect }: OntologyHubProps) {
   useEffect(() => {
     const ontologyHub = getOntologyHubFactory().create();
     ontologyHub.getOntologies().then((data) => {
-      console.log(data);
       setOntologyList(data);
     });
   }, []);
