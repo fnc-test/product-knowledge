@@ -1,9 +1,10 @@
-import { AssetView, OntologyHub } from '@catenax-ng/skill-modules';
+import { AssetView, OntologyHub, OntologyHubService } from '@catenax-ng/skill-modules';
 import { useState } from 'react';
 
 export default function SkillGym() {
   const [selectedOntology, setSelectedOntology] = useState<string>('')
-  
+  const hub = OntologyHubService;
+  hub().then(data => console.log(data))
   return (
     <>
       <AssetView />
