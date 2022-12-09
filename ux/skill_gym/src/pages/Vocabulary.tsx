@@ -32,6 +32,6 @@ export default function Vocabulary() {
       <Box mt={1} mb={1}>
         <OntologyHub onOntologySelect={setSelectedOntology} pageSize={ (selectedOntology.length>0) ? 5 : 12} />
       </Box>
-    </>
+    </Box>
   );
 }
