@@ -9,7 +9,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import Search from './pages/Search';
-import SkillGym from './pages/SkillGym';
+import Vocabulary from './pages/Vocabulary';
 import Dataspace from './pages/Dataspace';
 import Home from './pages/Home';
 import App from './App';
@@ -28,7 +28,7 @@ ReactDOM.render(
             <Route path="/" element={<Navigate replace to="/home" />} />
             <Route path="/home" element={<Home />} />
             <Route path="/dataspace" element={<Dataspace />} />
-            <Route path="/skill-gym" element={<SkillGym />} />
+            <Route path="/vocabulary" element={<Vocabulary />} />
             <Route path="/custom-search" element={<Search />} />
           </Route>
         </Routes>

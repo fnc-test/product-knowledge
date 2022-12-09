@@ -6,7 +6,7 @@ export default function App() {
   const menu = [
     { to: '/home', title: "Skill Gym" },
     { to: '/dataspace', title: "Dataspace" },
-    { to: '/skill-gym', title: "Vocabulary" },
+    { to: '/vocabulary', title: "Vocabulary" },
     { to: '/custom-search', title: 'Intelligence' },
   ];
 

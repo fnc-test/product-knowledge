@@ -1,20 +1,18 @@
-import { OntologyHub, OntologyView, getSkillBackend } from '@catenax-ng/skill-modules';
+import { OntologyHub, getSkillBackend } from '@catenax-ng/skill-modules';
 import { useState } from 'react';
 import { Box } from "@mui/material";
 
-export default function SkillGym() {
+export default function Vocabulary() {
   const [selectedOntology, setSelectedOntology] = useState<string>('')
 
   return (
-    <>
+    <Box mt={4}>
       {selectedOntology.length > 0 &&
-        <Box mt={1} mb={1}>
+        <Box mb={2}>
           <iframe title="WebVowl" width="100%" height={500} src={`${getSkillBackend()}#url=${selectedOntology}`} />
         </Box>
       }
-      <Box mt={1} mb={1}>
-        <OntologyHub onOntologySelect={setSelectedOntology} />
-      </Box>
-    </>
+      <OntologyHub onOntologySelect={setSelectedOntology} />
+    </Box>
   );
 }
