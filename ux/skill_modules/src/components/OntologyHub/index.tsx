@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 
 interface OntologyHubProps {
   onOntologySelect: (vowlUrl: string) => void;
-  pageSize: number
+  pageSize: number;
 }
 
 export function OntologyHub({ onOntologySelect, pageSize }: OntologyHubProps) {

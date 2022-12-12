@@ -16,7 +16,7 @@ import {
   Marker,
   Rectangle,
   Pane,
-  Polyline
+  Polyline,
 } from 'react-leaflet';
 import { LatLngTuple, LatLng } from 'leaflet';
 import { Node, getParent } from './components/Tree';
@@ -348,7 +348,7 @@ export const CustomSearch = ({ onSearch }: CustomSearchProps) => {
               {results.map((tuple, index) => {
                 return <Marker key={index.toString()} position={tuple} />;
               })}
-              <Polyline positions={results}/>
+              <Polyline positions={results} />
             </MapContainer>
           </Box>
           <Button
