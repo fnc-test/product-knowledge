@@ -94,6 +94,7 @@ const GridCellExpand = React.memo(function GridCellExpand(
         sx={{
           whiteSpace: 'nowrap',
           overflow: 'hidden',
+          direction: 'rtl',
           textOverflow: 'ellipsis',
         }}
       >
@@ -139,9 +140,10 @@ export const DataList = ({
 }) => {
   const tableTitle = `Results for ${search}`;
   const resultToColumns = (result: string[]): Array<GridColDef> =>
-    result.map((item) => ({
+    result.map((item, index) => ({
       field: item,
       flex: 2,
+      hide: index > 5,
       renderCell: renderCellExpand,
       valueGetter: ({ row }: { row: Entry }) =>
         row[item].value ? row[item].value : 'No Value',
