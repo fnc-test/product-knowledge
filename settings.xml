@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Settings for building complete product
+  Settings for building complete product.
+  To interact with the maven repos, you need to put your GITHUB credentials
+  into the environment variables GITHUB_ACTOR and GITHUB_TOKEN.
+  Use the -s switch with the maven command to use these settings.
   See copyright notice in the top folder
   See authors file in the top folder
   See license file in the top folder

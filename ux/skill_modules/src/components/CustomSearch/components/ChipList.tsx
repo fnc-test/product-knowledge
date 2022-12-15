@@ -1,5 +1,5 @@
 import { Box, Chip } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 
 export interface ChipData {
   key: number;

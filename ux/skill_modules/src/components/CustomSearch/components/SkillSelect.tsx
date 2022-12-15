@@ -1,14 +1,6 @@
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
-  TextField,
-} from '@mui/material';
+import { FormControl, TextField } from '@mui/material';
 import TreeSelect from 'mui-tree-select';
 import React, { useState, useEffect } from 'react';
-import { nodeModuleNameResolver } from 'typescript';
 import { Node, getParent } from './Tree';
 
 const skills = [
@@ -32,7 +24,7 @@ export const SkillSelect = ({
   onChange,
   disabled,
 }: SkillSelectProps) => {
-  const [skillList, setSkillList] = useState<any[]>([]);
+  const [skillList, setSkillList] = useState<Node[]>([]);
 
   useEffect(() => {
     setSkillList(skills);
@@ -44,7 +36,7 @@ export const SkillSelect = ({
         getChildren={getSkillChildren}
         getParent={getParent}
         renderInput={(params) => <TextField {...params} label="Skill" />}
-        value={skills[0].children!.find((node) => node.value == value)}
+        value={skillList[0].children!.find((node) => node.value == value)}
         onChange={(event, value, reason, details) => onChange(value!.value)}
       />
     </FormControl>

@@ -16,8 +16,6 @@
 
 FROM openjdk:8-jdk as run
 
-MAINTAINER Dremio
-
 LABEL org.label-schema.name='dremio/dremio-oss'
 LABEL org.label-schema.description='Dremio OSS.'
 

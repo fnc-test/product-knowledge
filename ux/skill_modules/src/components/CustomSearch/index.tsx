@@ -158,6 +158,7 @@ export const CustomSearch = ({ onSearch }: CustomSearchProps) => {
 
   const onMaterialButtonClick = () => {
     setLoading(true);
+    setDragging(false);
     let queryVars;
     queryVars = {
       material: searchMaterial,

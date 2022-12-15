@@ -1,2 +1,6 @@
+# auto-configuration to track certain binaries in lfs
+# See copyright notice in the top folder
+# See authors file in the top folder
+# See license file in the top folder
 *.jar filter=lfs diff=lfs merge=lfs -text
 *.war filter=lfs diff=lfs merge=lfs -text

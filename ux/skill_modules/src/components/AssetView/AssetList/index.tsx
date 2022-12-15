@@ -1,8 +1,4 @@
-import {
-  AssetProperties,
-  getConnectorFactory,
-  BindingSet,
-} from '@catenax-ng/skill-framework/dist/src';
+import { getConnectorFactory, BindingSet } from '@catenax-ng/skill-framework/dist/src';
 import { DataList } from '../../DataList';
 
 import React, { useEffect, useState } from 'react';

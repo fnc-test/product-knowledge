@@ -17,7 +17,7 @@ RUN if [ "${HTTP_PROXY}" != ""  ]; then \
     fi && \
     apt-get -y upgrade \
     && apt-get -y update \
-    && apt-get -y install jq \
+    && apt-get -y install jq=1.6-2.1 \
     && if [ "${HTTP_PROXY}" != ""  ]; then rm -f /etc/apt/apt.conf.d/proxy.conf; fi \
     && mkdir -p /opt/druid \
     && groupadd --system -g 30000 druid \
