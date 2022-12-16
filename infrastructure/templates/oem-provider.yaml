@@ -235,7 +235,8 @@ data:
       coordinator.enabled: true,
       coordinator.master.enabled: true,
       executor.enabled: true,
-      flight.use_session_service: true
+      flight.use_session_service: true,
+      conduit.port: 37877
     } 
 
     registration.publish-host: "oem-backend"
@@ -277,8 +278,11 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: false
           ports:
+            - containerPort: 2181   # Zookeeper
             - containerPort: 9047   # Web
             - containerPort: 31010  # JDBC
+            - containerPort: 32010  # Arrow
+            - containerPort: 37877  # Conduit
             - containerPort: 45678  # Dremio Exec
           resources:
            requests:
@@ -346,12 +350,21 @@ metadata:
 spec:
   type: ClusterIP
   ports:
+    - port: 2181
+      name: zookeeper
+      targetPort: 2181
     - port: 9047
       name: web
       targetPort: 9047
     - port: 31010
       name: jdbc
       targetPort: 31010
+    - port: 32010
+      name: arrow
+      targetPort: 32010
+    - port: 37877
+      name: conduit
+      targetPort: 37877
     - port: 45678
       name: execute
       targetPort: 45678
