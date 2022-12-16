@@ -321,7 +321,7 @@ spec:
           volumeMounts:
             - name: backups
               mountPath: /opt/dremio/data
-            - name: oem-agent-config
+            - name: oem-backend-config
               mountPath: /opt/dremio/conf/dremio.conf
               subPath: dremio.conf
               readOnly: true
@@ -334,9 +334,9 @@ spec:
                 secretName: oem-backend-storage  # required
                 shareName: {{ .Values.security.backupsShare }} # required
                 mountOptions: "dir_mode=0777,file_mode=0777,cache=strict,actimeo=30,uid=10000,gid=30000"  # optional
-        - name: oem-agent-config
+        - name: oem-backend-config
           configMap:
-            name: oem-agent-config
+            name: oem-backend-config
 ---
 apiVersion: v1
 kind: Service
