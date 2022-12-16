@@ -216,6 +216,30 @@ metadata:
   namespace: {{ .Values.namespace }}
 type: Opaque
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oem-backend-config
+  namespace: {{ .Values.namespace }}
+data:
+  dremio.conf: |-
+    paths: {
+      # the local path for dremio to store data.
+      local: ${DREMIO_HOME}"/data"
+
+      # the distributed path Dremio data including job results, downloads, uploads, etc
+      #dist: "pdfs://"${paths.local}"/pdfs"
+    }
+
+    services: {
+      coordinator.enabled: true,
+      coordinator.master.enabled: true,
+      executor.enabled: true,
+      flight.use_session_service: true
+    } 
+
+    registration.publish-host: "oem-backend"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -297,6 +321,10 @@ spec:
           volumeMounts:
             - name: backups
               mountPath: /opt/dremio/data
+            - name: oem-agent-config
+              mountPath: /opt/dremio/conf/dremio.conf
+              subPath: dremio.conf
+              readOnly: true
       volumes:
         - name: backups
           csi:
@@ -306,6 +334,9 @@ spec:
                 secretName: oem-backend-storage  # required
                 shareName: {{ .Values.security.backupsShare }} # required
                 mountOptions: "dir_mode=0777,file_mode=0777,cache=strict,actimeo=30,uid=10000,gid=30000"  # optional
+        - name: oem-agent-config
+          configMap:
+            name: oem-agent-config
 ---
 apiVersion: v1
 kind: Service
