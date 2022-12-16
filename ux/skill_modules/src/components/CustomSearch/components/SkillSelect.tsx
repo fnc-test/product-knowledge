@@ -24,7 +24,7 @@ export const SkillSelect = ({
   onChange,
   disabled,
 }: SkillSelectProps) => {
-  const [skillList, setSkillList] = useState<Node[]>([]);
+  const [skillList, setSkillList] = useState<Node[]>(skills);
 
   useEffect(() => {
     setSkillList(skills);

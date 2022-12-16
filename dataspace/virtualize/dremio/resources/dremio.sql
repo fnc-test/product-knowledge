@@ -1,5 +1,6 @@
 /* Examples for Flatting Views based on a JSON file */
 
+CREATE VIEW "DIAGNOSIS_LOCAL"."meta" AS 
 SELECT 
   'BPNL00000003COJN' as bpnl,
   "dtc_codes.json".meta.first,
@@ -12,6 +13,7 @@ SELECT
 FROM "Local"."dtc_codes.json"
 
 /** content */
+CREATE VIEW "DIAGNOSIS_LOCAL"."content" AS
 SELECT 'BPNL00000003COJN' as bpnl,
   0 as number,
   contents.content.id,
@@ -28,7 +30,7 @@ FROM (
 ) contents
 
 /** part */
-
+CREATE VIEW "DIAGNOSIS_LOCAL"."part" AS
 SELECT distinct 'BPNL00000003COJN' as bpnl,
   0 as number,
   parts.part.part.entityGuid,
@@ -44,6 +46,7 @@ FROM (
 ) parts
 
 /** content_part */
+CREATE VIEW "DIAGNOSIS_LOCAL"."content_part" AS
 SELECT parts.id as dtc_id,
   parts.part.part.entityGuid as part_entityguid
 FROM (
