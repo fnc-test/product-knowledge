@@ -11,9 +11,6 @@ import createHttpsProxyAgent from 'https-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 export { getOntologyHubFactory, OntologyResult } from './ontology_hub';
 
-// issue a module loading message
-console.log('skill_framework/index: Loading');
-
 /*
  * a connector factory
  */
@@ -31,7 +28,7 @@ export interface IConnector {
    */
 
   listAssets: (providerUrl?: string) => Promise<Catalogue>;
-  execute: (skill: string, queryVariables: any) => Promise<BindingSet>;
+  execute: (skill: string, queryVariables: JSONElement) => Promise<BindingSet>;
 }
 
 /**
@@ -97,6 +94,13 @@ export interface ContractOffer {
    */
   asset: Asset;
 }
+type JSONElement = JSONObject | JSONArray;
+type JSONArray = Array<JSONValue>;
+type JSONValue = string | number | boolean | JSONElement;
+
+interface JSONObject {
+  [x: string]: JSONValue;
+}
 
 /**
  * a connector policy
@@ -111,7 +115,7 @@ interface Policy {
   /** a set of obligations */
   obligations: Condition[];
   /** this is extensible */
-  extensibleProperties: any;
+  extensibleProperties?: JSONObject;
   /** policies may inherit from each other, this would be the uid of the parent policy if so */
   inheritsFrom?: string | null;
   /** the assigner of the policy */
@@ -199,6 +203,7 @@ export interface Action {
 /**
  * TODO need to define constraints
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Constraint {}
 
 /**
@@ -284,7 +289,7 @@ export interface DataAddressProperties {
  * Implementation of a mock connector
  */
 class MockConnector implements IConnector {
-  public listAssets(providerUrl?: string): Promise<Catalogue> {
+  public listAssets(): Promise<Catalogue> {
     return Promise.resolve({
       id: 'catenax',
       contractOffers: [
@@ -434,9 +439,12 @@ export class EnvironmentConnectorFactory implements IConnectorFactory {
 interface IRealmMappingFactory {
   create: () => IRealmMapping;
 }
+interface HeaderRecord {
+  [key: string]: string;
+}
 
 interface IRealmMapping {
-  getHeaderAnnotation: (targetDomain: string) => any;
+  getHeaderAnnotation: (targetDomain: string) => HeaderRecord;
 }
 
 class EnvironmentRealmMappingFactory implements IRealmMappingFactory {
@@ -452,11 +460,11 @@ class EnvironmentRealmMappingFactory implements IRealmMappingFactory {
 }
 
 class EnvironmentRealmMapping implements IRealmMapping {
-  public getHeaderAnnotation(targetDomain: string) {
-    const headers: any = {};
+  public getHeaderAnnotation() {
+    const headers: HeaderRecord = {};
     if (process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY != undefined) {
-      headers[process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY ?? ''] =
-        process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_VALUE;
+      headers[process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY] =
+        process.env.REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_VALUE ?? '';
     }
     return headers;
   }
@@ -505,8 +513,6 @@ interface Value {
   value: string;
 }
 
-interface SparqlParameters {}
-
 /**
  * Implementation of a remote connector
  */
@@ -540,10 +546,6 @@ class RemoteConnector implements IConnector {
     const finalproviderUrl = providerUrl ?? this.url;
     const idsUrl = `${finalproviderUrl}/api/v1/ids/data`;
 
-    console.log(
-      `Listing Assets from Remote Connector ${finalproviderUrl} starts at ${start}.`
-    );
-
     const finalUrl = `${this.url}/data/catalog?providerUrl=${idsUrl}`;
 
     const fetchOpts: RequestInit = {
@@ -557,6 +559,7 @@ class RemoteConnector implements IConnector {
 
     const elapsed = new Date().getTime() - start;
 
+    // eslint-disable-next-line no-console
     console.log(
       `Listing Assets from Remote Connector finished after ${elapsed} milliseconds.`
     );
@@ -574,13 +577,16 @@ class RemoteConnector implements IConnector {
   }
 
   //Execute Query
-  public async execute(skill: string, queryVariable: any): Promise<BindingSet> {
+  public async execute(
+    skill: string,
+    queryVariable: JSONElement
+  ): Promise<BindingSet> {
     const start = new Date().getTime();
 
     const skillUrl = '/api/agent?asset=urn:cx:Skill:consumer:' + skill;
     let parameters = '';
     let parametersContainer = '';
-    let queryVariables: any[] = [];
+    let queryVariables: JSONArray = [];
 
     if (Array.isArray(queryVariable)) {
       queryVariables = queryVariable;
@@ -599,8 +605,6 @@ class RemoteConnector implements IConnector {
 
     const finalUrl = this.data_url + skillUrl + parametersContainer;
 
-    console.log(finalUrl);
-
     const fetchOpts: RequestInit = {
       method: 'GET',
       headers: this.realmMapping.getHeaderAnnotation(this.url),
@@ -612,6 +616,7 @@ class RemoteConnector implements IConnector {
 
     const elapsed = new Date().getTime() - start;
 
+    // eslint-disable-next-line no-console
     console.log(
       `Result from Remote Connector finished after ${elapsed} milliseconds.`
     );
