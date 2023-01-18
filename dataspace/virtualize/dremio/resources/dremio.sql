@@ -1,6 +1,6 @@
 /* Examples for Flatting Views based on a JSON file */
 
-CREATE VIEW "DIAGNOSIS_LOCAL"."meta" AS 
+CREATE VIEW "dtc"."meta" AS 
 SELECT 
   'BPNL00000003COJN' as bpnl,
   "dtc_codes.json".meta.first,
@@ -10,10 +10,10 @@ SELECT
   "dtc_codes.json".meta.size,
   "dtc_codes.json".meta.total_elements,
   "dtc_codes.json".meta.total_pages
-FROM "Local"."dtc_codes.json"
+FROM "Local"."dtc_codes.json";
 
 /** content */
-CREATE VIEW "DIAGNOSIS_LOCAL"."content" AS
+CREATE VIEW "dtc"."content" AS
 SELECT 'BPNL00000003COJN' as bpnl,
   0 as number,
   contents.content.id,
@@ -27,10 +27,10 @@ SELECT 'BPNL00000003COJN' as bpnl,
 FROM (
   SELECT flatten(content) AS content
   FROM "Local"."dtc_codes.json"
-) contents
+) contents;
 
 /** part */
-CREATE VIEW "DIAGNOSIS_LOCAL"."part" AS
+CREATE VIEW "dtc"."part" AS
 SELECT distinct 'BPNL00000003COJN' as bpnl,
   0 as number,
   parts.part.part.entityGuid,
@@ -43,10 +43,10 @@ FROM (
     SELECT flatten(content) AS content
     FROM "Local"."dtc_codes.json"
   ) contents
-) parts
+) parts;
 
 /** content_part */
-CREATE VIEW "DIAGNOSIS_LOCAL"."content_part" AS
+CREATE VIEW "dtc"."content_part" AS
 SELECT parts.id as dtc_id,
   parts.part.part.entityGuid as part_entityguid
 FROM (
@@ -54,22 +54,22 @@ FROM (
     SELECT flatten(content) AS content
     FROM "Local"."dtc_codes.json"
   ) contents
-) parts
+) parts;
 
 /** Quality Skill */
 
 /** data from cloud **/
 /**
-CREATE VIEW "quality"."DTC" AS SELECT * FROM datalake."catenax-knowledge-agents"."DTC.xlsx"
-CREATE VIEW "quality"."DTC_PossibleCause_Error" AS SELECT * FROM datalake."catenax-knowledge-agents"."DTC_PossibleCause_Error.xlsx"
-CREATE VIEW "quality"."Error" AS SELECT * FROM datalake."catenax-knowledge-agents"."Error.xlsx"
-CREATE VIEW "quality"."Error_ErrorEffect" AS SELECT * FROM datalake."catenax-knowledge-agents"."Error_ErrorEffect.xlsx"
-CREATE VIEW "quality"."Error_ErrorSolution" AS SELECT * FROM datalake."catenax-knowledge-agents"."Error_ErrorSolution.xlsx"
-CREATE VIEW "quality"."ErrorEffect" AS SELECT * FROM datalake."catenax-knowledge-agents"."ErrorEffect.xlsx"
-CREATE VIEW "quality"."ErrorSolution" AS SELECT * FROM datalake."catenax-knowledge-agents"."ErrorSolution.xlsx"
-CREATE VIEW "quality"."Part" AS SELECT * FROM datalake."catenax-knowledge-agents"."Part.xlsx"
-CREATE VIEW "quality"."Part_PossibleCause" AS SELECT * FROM datalake."catenax-knowledge-agents"."Part_PossibleCause.xlsx"
-CREATE VIEW "quality"."PossibleCause" AS SELECT * FROM datalake."catenax-knowledge-agents"."PossibleCause.xlsx"
+CREATE VIEW "quality"."DTC" AS SELECT * FROM datalake."catenax-knowledge-agents"."DTC.xlsx";
+CREATE VIEW "quality"."DTC_PossibleCause_Error" AS SELECT * FROM datalake."catenax-knowledge-agents"."DTC_PossibleCause_Error.xlsx";
+CREATE VIEW "quality"."Error" AS SELECT * FROM datalake."catenax-knowledge-agents"."Error.xlsx";
+CREATE VIEW "quality"."Error_ErrorEffect" AS SELECT * FROM datalake."catenax-knowledge-agents"."Error_ErrorEffect.xlsx";
+CREATE VIEW "quality"."Error_ErrorSolution" AS SELECT * FROM datalake."catenax-knowledge-agents"."Error_ErrorSolution.xlsx";
+CREATE VIEW "quality"."ErrorEffect" AS SELECT * FROM datalake."catenax-knowledge-agents"."ErrorEffect.xlsx";
+CREATE VIEW "quality"."ErrorSolution" AS SELECT * FROM datalake."catenax-knowledge-agents"."ErrorSolution.xlsx";
+CREATE VIEW "quality"."Part" AS SELECT * FROM datalake."catenax-knowledge-agents"."Part.xlsx";
+CREATE VIEW "quality"."Part_PossibleCause" AS SELECT * FROM datalake."catenax-knowledge-agents"."Part_PossibleCause.xlsx";
+CREATE VIEW "quality"."PossibleCause" AS SELECT * FROM datalake."catenax-knowledge-agents"."PossibleCause.xlsx";
 **/
 
 /** data from local system **/
