@@ -14,7 +14,7 @@
     <servers>
         <!-- EDC SNAPSHOTS -->
         <server>
-            <id>ka-edc-snapshots</id>
+            <id>edc</id>
             <username>${env.GITHUB_ACTOR}</username>
             <password>${env.GITHUB_TOKEN}</password>
         </server>
