@@ -27,7 +27,10 @@
        <mockito.version>4.6.1</mockito.version>
        <tx.edc.version>0.2.0</tx.edc.version>
        <edc.version>0.0.1-20221006-SNAPSHOT</edc.version>
+       <failsafe.version>3.2.4</failsafe.version>
+       <okhttp.version>4.10.0</okhttp.version>
        <rdf4j.version>4.2.0</rdf4j.version>
+       <slf4j.version>2.0.0-alpha7</slf4j.version>
 
        <!-- Source characteristics -->
        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
