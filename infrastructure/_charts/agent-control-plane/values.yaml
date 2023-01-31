@@ -9,7 +9,7 @@ replicaCount: 1
 
 image:
   # -- Which derivate of the agent-enabled edc control-plane to use.
-  # One of: [ghcr.io/catenax-ng/product-edc/edc-controlplane-postgresql-hashicorp-vault, ghcr.io/catenax-ng/product-edc/edc-controlplane-postgresql, ghcr.io/catenax-ng/product-edc/edc-controlplane-memory]
+  # One of: [ghcr.io/catenax-ng/product-knowledge/controlplane-memory, ghcr.io/catenax-ng/product-knowledge/controlplane-memory-hashicorp, ghcr.io/catenax-ng/product-knowledge/controlplane-postgresql-hashicorp]
   repository: ghcr.io/catenax-ng/product-knowledge/controlplane-memory
   # -- [Kubernetes image pull policy](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy) to use
   pullPolicy: IfNotPresent
@@ -215,8 +215,7 @@ ingresses:
       clusterIssuer: ""
 
 # -- [Resource management](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) applied to the deployed pod
-resources:
-  {}
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -281,7 +280,7 @@ configuration:
 ## Vault settings
 vault:
   ## -- Vault url
-  # url:
+  url: VAULT_URL
   ## -- Client with with to access the vault 
   clientid: VAULT_CLIENT
   ## -- Client secret with with to access the vault 
@@ -291,13 +290,16 @@ vault:
   ## -- Subscription which hosts the vault
   tenantid: VAULT_TENANT
   ## -- certificate
-  # certificate:
-  ## Hashicorp settings
-  # hashicorp:
-  #   url:
-  #   token:
-  #   timeout:
-
+  certificate: VAULT_CERTIFICATE
+  ## Hashicorp specific settings
+  hashicorp:
+    url: VAULT_URL
+    path: VAULT_PATH
+    token: VAULT_TOKEN
+    timeout: VAULT_TIMEOUT
+    healthCheck: false
+    checkStandby: true
+    
 ## EDC dataplanes to be registered via selectors
 dataplanes:
   ## An agent plane with to sync transfers

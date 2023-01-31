@@ -69,7 +69,7 @@ securityContext:
     add: 
       - NET_BIND_SERVICE
   # -- Whether the root filesystem is mounted in read-only mode
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false
   # -- Controls [Privilege Escalation](https://kubernetes.io/docs/concepts/security/pod-security-policy/#privilege-escalation) enabling setuid binaries changing the effective user ID
   allowPrivilegeEscalation: false
   # -- Requires the container to run without root privileges
@@ -125,9 +125,9 @@ agent:
       # -- An auth object for default security
       auth: {}
       # -- The path mapping the "default" api is going to be exposed by
-      path: /
+      path: ""
       # -- The path mapping the "default" api is going to be exposed by
-      regex: (/|$)(.*)
+      regex: /(.*)
 
 service:
   # -- [Service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to expose the running application on a set of Pods as a network service.
@@ -141,7 +141,7 @@ ingresses:
     hostname: "remoting-agent.local"
     # -- Additional ingress annotations to add
     annotations: 
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
       nginx.ingress.kubernetes.io/use-regex: "true"
     # -- Agent endpoints exposed by this ingress resource
     endpoints:

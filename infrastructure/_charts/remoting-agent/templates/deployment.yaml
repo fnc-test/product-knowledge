@@ -104,7 +104,7 @@ spec:
             name: {{ include "agent.fullname" . }}-configmap
             items:
               - key: logback.xml
-                path: lockback.xml
+                path: logback.xml
               {{- range $asset, $_ := .Values.repositories }}
               - key: {{ $asset }}.ttl
                 path: {{ $asset }}.ttl

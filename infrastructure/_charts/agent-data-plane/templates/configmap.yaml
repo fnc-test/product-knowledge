@@ -71,6 +71,15 @@ data:
     {{- if .Values.vault.hashicorp.timeout }}
     edc.vault.hashicorp.timeout.seconds={{ .Values.vault.hashicorp.timeout.seconds }}
     {{- end }}   
+    {{- if .Values.vault.hashicorp.path }}
+    edc.vault.hashicorp.api.secret.path={{ .Values.vault.hashicorp.path }}
+    {{- end }}   
+    {{- if .Values.vault.hashicorp.checkHealth }}
+    edc.vault.hashicorp.health.check.enabled={{ .Values.vault.hashicorp.checkHealth }}
+    {{- end }}   
+    {{- if .Values.vault.hashicorp.checkStandby }}
+    edc.vault.hashicorp.health.check.standby.ok={{ .Values.vault.hashicorp.checkStandby }}
+    {{- end }}   
     {{- end }}   
     {{- end }}   
     {{- .Values.configuration.properties | nindent 4 }}

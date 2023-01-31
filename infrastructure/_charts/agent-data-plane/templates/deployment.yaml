@@ -99,7 +99,7 @@ spec:
               mountPath: /app/logging.properties
               subPath: logging.properties
             {{- range $asset, $_ := .Values.assets }}
-            - name: configuraiton
+            - name: configuration
               mountPath: /app/{{ $asset }}
               subPath: {{ $asset }}
             {{- end }}
