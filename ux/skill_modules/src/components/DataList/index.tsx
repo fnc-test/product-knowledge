@@ -1,24 +1,41 @@
 import { BindingSet, Entry } from '@catenax-ng/skill-framework/dist/src';
-import { Table, Typography } from 'cx-portal-shared-components';
+import { IconButton, Table } from 'cx-portal-shared-components';
 import React from 'react';
 import { GridColDef, GridRowId, GridRowModel } from '@mui/x-data-grid';
-import { Box, Tooltip } from '@mui/material';
-import ErrorTwoToneIcon from '@mui/icons-material/ErrorTwoTone';
+import { Tooltip } from '@mui/material';
+import EmptyResultBox from '../EmptyResultBox';
 
 interface DataListProps {
   search: string;
   id: string;
   data: BindingSet;
+  actions?: Action[];
+  hiddenColums?: string[];
 }
 
-export const DataList = ({ search, id, data }: DataListProps) => {
+interface Action {
+  name: string;
+  icon: JSX.Element;
+  onClick: (id: string | undefined) => void;
+  rowKey: string;
+}
+
+export const DataList = ({
+  search,
+  id,
+  data,
+  actions,
+  hiddenColums,
+}: DataListProps) => {
   const tableTitle = `Results for ${search}`;
-  const resultToColumns = (result: string[]): Array<GridColDef> =>
-    result.map((item, index) => ({
+
+  const resultToColumns = (result: string[]): Array<GridColDef> => {
+    const columns: Array<GridColDef> = result.map((item) => ({
       field: item,
       flex: 2,
       renderCell: ({ row }: { row: Entry }) => {
-        let val = row[item] ? row[item].value : '';
+        const rowItem = row[item];
+        let val = rowItem ? rowItem.value : '';
         val = val.replace('\\"', '"').replace('\\n', '\n');
         return (
           <Tooltip title={val}>
@@ -35,8 +52,31 @@ export const DataList = ({ search, id, data }: DataListProps) => {
           </Tooltip>
         );
       },
-      hide: index > 5,
+      hide: hiddenColums && hiddenColums.includes(item),
     }));
+    if (actions && actions.length > 0) {
+      const actionColumn = {
+        field: 'actions',
+        flex: 2,
+        renderCell: ({ row }: { row: Entry }) =>
+          actions.map((action) => {
+            const rowValue = row[action.rowKey];
+            const onClickParam = row && rowValue ? rowValue.value : '';
+            return (
+              <IconButton
+                key={action.name}
+                title={action.name}
+                onClick={() => action.onClick(onClickParam)}
+              >
+                {action.icon}
+              </IconButton>
+            );
+          }),
+      };
+      columns.push(actionColumn);
+    }
+    return columns;
+  };
 
   const rowId = (row: GridRowModel): GridRowId => {
     if (id != undefined && row[id] != undefined) {
@@ -58,14 +98,7 @@ export const DataList = ({ search, id, data }: DataListProps) => {
           getRowId={rowId}
         />
       ) : (
-        <Box textAlign="center" maxWidth="500px" ml="auto" mr="auto">
-          <ErrorTwoToneIcon color="warning" fontSize="large" />
-          <Typography variant="h4">Empty search result</Typography>
-          <Typography>
-            We could not find any data related to your search request. Please
-            change your search input.
-          </Typography>
-        </Box>
+        <EmptyResultBox />
       )}
     </>
   );
