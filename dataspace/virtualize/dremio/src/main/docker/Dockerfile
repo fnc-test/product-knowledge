@@ -19,7 +19,7 @@ FROM ubuntu:jammy
 LABEL org.label-schema.name='dremio/dremio-oss'
 LABEL org.label-schema.description='Dremio OSS.'
 
-RUN apt-get -y update && apt-get -y upgrade && apt-get -y install openjdk-8-jdk wget
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get -y update && apt-get -y upgrade && apt-get -y install openjdk-8-jdk wget
 
 ARG DOWNLOAD_URL=https://download.dremio.com/community-server/22.1.1-202208230402290397-a7010f28/dremio-community-22.1.1-202208230402290397-a7010f28.tar.gz
 RUN \
