@@ -9,7 +9,7 @@ xml:		http://www.w3.org/XML/1998/namespace
 xsd:		http://www.w3.org/2001/XMLSchema#
 obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
-json:       https://json-schema.org/draft/2020-12/
+json:       https://json-schema.org/draft/2020-12/schema#
 
 [MappingDeclaration] @collection [[
 mappingId	vehicles
@@ -30,7 +30,7 @@ source		SELECT gearbox_id, newest_telematics_id,  index FROM vehicles, (VALUES (
 
 mappingId   loadspectrum
 target      oem:{id}/{index} rdf:type cx:LoadSpectrum; cx:loadSpectrumId {metadata_projectDescription}^^xsd:string; cx:loadSpectrumName {header_countingValue}^^xsd:string; cx:loadSpectrumDescription {name}^^xsd:string; rdf:type cx:VehicleCurrentState; cx:vehicleOperatingHours {metadata_status_operatingHours}^^xsd:int; cx:vehicleCurrentStateDateTime {metadata_status_date}^^xsd:dateTime; cx:vehicleCurrentMileage {metadata_status_mileage}^^xsd:int; cx:loadSpectrumType {header_channels}^^xsd:string; cx:hasLoadSpectrumValues oem:{id}/{index}/0.
-source		SELECT id, index, name, load_spectra::jsonb->index->'metadata'->>'projectDescription' as metadata_projectDescription, load_spectra::jsonb->index->'header'->>'countingValue' as header_countingValue, load_spectra::jsonb->index->'metadata'->'status'->>'operatingHours' as metadata_status_operatingHours, load_spectra::jsonb->index->'metadata'->'status'->>'date' as metadata_status_date, load_spectra::jsonb->index->'metadata'->'status'->>'mileage' as metadata_status_mileage, load_spectra::jsonb->index->'header'->'channels' as header_channels FROM (VALUES (0,'GearSet'), (1,'GearOil'), (2,'Clutch')) AS spectrum(index,name), telematics_data
+source		SELECT id, index, name, load_spectra::jsonb->index->'metadata'->>'projectDescription' as metadata_projectDescription, load_spectra::jsonb->index->'header'->>'countingValue' as header_countingValue, floor((load_spectra::jsonb->index->'metadata'->'status'->>'operatingHours')::numeric)::integer as metadata_status_operatingHours, replace(load_spectra::jsonb->index->'metadata'->'status'->>'date','Z','.000Z') as metadata_status_date, load_spectra::jsonb->index->'metadata'->'status'->>'mileage' as metadata_status_mileage, load_spectra::jsonb->index->'header'->'channels' as header_channels FROM (VALUES (0,'GearSet'), (1,'GearOil'), (2,'Clutch')) AS spectrum(index,name), telematics_data
 
 mappingId   loadspectrumChannel
 target      oem:{id}/{index}/0 rdf:type cx:LoadSpectrumValues; cx:loadSpectrumChannelIndex {body_classes}^^xsd:string; cx:loadSpectrumCountingUnit {header_countingUnit}^^xsd:string; cx:loadSpectrumCountingMethod {header_countingMethod}^^xsd:string; cx:loadSpectrumChannelValues {body_counts}^^xsd:string.
@@ -42,7 +42,7 @@ source		SELECT vehicle_id, newest_telematics_id FROM vehicles
 
 mappingId   adaptionValues
 target		oem:{id} rdf:type cx:Adaption; rdf:type cx:VehicleCurrentState; cx:vehicleOperatingHours {adaption_status_operatingHours}^^xsd:int; cx:vehicleCurrentStateDateTime {adaption_status_date}^^xsd:dateTime; cx:vehicleCurrentMileage {adaption_status_mileage}^^xsd:int; cx:hasValues {adaption_values}^^json:Object .
-source		SELECT id, adaption_values::jsonb->0->'status'->>'date' as adaption_status_date, adaption_values::jsonb->0->'status'->>'operatingHours' as adaption_status_operatingHours, adaption_values::jsonb->0->'status'->>'mileage' as adaption_status_mileage, adaption_values::jsonb->0->'values' as adaption_values FROM public.telematics_data
+source		SELECT id, replace(adaption_values::jsonb->0->'status'->>'date','Z','.000Z') as adaption_status_date, floor((adaption_values::jsonb->0->'status'->>'operatingHours')::numeric)::integer as adaption_status_operatingHours, adaption_values::jsonb->0->'status'->>'mileage' as adaption_status_mileage, adaption_values::jsonb->0->'values' as adaption_values FROM public.telematics_data
 
 ]]  
 

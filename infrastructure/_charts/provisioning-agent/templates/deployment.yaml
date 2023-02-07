@@ -53,7 +53,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: dtc
+              port: {{ (keys .Values.bindings | last) }}
             failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             successTreshold: {{ .Values.livenessProbe.successTreshold }}
@@ -63,7 +63,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /
-              port: dtc
+              port: {{ (keys .Values.bindings | last) }}
             failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             successTreshold: {{ .Values.readinessProbe.successTreshold }}
@@ -73,7 +73,7 @@ spec:
           startupProbe:
             httpGet:
               path: /
-              port: dtc
+              port: {{ (keys .Values.bindings | last) }}
             failureThreshold: {{ .Values.startupProbe.failureThreshold }}
             periodSeconds: {{ .Values.startupProbe.periodSeconds }}
             successTreshold: {{ .Values.startupProbe.successTreshold }}
@@ -90,22 +90,22 @@ spec:
           env:
             - name: ONTOP_PORT              
               value: >-
-              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files $binding.port) }}{{- end }}{{ join " " (reverse $files) | quote| nindent 16 }}
+              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files $binding.port) }}{{- end }}{{ join " " (reverse $files) | nindent 16 }}
             - name: ONTOP_ONTOLOGY_FILE 
               value: >-
-              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files (printf "/opt/ontop/input/%s" $binding.ontology)) }}{{- end }}{{ join " " (reverse $files) | quote| nindent 16 }}
+              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files (printf "/opt/ontop/input/%s" $binding.ontology)) }}{{- end }}{{ join " " (reverse $files) | nindent 16 }}
             - name: ONTOP_MAPPING_FILE 
               value: >-
-              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files (printf "/opt/ontop/input/%s.obda" $endpoint)) }}{{- end }}{{ join " " (reverse $files) | quote| nindent 16 }}
+              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files (printf "/opt/ontop/input/%s.obda" $endpoint)) }}{{- end }}{{ join " " (reverse $files) | nindent 16 }}
             - name: ONTOP_PROPERTIES_FILE
               value: >-
-              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files (printf "/opt/ontop/input/%s.properties" $endpoint)) }}{{- end }}{{ join " " (reverse $files) | quote| nindent 16 }}
+              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files (printf "/opt/ontop/input/%s.properties" $endpoint)) }}{{- end }}{{ join " " (reverse $files) | nindent 16 }}
             - name: ONTOP_PORTAL_FILE
               value: >-
-              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files "/opt/ontop/input/portal.toml") }}{{- end }}{{ join " " (reverse $files) | quote| nindent 16 }}
+              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files "/opt/ontop/input/portal.toml") }}{{- end }}{{ join " " (reverse $files) | nindent 16 }}
             - name: ONTOP_DEV_MODE
               value: >-
-              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files "false") }}{{- end }}{{ join " " (reverse $files) | quote| nindent 16 }}
+              {{- $files := (list) }}{{- range $endpoint,$binding := .Values.bindings }}{{- $files = (append $files "false") }}{{- end }}{{ join " " (reverse $files) | nindent 16 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

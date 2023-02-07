@@ -126,10 +126,9 @@ bindings:
   dtc: 
     port: 8080
     path: (/|$)(.*)
-    settings: |-
-      # Setup In-Memory Database 
-      jdbc.url=jdbc:h2:file:/opt/ontop/database/db;INIT=RUNSCRIPT FROM '/opt/ontop/data/dtc.sql'
-      jdbc.driver=org.h2.Driver
+    settings: 
+      jdbc.url: "jdbc:h2:file:/opt/ontop/database/db;INIT=RUNSCRIPT FROM '/opt/ontop/data/dtc.sql'"
+      jdbc.driver: "org.h2.Driver"
     ontology: cx-ontology.xml
     mapping: |-
       [PrefixDeclaration]
@@ -243,6 +242,3 @@ env: {}
 
 # -- [Kubernetes Secret Resource](https://kubernetes.io/docs/concepts/configuration/secret/) name to load environment variables from
 envSecretName:
-
-# -- A map of repository names to configuration ttl files
-repositories: {}

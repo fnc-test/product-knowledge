@@ -19,6 +19,8 @@ data:
   {{ $endpoint }}.obda: |-
   {{- $binding.mapping | nindent 4 }}
   {{ $endpoint }}.properties: |-
-  {{- $binding.settings | nindent 4 }}
+  {{- range $skey, $svalue := $binding.settings }}
+    {{ $skey }}: {{ $svalue }}
+  {{- end }}
   {{- end }}
 
