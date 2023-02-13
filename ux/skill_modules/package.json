@@ -37,7 +37,7 @@
     "@types/react-dom": "^16.9.14",
     "react": ">=17.0.2",
     "react-dom": ">=17.0.2",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "rollup": "^2.77.2",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-dts": "^4.2.2",
