@@ -24,9 +24,9 @@ $ helm install my-release catenax-ng-product-knowledge/remoting-agent --version 
 |-----|------|---------|-------------|
 | affinity | object | `{}` | [Affinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) constrains which nodes the Pod can be scheduled on based on node labels. |
 | agent.endpoints.default.auth | object | `{}` | An auth object for default security |
-| agent.endpoints.default.path | string | `"/"` | The path mapping the "default" api is going to be exposed by |
+| agent.endpoints.default.path | string | `""` | The path mapping the "default" api is going to be exposed by |
 | agent.endpoints.default.port | string | `"8081"` | The network port, which the "default" api is going to be exposed by the container, pod and service |
-| agent.endpoints.default.regex | string | `"(/|$)(.*)"` | The path mapping the "default" api is going to be exposed by |
+| agent.endpoints.default.regex | string | `"/(.*)"` | The path mapping the "default" api is going to be exposed by |
 | automountServiceAccountToken | bool | `false` | Whether to [automount kubernetes API credentials](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server) into the pod |
 | autoscaling.enabled | bool | `false` | Enables [horizontal pod autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) |
 | autoscaling.maxReplicas | int | `100` | Maximum replicas if resource consumption exceeds resource threshholds |
@@ -42,7 +42,7 @@ $ helm install my-release catenax-ng-product-knowledge/remoting-agent --version 
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
 | imagePullSecret.dockerconfigjson | string | `""` | Image pull secret to create to [obtain the container image from private registries](https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry) Note: This value needs to adhere to the [(base64 encoded) .dockerconfigjson format](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#registry-secret-existing-credentials). Furthermore, if 'imagePullSecret.dockerconfigjson' is defined, it takes precedence over 'imagePullSecrets'. |
 | imagePullSecrets | list | `[]` | Existing image pull secret to use to [obtain the container image from private registries](https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry) |
-| ingresses[0].annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2","nginx.ingress.kubernetes.io/use-regex":"true"}` | Additional ingress annotations to add |
+| ingresses[0].annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$1","nginx.ingress.kubernetes.io/use-regex":"true"}` | Additional ingress annotations to add |
 | ingresses[0].certManager.clusterIssuer | string | `""` | If preset enables certificate generation via cert-manager cluster-wide issuer |
 | ingresses[0].certManager.issuer | string | `""` | If preset enables certificate generation via cert-manager namespace scoped issuer |
 | ingresses[0].className | string | `""` | Defines the [ingress class](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class)  to use |
@@ -76,7 +76,7 @@ $ helm install my-release catenax-ng-product-knowledge/remoting-agent --version 
 | securityContext.allowPrivilegeEscalation | bool | `false` | Controls [Privilege Escalation](https://kubernetes.io/docs/concepts/security/pod-security-policy/#privilege-escalation) enabling setuid binaries changing the effective user ID |
 | securityContext.capabilities.add | list | `["NET_BIND_SERVICE"]` | Specifies which capabilities to add to issue specialized syscalls |
 | securityContext.capabilities.drop | list | `["ALL"]` | Specifies which capabilities to drop to reduce syscall attack surface |
-| securityContext.readOnlyRootFilesystem | bool | `true` | Whether the root filesystem is mounted in read-only mode |
+| securityContext.readOnlyRootFilesystem | bool | `false` | Whether the root filesystem is mounted in read-only mode |
 | securityContext.runAsNonRoot | bool | `true` | Requires the container to run without root privileges |
 | securityContext.runAsUser | int | `10000` | The container's process will run with the specified uid |
 | service.type | string | `"ClusterIP"` | [Service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to expose the running application on a set of Pods as a network service. |

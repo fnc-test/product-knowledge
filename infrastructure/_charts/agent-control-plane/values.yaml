@@ -312,6 +312,8 @@ dataplanes:
      callback: 
        # -- callback interface of the agent plane
        url: http://edc-dataplane.intranet:8082/callback/endpoint-data-reference
+       # -- whether it should appear as the default callback (only one can be active)
+       default: false 
        # -- auth of the callback
        auth: 
        # -- auth key of the callback

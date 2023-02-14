@@ -23,12 +23,24 @@ data:
     edc.dataplane.selector.{{ $key }}.sourcetypes={{ join ","  $agent.sourcetypes }}
     edc.dataplane.selector.{{ $key }}.destinationtypes={{ join ","  $agent.destinationtypes }}
     edc.dataplane.selector.{{ $key }}.properties={ "publicApiUrl": {{ quote $agent.publicurl }} }
+    {{- if eq $agent.callback.default true }}
+    edc.receiver.http.endpoint={{ $agent.callback.url }}
+    {{- else }} 
     edc.receiver.http.endpoints.{{ $key }}={{ $agent.callback.url }} 
+    {{- end }}
     {{- if $agent.callback.auth.value }}
+    {{- if eq $agent.callback.default true }}
+    edc.receiver.http.auth-code={{ $agent.callback.auth.value }}
+    {{- else }} 
     edc.receiver.http.auth-codes.{{ $key }}={{ $agent.callback.auth.value }} 
     {{- end }}
+    {{- end }}
     {{- if $agent.callback.auth.key }}
-    edc.receiver.http.auth-keys.{{ $key }}={{ $agent.callback.auth.key }} 
+    {{- if eq $agent.callback.default true }}
+    edc.receiver.http.auth-key={{ $agent.callback.auth.key }}
+    {{- else }} 
+    edc.receiver.http.auth-keys.{{ $key }}={{ $agent.callback.auth.key }}
+    {{- end }}
     {{- end }}
     {{- end }}
     {{- if .Values.edc.endpoints.default.auth.value }}

@@ -25,8 +25,8 @@ data:
     {{- if .Values.edc.endpoints.control.auth.key }}
     edc.api.control.auth.apikey.value={{ .Values.edc.endpoints.control.auth.value }}
     {{- end }} 
-    {{- if .Values.agent.controlPlaneUrl }}
-    cx.agent.controlplane.url={{ .Values.agent.controlPlaneUrl }}
+    {{- if .Values.agent.controlPlaneDataUrl }}
+    cx.agent.controlplane.url={{ .Values.agent.controlPlaneDataUrl }}
     {{- end }} 
     {{- if .Values.agent.defaultGraph.content }}
     cx.agent.asset.file={{ .Values.agent.defaultGraph.content }}

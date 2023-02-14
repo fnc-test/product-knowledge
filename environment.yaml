@@ -14,4 +14,7 @@ dependencies:
   - pip
   - pip:
     - rdflib
+    - pandas
+    - rdfpandas
+    - openpyxl
 
