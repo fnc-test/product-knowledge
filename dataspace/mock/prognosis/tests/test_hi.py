@@ -3,6 +3,8 @@ import copy
 import json
 import os
 import tempfile
+from app.utils.exceptions import CustomException
+import pytest
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
@@ -52,6 +54,26 @@ def test_hi_200_sanity(client):
     response_item = response_array[0]
     assert len(response_item["healthIndicatorValues"]) == 2
 
+def test_hi_200_invalid(client):
+    """
+
+    Args:
+        client:
+
+    Returns:
+
+    """
+
+    hi_file = f"{THIS_FOLDER}/data/sample-hi-input-invalid.json"
+    with open(hi_file, 'rb') as fdata:
+        hi_data = fdata.read()
+
+    response=hi_request(
+      client=client,
+      hi_file=hi_data
+    )
+    response_data = response.json()
+    assert response.status_code != 200
 
 def test_hi_csv_file(client, hi_data):
     hi_data_copy = copy.deepcopy(hi_data)

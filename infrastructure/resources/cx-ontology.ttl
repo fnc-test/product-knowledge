@@ -5,6 +5,9 @@
 @prefix schema: <https://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix json: <https://json-schema.org/draft/2020-12/schema#> .
+
+json:Object a rdfs:Datatype.
 
 cx:CxOntology a owl:Ontology ;
     dc:creator "Catena-X Knowledge Agents Team" ;
@@ -1509,7 +1512,7 @@ cx:loadSpectrumDescription a owl:DatatypeProperty ;
 cx:loadSpectrumType a owl:DatatypeProperty ;
     rdfs:domain cx:LoadSpectrum ;
     rdfs:isDefinedBy <https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/load_spectrum_ontology.ttl> ;
-    rdfs:range xsd:string ;
+    rdfs:range json:Object ;
     rdfs:subPropertyOf cx:type ;
     skos:example "count"@en,
         "sum"@en ;
@@ -1818,7 +1821,7 @@ cx:isOwnedBy a owl:ObjectProperty ;
 cx:loadSpectrumChannelIndex a owl:DatatypeProperty ;
     rdfs:domain cx:LoadSpectrumValues ;
     rdfs:isDefinedBy <https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/load_spectrum_ontology.ttl> ;
-    rdfs:range xsd:string ;
+    rdfs:range json:Object ;
     skos:example "2"@en,
         "3]"@en,
         "[1"@en ;
@@ -1846,7 +1849,7 @@ cx:loadSpectrumChannelUnit a owl:DatatypeProperty ;
 cx:loadSpectrumChannelValues a owl:DatatypeProperty ;
     rdfs:domain cx:LoadSpectrumValues ;
     rdfs:isDefinedBy <https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/ontology/load_spectrum_ontology.ttl> ;
-    rdfs:range xsd:string ;
+    rdfs:range json:Object ;
     skos:example "3"@en,
         "4]"@en,
         "[2"@en ;
@@ -2240,25 +2243,10 @@ cx:LoadSpectrumValues a owl:Class ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cx:loadSpectrumChannelValues ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:loadSpectrumChannelValues ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:loadSpectrumChannelValues ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:loadSpectrumCountingUnit ;
-            owl:someValuesFrom xsd:string ],
+            owl:someValuesFrom json:Object ],
         [ a owl:Restriction ;
             owl:onProperty cx:loadSpectrumChannelIndex ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:loadSpectrumChannelIndex ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:loadSpectrumChannelIndex ;
-            owl:someValuesFrom xsd:string ],
+            owl:someValuesFrom json:Object ],
         cx:ImmaterialThing ;
     skos:altLabel "body"@en ;
     skos:definition "The values contains a list or a matrix with count values of the histogram."@en ;
@@ -3227,7 +3215,7 @@ cx:LoadSpectrum a owl:Class ;
             owl:someValuesFrom xsd:dateTime ],
         [ a owl:Restriction ;
             owl:onProperty cx:loadSpectrumType ;
-            owl:someValuesFrom xsd:string ],
+            owl:someValuesFrom json:Object ],
         [ a owl:Restriction ;
             owl:onProperty cx:loadSpectrumName ;
             owl:someValuesFrom xsd:string ],
@@ -3239,9 +3227,6 @@ cx:LoadSpectrum a owl:Class ;
             owl:someValuesFrom cx:LoadSpectrumValues ],
         [ a owl:Restriction ;
             owl:onProperty cx:loadSpectrumDescription ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cx:loadSpectrumType ;
             owl:someValuesFrom xsd:string ],
         cx:ImmaterialThing ;
     skos:altLabel "load collective"@en ;

@@ -8,7 +8,7 @@ Below are the steps for installing and setting up the project.
 
 ```
 sudo conda env create -f environment.yaml
-conda activate rul
+conda activate mock
 ```
 
 ## Software Pre-requisites

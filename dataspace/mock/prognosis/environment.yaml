@@ -1,4 +1,4 @@
-name: rul
+name: mock
 channels:
   - defaults
 dependencies:

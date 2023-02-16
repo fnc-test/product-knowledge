@@ -2,6 +2,8 @@
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
+import logging
+LOGGER = logging.getLogger("ERROR")
 
 class CustomException(Exception):
     """
@@ -37,4 +39,5 @@ async def custom_exception_handler(request: Request, exc: CustomException):
     Returns:
 
     """
+    LOGGER.warning(f"About to handle CustomException with status {exc.status_code} and payload {exc.payload}")
     return JSONResponse(content=exc.payload, status_code=exc.status_code)

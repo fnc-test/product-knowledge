@@ -25,15 +25,26 @@ class HiService:
         self.hi_data = hi_data
         self.hi_filename = hi_filename
 
-        errors = self.validate()
         self.hi_component = hi_data.get("componentId")
-        if errors:
+        if not self.hi_component:
             raise CustomException(
-                error_message=f"Health Indicator Input '{hi_filename}' Component '{componentId}' does not have "
+                error_message=f"Health Indicator Input "
+                              f"does not have componentId which is mandatory.",
+                metadata=self.hi_filename
+             )
+
+        errors = self.validate()
+
+        if errors:
+            LOGGER.warning(f"Health indicator file produced errors {errors}.")
+            raise CustomException(
+                error_message=f"Health Indicator Input does not have "
                               f"{','.join(errors)} information which are mandatory.",
                 metadata=self.hi_component
             )
+
         self.hi_hash = hash(json.dumps(hi_data,sort_keys=True))
+
         LOGGER.info("Health indicator file passed all the validations")
 
     def validate(self) -> list:
@@ -47,15 +58,96 @@ class HiService:
             CustomException: If any validation fail will raise custom exception
         """
 
+        LOGGER.info(f"Validating indicator file for component {self.hi_component}.")
+
         errors = []
-        if not self.hi_data.get("componentId"):
+
+        classifiedLoadCollective =  self.hi_data.get("classifiedLoadCollective")
+
+        if not classifiedLoadCollective:
             raise CustomException(
-                error_message=f"Health Indicator Input '{self.hi_filename}' "
-                              f"does not have metadata information which is mandatory.",
-                metadata=self.hi_filename
+                error_message=f"Health Indicator Input does not have "
+                              f"classifiedLoadCollective which is mandatory.",
+                            metadata=self.hi_component
+                        )
+
+        LOGGER.info(f"Validating load collective for component {self.hi_component}.")
+
+        header = classifiedLoadCollective.get("header")
+        if not header:
+            raise CustomException(
+                 error_message=f"Health Indicator Input does not have "
+                               f"classifiedLoadCollective.header which is mandatory.",
+                               metadata=self.hi_component
+                 )
+
+        channels = header.get("channels")
+        if (not channels or not isinstance(channels, list)):
+            raise CustomException(
+                 error_message=f"Health Indicator Input does not have a "
+                               f"classifiedLoadCollective.header.channels array which is mandatory.",
+                              metadata=self.hi_component
             )
-            
-        for meta_field in ["classifiedLoadCollective", "adaptionValueList"]:
+        channelsCount = len(channels)
+
+        body = classifiedLoadCollective.get("body")
+        if not body:
+            raise CustomException(
+                 error_message=f"Health Indicator Input does not have "
+                               f"classifiedLoadCollective.body which is mandatory.",
+                               metadata=self.hi_component
+                 )
+
+        counts = body.get("counts")
+        if not counts:
+            raise CustomException(
+                 error_message=f"Health Indicator Input does not have "
+                               f"classifiedLoadCollective.body.counts which is mandatory.",
+                               metadata=self.hi_component
+                 )
+
+        countsList = counts.get("countsList")
+        if (not countsList or not isinstance(countsList, list)):
+            raise CustomException(
+                 error_message=f"Health Indicator Input does not have "
+                               f"classifiedLoadCollective.body.counts.countsList array which is mandatory.",
+                               metadata=self.hi_component
+                 )
+        countsListCount = len(countsList)
+
+        LOGGER.info(f"Got {countsListCount} counts.")
+
+        classes = body.get("classes")
+        if (not classes or not isinstance(classes, list)):
+            raise CustomException(
+                 error_message=f"Health Indicator Input does not have "
+                               f"classifiedLoadCollective.body.classes array which is mandatory.",
+                               metadata=self.hi_component
+                 )
+
+        classesCount= len(classes)
+
+        if (channelsCount!=classesCount):
+            errors.append(f"{channelsCount} channels, but {classesCount} classes")
+
+        for clazz in classes:
+
+            className = clazz.get("className")
+            if not className:
+               errors.append(f"A class has no name which is mandatory")
+
+            classList = clazz.get("classList")
+            if (not classList or not isinstance(classList, list)):
+              errors.append(f"Class {className} has no classList array which is mandatory")
+            else:
+              classListCount=len(classList)
+
+              LOGGER.info(f"Got {classListCount} classes for class {className}.")
+
+              if (classListCount!=countsListCount):
+                errors.append(f"Class {className} has {classListCount} entries, but there are {countsListCount} counts.")
+
+        for meta_field in ["adaptionValueList"]:
             if not self.hi_data.get(meta_field):
                 errors.append(f"{meta_field}")
 
