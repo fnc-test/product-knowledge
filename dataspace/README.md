@@ -5,7 +5,9 @@ This is a folder linking all the codes related to the Hey Catena! Dataspace prod
 It consists of
 
 - [Extensions to the Eclipse Dataspace Connector (EDC)](edc)
-- [Several Agent Backends for Different Profiles](agents)
+- [Several Agents for Different Provider Profiles](agents)
+- [Virtualization Engines to Bridge Agents and Backends](virtualize)
+- [Mock Backends as Sources for the Virtualization/Agents](mock)
 
 ## Notice
 
