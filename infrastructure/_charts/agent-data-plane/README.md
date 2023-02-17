@@ -26,7 +26,7 @@ $ helm install my-release catenax-ng-product-knowledge/agent-data-plane --versio
 | agent.controlPlaneDataUrl | string | `"http://edc-controlplane.intranet/data"` | Data API Url of the associated Control Plane |
 | agent.defaultGraph | object | `{"content":"dataspace.ttl","name":"api"}` | Initial Definition of the default graph, path to a mounted resource containing a turtle file |
 | agent.federation.connectors | list | `[]` | A List of Base Urls Hinting to the IDS Apis of business partners |
-| assets | object | `{}` | Defines a map of file-based assets |
+| assets | object | `{"dataspace.ttl":"#################################################################\n# Catena-X Agent Bootstrap Graph in TTL/RDF/OWL FORMAT\n#################################################################\n@prefix : <urn:cx:Graph:local:Dataspace> .\n@base <urn:cx:Graph:local:Dataspace> .\n"}` | Defines a map of file-based assets |
 | automountServiceAccountToken | bool | `false` | Whether to [automount kubernetes API credentials](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server) into the pod |
 | autoscaling.enabled | bool | `false` | Enables [horizontal pod autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) |
 | autoscaling.maxReplicas | int | `100` | Maximum replicas if resource consumption exceeds resource threshholds |

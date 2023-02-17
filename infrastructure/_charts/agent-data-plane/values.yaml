@@ -266,6 +266,10 @@ token:
   validationEndpoint: "http://edc-controlplane.intranet/validation/token"
   
 # -- Defines a map of file-based assets
-assets: {}
-  # dataspace.ttl: :-
-  # blablabla
+assets:
+  dataspace.ttl: |
+    #################################################################
+    # Catena-X Agent Bootstrap Graph in TTL/RDF/OWL FORMAT
+    #################################################################
+    @prefix : <urn:cx:Graph:local:Dataspace> .
+    @base <urn:cx:Graph:local:Dataspace> .

@@ -92,7 +92,7 @@ data:
 
   {{ $scope := . }}
   {{- range $asset, $content := .Values.assets }}
-  {{- $asset }}: |-
-  {{- $scope.Files.Get $content | nindent 4 }}
+  {{- $asset  }}: |- 
+  {{- $content | nindent 4 }}
   {{- end }}
 
