@@ -71,7 +71,18 @@ conda env create -f environment.yaml
 conda activate knowledgeagents
 ```
 
+### Ontology Create
+
+Creating a new ontology excel source can be done by invoking
+
+```
+python 
+>>> import ontology.ontology_tools.create_ontology as co
+>>>  co.create_ontology_table('test','Schorsch','1.0.0')
+```
+
 ### Ontology Merge
+
 Creating a merged ontology out of several domain ontologies may be done by invoking
 
 ```

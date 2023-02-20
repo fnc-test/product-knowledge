@@ -17,4 +17,5 @@ dependencies:
     - pandas
     - rdfpandas
     - openpyxl
+    - xlsxwriter
 
