@@ -27,6 +27,16 @@ services:
       - ./resources/druid.runtime.properties:/opt/druid/conf/druid/single-server/micro-quickstart/_common/common.runtime.properties
       - ./resources/data:/opt/druid/data
 
+#  db-backend:
+#    image: postgres
+#    environment:
+#      POSTGRES_PASSWORD:
+#      PGPASSWD:
+#    ports:
+#      - 5432:5432
+#    volumes:
+#      - ./resources/data:/tmp/data
+
   data-backend:
     build:
       dockerfile: src/main/docker/Dockerfile
@@ -41,6 +51,20 @@ services:
       - ./resources/dremio:/opt/dremio/data
       - ./oem/resources/dremio.conf:/opt/dremio/conf/dremio.conf
 
+#  search-backend:
+#    build:
+#      dockerfile: src/main/docker/Dockerfile
+#      context: ../dataspace/agents/sparql-anything
+#    image: ghcr.io/catenax-ng/product-knowledge/facadex-agent:0.7.4-SNAPSHOT
+#    ports:
+#      - "3000:3000"
+#    volumes:
+#      - ./resources/data/zag_fmea.xml:/opt/xyz/zag_fmea.xml
+
+#  graph-backend:
+#    image: ontotext/graphdb:10.1.4
+#    ports:
+#      - "7200:7200"
 
   #
   # Configures the provider agent
@@ -77,11 +101,13 @@ services:
       - ./resources/cx-ontology.ttl:/opt/ontop/input/cx-ontology.ttl
       - ./oem/resources/dtc.obda:/opt/ontop/input/dtc.obda
       - ./oem/resources/hi.obda:/opt/ontop/input/hi.obda
+      - ./oem/resources/hi.psql.obda:/opt/ontop/input/hi.psql.obda
       - ./oem/resources/trace.obda:/opt/ontop/input/trace.obda
       - ./oem/resources/quality.obda:/opt/ontop/input/quality.obda
       - ./oem/resources/settings.local.properties:/opt/ontop/input/settings.local.properties
       - ./oem/resources/settings.dremio.properties:/opt/ontop/input/settings.dremio.properties
       - ./oem/resources/settings.druid.properties:/opt/ontop/input/settings.druid.properties
+      - ./oem/resources/settings.psql.properties:/opt/ontop/input/settings.psql.properties
       - ./oem/resources/portal.toml:/opt/ontop/input/portal.toml
       - ./oem/resources/logback.xml:/opt/ontop/log/logback.xml
 
