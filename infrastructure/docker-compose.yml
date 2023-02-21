@@ -354,5 +354,13 @@ services:
       context: ../ux   
     image: ghcr.io/catenax-ng/product-knowledge/ux:0.7.4-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
+    environment:
+      REACT_APP_SKILL_CONNECTOR_DATA: http://localhost:8500
+      REACT_APP_SKILL_CONNECTOR_CONTROL: http://localhost:8600
+      REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY: X-Api-Key
+      REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_VALUE: foo
+      REACT_APP_SKILL_BACKEND: http://localhost:3000/webvowl/index.html
+      REACT_APP_SKILL_GITHUB_ONTOLOGYHUB: https://api.github.com/repos/catenax-ng/product-knowledge/contents/ontology
+      REACT_APP_FOLDER: /consumer-frontend
     ports:
       - "3000:8080"  # http
