@@ -1,7 +1,3 @@
-edc:
-  repo: ghcr.io/catenax-ng/product-knowledge
-  version: 0.1.2-KA-SNAPSHOT
-
 version: 0.7.4-SNAPSHOT
 
 dataspace:

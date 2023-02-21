@@ -1,6 +1,6 @@
 # Catena-X Knowledge Agents (Hey Catena!) Repository
 
-This is a [MonoRepo](https://en.wikipedia.org/wiki/Monorepo) hosting or linking all the module and infrastructure codes related to the Hey Catena! product(s).
+This is a [MonoRepo](https://en.wikipedia.org/wiki/Monorepo) hosting or linking all the module and infrastructure codes related to the [Hey Catena!](https://catenax-ng.github.io/product-knowledge/) product(s).
 
 * See this [copyright notice](COPYRIGHT.md)
 * See the [authors file](AUTHORS.md)
@@ -27,16 +27,16 @@ some of the docker images need a certain amount of memory and horsepower.
 
 These are the sub-modules of the Hey Catena! product (and their respective sub-folders)
 
-- [Ontology](ontology/README.md) hosts the CX domain ontologies (and the fully merged CX ontology) describing the semantics of Catena-X.
+- [Ontology](ontology/README.md) hosts the CX domain ontologies (including the full-fledged CX ontology) describing the semantics of Catena-X.
 - [Dataspace](dataspace/README.md) hosts the Gaia-X/IDS Dataspace extensions for both providers and consumers which help to implement the semantics of Catena-X.
-- [UX](ux/README.md) hosts the User Experience components and a sample portal/development environment for the semantics and semantic-driven logic and apps.
-- [Infrastructure](infrastructure/README.md) hosts the "Infrastructure as Code" descriptions for easy deployment of above artifacts.
+- [UX](ux/README.md) hosts the User Experience components and a sample portal/development environment for developing and executing semantically-driven logic and apps.
+- [Infrastructure](infrastructure/README.md) hosts "Infrastructure as Code" descriptions for easy deployment of above artifacts.
 
 Besides the markdown documentation including this file, we have some helper folders
 
 - [Github](.github) contains all workflows and CI/CD processes.
   - [Github CI/CD Workflow](.github/workflows/codeql.yaml) builds and unit-tests all artifacts, checks source and binary code quality using CodeQL and publishes the results (only main branch).
-  - [Github KICS Workflow](.github/workflows/kics.yaml) checks Docker Buildfiles and Helm Charts for the most common vulnerabilities.
+  - [Github KICS Workflow](.github/workflows/kics.yml) checks Docker Buildfiles and Helm Charts for the most common vulnerabilities.
 - [Maven](.mvn) contains bootstrap code for the main build system.
 
 And some related scripts and settings

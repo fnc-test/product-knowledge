@@ -6,7 +6,7 @@
 #
 
 ###
-# Build Stage
+# Build Stage, add --platform=linux/arm64 if the build is slow on Apple Silicon
 ###
 FROM node:18 as build
 
@@ -15,7 +15,7 @@ COPY . /app
 COPY skill_gym/.env /app/skill_gym/
 
 RUN npm run init:dev && \
-    npm run build:skillg 
+    npm run build:skillg
 
 ###
 # Operate Stage
@@ -26,6 +26,13 @@ RUN apk update && apk add --no-cache ca-certificates=20190108-r0 && update-ca-ce
 
 # Build time arguments (WebVOWL version)
 ARG VERSION=1.1.7
+ENV REACT_APP_SKILL_CONNECTOR_DATA=http://localhost:8500
+ENV REACT_APP_SKILL_CONNECTOR_CONTROL=http://localhost:8600
+ENV REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY=X-Api-Key
+ENV REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_VALUE=foo
+ENV REACT_APP_SKILL_BACKEND=http://localhost:3000/webvowl/index.html
+ENV REACT_APP_SKILL_GITHUB_ONTOLOGYHUB=https://api.github.com/repos/catenax-ng/product-knowledge/contents/ontology
+ENV REACT_APP_FOLDER=/consumer-frontend
 
 # Download WebVOWL to tomcat webapps directory 
 RUN rm -rf /usr/local/tomcat/webapps/* && \

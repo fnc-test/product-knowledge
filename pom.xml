@@ -46,7 +46,7 @@
         <!-- uncomment once the jitpack problem is resolved -->
         <module>ontology</module>
         <!-- uncomment once the .env problem has been solved by SSO -->
-        <!--<module>ux</module>-->
+        <module>ux</module>
     </modules>
 
     <dependencyManagement>

@@ -71,6 +71,20 @@ spec:
             successThreshold: 1
             timeoutSeconds: 5        
           env:
+            - name: REACT_APP_SKILL_CONNECTOR_DATA
+              value: https://{{ .Values.ingress.host }}/consumer-edc-data/BPNL00000003CQI9
+            - name: REACT_APP_SKILL_CONNECTOR_CONTROL
+              value: https://{{ .Values.ingress.host }}/oem-edc-control/BPNL00000003COJN
+            - name: REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_KEY
+              value: X-Api-Key
+            - name: REACT_APP_SKILL_CONNECTOR_AUTH_HEADER_VALUE
+              value: {{ .Values.security.xApiKey }}
+            - name: REACT_APP_SKILL_BACKEND
+              value: https://{{ .Values.ingress.host }}/consumer-frontend/webvowl/index.html
+            - name: REACT_APP_SKILL_GITHUB_ONTOLOGYHUB
+              value: https://api.github.com/repos/catenax-ng/product-knowledge/contents/ontology
+            - name: REACT_APP_FOLDER
+              value: /consumer-frontend
           volumeMounts:
       volumes:
 ---
@@ -97,7 +111,6 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: "https://knowledge.dev.demo.catena-x.net, http://localhost:3000"
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, PATCH, OPTIONS"
