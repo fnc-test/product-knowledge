@@ -12,7 +12,6 @@ FROM node:18 as build
 
 WORKDIR /app
 COPY . /app
-COPY skill_gym/.env /app/skill_gym/
 
 RUN npm run init:dev && \
     npm run build:skillg
