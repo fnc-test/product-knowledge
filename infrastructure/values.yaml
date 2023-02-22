@@ -14,6 +14,7 @@ dataspace:
   publicKeyAliasCustomer: "customer-daps-crt"
   dapsClientIdCustomer: ""
   ontology: resources/dataspace.ttl
+  ontologyRef: main
   config: resources/agent.ttl
 
 ingress:
