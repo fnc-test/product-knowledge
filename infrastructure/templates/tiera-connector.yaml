@@ -57,7 +57,7 @@ data:
     edc.dataplane.selector.agentplane.url=http://tiera-data-plane:8082/
     edc.dataplane.selector.agentplane.sourcetypes=urn:cx:Protocol:w3c:Http#SPARQL,HttpData
     edc.dataplane.selector.agentplane.destinationtypes=HttpProxy,HttpProtocol
-    edc.dataplane.selector.agentplane.properties={ "publicApiUrl": "https://{{ .Values.ingress.host }}/tiera-edc-data/{{ .Values.dataspace.bpnTier1 }}/api/public" }
+    edc.dataplane.selector.agentplane.properties={ "publicApiUrl": "https://{{ .Values.ingress.host }}/tiera-edc-data/{{ .Values.dataspace.bpnTier1 }}/data/" }
     
     edc.transfer.proxy.endpoint=https://{{ .Values.ingress.host }}/tiera-edc-data/{{ .Values.dataspace.bpnTier1 }}
     edc.transfer.proxy.token.signer.privatekey.alias={{ .Values.dataspace.privateKeyAliasTier1 }}
@@ -262,7 +262,7 @@ data:
     web.http.default.port=8082
     web.http.default.path=/api
     web.http.public.port=8185
-    web.http.public.path=/api/public
+    web.http.public.path=/data
     web.http.callback.port=8186
     web.http.callback.path=/callback
     web.http.control.port=9999
@@ -563,7 +563,7 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /tiera-edc-data/{{ .Values.dataspace.bpnTier1 }}/(api/public)(/|$)(.*)
+          - path: /tiera-edc-data/{{ .Values.dataspace.bpnTier1 }}/(data)(/|$)(.*)
             pathType: Prefix
             backend:
               service:
