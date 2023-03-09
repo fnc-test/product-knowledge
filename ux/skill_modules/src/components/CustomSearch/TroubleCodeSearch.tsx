@@ -1,11 +1,12 @@
 import { Grid } from '@mui/material';
 import { Input, Button } from 'cx-portal-shared-components';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CustomSearchProps } from '.';
 import { getConnectorFactory } from '../..';
 import { ChipData } from './components/ChipList';
 import KeywordInput from './components/KeywordInput';
 import VinInput from './components/VinInput';
+import { SearchContext } from './SearchContext';
 
 export default function TroubleCodeSearch({ onSearch }: CustomSearchProps) {
   const [searchVin, setSearchVin] = useState<string>('');
@@ -14,6 +15,8 @@ export default function TroubleCodeSearch({ onSearch }: CustomSearchProps) {
   const [chipData, setChipData] = useState<ChipData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [disabledButton, setDisabledButton] = useState<boolean>(true);
+  const context = useContext(SearchContext);
+  const { options } = context;
 
   const onVinSearchChange = (value: string) => {
     setSearchVin(value);
@@ -28,6 +31,15 @@ export default function TroubleCodeSearch({ onSearch }: CustomSearchProps) {
       (hasNoValue(chipData) && hasNoValue(keywordInput));
     setDisabledButton(isDisabled);
   }, [searchVin, chipData, keywordInput, searchVersion]);
+
+  useEffect(() => {
+    if (!options.values) return;
+    if (options.skill === 'TroubleCodeSearch') {
+      if (options.values.vin) setSearchVin(options.values.vin);
+      setSearchVersion('1');
+      if (options.values.keywords) setKeywordInput(options.values.keywords);
+    }
+  }, [options]);
 
   const onTroubleButtonClick = () => {
     setLoading(true);
@@ -54,7 +66,7 @@ export default function TroubleCodeSearch({ onSearch }: CustomSearchProps) {
 
   return (
     <>
-      <Grid container spacing={1}>
+      <Grid container spacing={1} sx={{ mt: 2 }}>
         <Grid item xs={12} md={10}>
           <VinInput
             value={searchVin}
@@ -77,6 +89,7 @@ export default function TroubleCodeSearch({ onSearch }: CustomSearchProps) {
         placeholder="Enter a key word"
         disabled={loading}
         onChipChange={setChipData}
+        input={keywordInput}
       />
       <Button
         disabled={disabledButton || loading}
