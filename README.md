@@ -1,6 +1,7 @@
-# Catena-X Knowledge Agents (Hey Catena!) Repository
+# Catena-X Knowledge Agents KIT (Hey Catena!) Source Repository
 
-This is a [MonoRepo](https://en.wikipedia.org/wiki/Monorepo) hosting or linking all the module and infrastructure codes related to the [Hey Catena!](https://catenax-ng.github.io/product-knowledge/) product(s).
+This is a [MonoRepo](https://en.wikipedia.org/wiki/Monorepo) hosting or linking all the module 
+and infrastructure codes related to the [Hey Catena!](https://catenax-ng.github.io/product-knowledge/) KIT.
 
 * See this [copyright notice](COPYRIGHT.md)
 * See the [authors file](AUTHORS.md)
@@ -27,10 +28,10 @@ some of the docker images need a certain amount of memory and horsepower.
 
 These are the sub-modules of the Hey Catena! product (and their respective sub-folders)
 
-- [Ontology](ontology/README.md) hosts the CX domain ontologies (including the full-fledged CX ontology) describing the semantics of Catena-X.
-- [Dataspace](dataspace/README.md) hosts the Gaia-X/IDS Dataspace extensions for both providers and consumers which help to implement the semantics of Catena-X.
-- [UX](ux/README.md) hosts the User Experience components and a sample portal/development environment for developing and executing semantically-driven logic and apps.
-- [Infrastructure](infrastructure/README.md) hosts "Infrastructure as Code" descriptions for easy deployment of above artifacts.
+- [Ontology](ontology/README.md) hosts the CX domain ontologies (including the fully merged CX ontology and tooling) describing the semantics of the Catena-X Dataspace.
+- [Dataspace](dataspace/README.md) hosts reference implementations of the Gaia-X/IDS Dataspace extensions (Agents) for both Providers and Consumers which  the semantics of Catena-X.
+- [UX](ux/README.md) hosts User Experience components and a sample portal/development environment for developing and executing semantically-driven logic and apps.
+- [Infrastructure](infrastructure/README.md) hosts "Infrastructure as Code" descriptions for easy deployment of above artifacts including a sample dataspace consisting of three tenants (Consumer, OEM and supplier).
 
 Besides the markdown documentation including this file, we have some helper folders
 
@@ -48,6 +49,11 @@ And some related scripts and settings
   - [Maven Wrapper](mvnw)([For Windows](mvnw.cmd)) for bootstrapping the build system.
   - [Maven Pom](pom.xml) describing the KA root module and common build steps.
   - [Maven Settings](settings.xml) configuring the associated artifact repository credentials.
+- Postman Collections and Environments
+  - [Knowledge Agents](cx_ka.postman_collection.json) contains API interactions and samples for all REST-based interfaces of the KA architecture. Includes integration test steps. Excludes conformity asessment methods. Should be combined with one of the following environments
+  - [Localhost](cx_ka.localhost.postman_environment.json) contains API endpoints and secrets for interacting with the local deployment of the sample dataspace.
+  - [Development](cx_ka.development.postman_environment.json) contains API endpoints and (emptied) secrets for interacting with the development deployment of the sample dataspace. Please contact the CX association to get the actual secrets.
+  - [Localhost](cx_ka.integration.postman_environment.json) contains API endpoints and (emptied) secrets for interacting with the integration deployment of the sample dataspace. Please contact the CX association to get the actual secrets.
 - [Conda Environment](environment.yaml) for setting up python.
 
 ## Build
