@@ -54,13 +54,15 @@ export const SkillSelect = ({ onSkillChange }: SkillSelectProps) => {
   const context = useContext(SearchContext);
   const { setOptions } = context;
 
-  const selectSkill = function(value:string) {
-    const selectedSkill=skillOptions.find((skill) => skill.value==value);
+  const selectSkill = function (value: string) {
+    const selectedSkill = skillOptions.find((skill) => skill.value == value);
     selectSkillOptions(selectedSkill);
-  }
+  };
 
-  const selectSkillOptions = function( selectedSkill:SkillOptions | undefined) {
-    if(selectedSkill) {
+  const selectSkillOptions = function (
+    selectedSkill: SkillOptions | undefined
+  ) {
+    if (selectedSkill) {
       const options: SearchOptions = {
         skill: selectedSkill!.value,
         values: getOptionValues(selectedSkill!),
@@ -70,7 +72,7 @@ export const SkillSelect = ({ onSkillChange }: SkillSelectProps) => {
       setSkillValue(selectedSkill!.title);
       setInputValue(selectedSkill!.title);
     }
-  }
+  };
 
   const onSearchSkill = (value: string) => {
     setNoResult(false);
@@ -116,28 +118,28 @@ export const SkillSelect = ({ onSkillChange }: SkillSelectProps) => {
     }
     if (skill.value === 'MaterialIncidentSearch') {
       let searchMaterial = skill.regExResult?.groups?.material;
-      if(searchMaterial) {
-        searchMaterial=searchMaterial.replace(' material','');
-        searchMaterial=searchMaterial.replace(' Material','');
+      if (searchMaterial) {
+        searchMaterial = searchMaterial.replace(' material', '');
+        searchMaterial = searchMaterial.replace(' Material', '');
         let arr = searchMaterial.split(' ');
         arr = arr.map((noun) => noun.charAt(0).toUpperCase() + noun.slice(1));
         searchMaterial = arr.join(' ');
       } else {
-        searchMaterial='';
+        searchMaterial = '';
       }
       let searchRegion: [number, number, number, number] = [0, 0, 0, 0];
       let searchCenter: LatLngTuple = [0, 0];
       if (
-        skill.regExResult?.groups && (
-        skill.regExResult.groups.region.includes('southern') ||
-        skill.regExResult.groups.region.includes('Southern'))
+        skill.regExResult?.groups &&
+        (skill.regExResult.groups.region.includes('southern') ||
+          skill.regExResult.groups.region.includes('Southern'))
       ) {
         searchRegion = [7.5, 98, 8, 98.5];
         searchCenter = [7.75, 98.25];
       } else if (
-        skill.regExResult?.groups && (
-        skill.regExResult.groups.region.includes('east') ||
-        skill.regExResult.groups.region.includes('East'))
+        skill.regExResult?.groups &&
+        (skill.regExResult.groups.region.includes('east') ||
+          skill.regExResult.groups.region.includes('East'))
       ) {
         searchRegion = [12.75, 74.75, 13.25, 75.25];
         searchCenter = [13, 75];
