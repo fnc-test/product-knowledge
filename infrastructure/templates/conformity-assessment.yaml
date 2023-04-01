@@ -63,7 +63,7 @@ spec:
           startupProbe:
             failureThreshold: 5
             httpGet:
-              path: /matchmaking?asset=TestAsset
+              path: /match?asset=TestAsset
               port: 8080
               scheme: HTTP
             initialDelaySeconds: 30
@@ -73,7 +73,7 @@ spec:
           livenessProbe:
             failureThreshold: 2
             httpGet:
-              path: /matchmaking?asset=TestAsset
+              path: /match?asset=TestAsset
               port: 8080
               scheme: HTTP
             periodSeconds: 300
@@ -82,7 +82,7 @@ spec:
           readinessProbe:
             failureThreshold: 2
             httpGet:
-              path: /matchmaking?asset=TestAsset
+              path: /match?asset=TestAsset
               port: 8080
               scheme: HTTP
             periodSeconds: 60
