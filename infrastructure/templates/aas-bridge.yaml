@@ -39,10 +39,10 @@ spec:
           resources:
            requests:
             cpu: 0.5
-            memory: "256Mi"
+            memory: "512Mi"
            limits:
             cpu: 0.5
-            memory: "256Mi"
+            memory: "512Mi"
           startupProbe:
             failureThreshold: 18
             httpGet:
@@ -72,9 +72,9 @@ spec:
             successThreshold: 1
             timeoutSeconds: 5        
           env:
-            - name: PROVIDER_AGENT_PLANE
-              value: http://oem-data-plane:8082/api/agent
             - name: PROVIDER_SPARQL_ENDPOINT
+              value: http://oem-data-plane:8082/api/agent
+            - name: PROVIDER_AGENT_PLANE
               value: http://oem-provider-agent:8082/sparql
             - name: TIMEOUT_SECONDS
               value: "30"
