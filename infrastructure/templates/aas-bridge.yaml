@@ -115,7 +115,7 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /aas-bridge(.*)
+          - path: /aas-bridge/(.*)
             pathType: Prefix
             backend:
               service:
