@@ -486,6 +486,16 @@ export const ASSETS = {
       },
     ],
   },
+  warnings: [
+    {
+      'source-tenant': 'BPNL00000003CQI9',
+      'source-asset': 'urn:cx:GraphAsset#DefaultGraph',
+      'target-tenant': 'BPNL00000003COJN',
+      'target-asset': 'urn:cx:GraphAsset#supplier.TestGraph',
+      problem: 'An example warning.',
+      context: 'SPARQL-10478',
+    },
+  ],
 };
 
 export const SEARCH_RESULT = {
@@ -524,6 +534,16 @@ export const SEARCH_RESULT = {
       },
     ],
   },
+  warnings: [
+    {
+      'source-tenant': 'BPNL00000003CQI9',
+      'source-asset': 'urn:cx:GraphAsset#DefaultGraph',
+      'target-tenant': 'BPNL00000003COJN',
+      'target-asset': 'urn:cx:GraphAsset#supplier.TestGraph',
+      problem: 'An example warning.',
+      context: 'SPARQL-10478',
+    },
+  ],
 };
 
 export const ONTOLOGIES = [
