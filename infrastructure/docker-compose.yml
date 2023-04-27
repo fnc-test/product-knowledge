@@ -234,7 +234,6 @@ services:
       - "8102:8186"  # AGREEMENT CALLBACK
       - "8103:9999" # CONTROL
       - "4041:4040"  # DEBUG
-      - "8104:8083"  # OBSERVABILITY
     environment:
       # If you want to enable multiple endpoints, simply list them with spaces, like ONTOP_PORT: 8080 8082
       EDC_FS_CONFIG: /app/configuration.properties
@@ -327,7 +326,6 @@ services:
       - "8402:8186"  # AGREEMENT CALLBACK
       - "8403:9999" # CONTROL
       - "4044:4040"  # DEBUG
-      - "8406:8083" # Observability
     environment:
       # If you want to enable multiple endpoints, simply list them with spaces, like ONTOP_PORT: 8080 8082
       EDC_FS_CONFIG: /app/configuration.properties
