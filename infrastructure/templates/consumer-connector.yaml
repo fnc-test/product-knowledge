@@ -8,7 +8,7 @@ data:
     web.http.default.port=8080
     web.http.default.path=/api
     web.http.management.port=8181
-    web.http.management.path=/data
+    web.http.management.path=/management
     web.http.validation.port=8182
     web.http.validation.path=/validation
     web.http.control.port=9999
