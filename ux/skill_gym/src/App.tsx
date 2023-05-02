@@ -8,6 +8,7 @@ export default function App() {
     { to: '/dataspace', title: 'Dataspace' },
     { to: '/vocabulary', title: 'Vocabulary' },
     { to: '/custom-search', title: 'Intelligence' },
+    { to: '/aaswc/', title: 'Digital Twins' },
   ];
 
   return (
