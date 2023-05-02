@@ -127,8 +127,8 @@ export const SkillSelect = ({ onSkillChange }: SkillSelectProps) => {
       } else {
         searchMaterial = '';
       }
-      let searchRegion: [number, number, number, number] = [0, 0, 0, 0];
-      let searchCenter: LatLngTuple = [0, 0];
+      let searchRegion: [number, number, number, number];
+      let searchCenter: LatLngTuple;
       if (
         skill.regExResult?.groups &&
         (skill.regExResult.groups.region.includes('southern') ||
