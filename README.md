@@ -20,9 +20,9 @@ All sources are locally documented using markdown and language-specific code com
 
 ## Repository Linking and Initialisation
 
-The individual modules may be maintained in separate repositories (currently: none). 
+The individual modules may be maintained in separate repositories (currently: [a patched AASWC client](ux/skill_gym/public/aaswc)). 
 
-If they are (currently: not), they would be linked as [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) 
+They are linked as [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) 
 so you should be sure to run the following command after cloning this repo:
 
 ```console

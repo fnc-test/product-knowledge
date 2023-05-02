@@ -17,7 +17,7 @@ The following is a simple type of single-level Software-BOM for all official ope
 * Comment - any further remarks on the kind of dependency
 
 | Product | Component | Library/Module  | Version | Stage | License | Comment |
-|--- | --- | --- | --- | --- | --- | ---| 
+|--- | -- | --- | --- | --- | --- | ---| 
 | * | * | [Apache Maven](https://maven.apache.org) | >=3.8 | Compile + Test + Packaging | Apache License 2.0 |     |
 | * | * | Docker Engine | >=20.10.17 | Packaging + Provided | Apache License 2.0 |     |
 | * | * | [kubernetes](https://kubernetes.io/de/)/[helm](https://helm.sh/) | >=1.20/3.9 | Provided | Apache License 2.0 |     |
@@ -50,6 +50,10 @@ The following is a simple type of single-level Software-BOM for all official ope
 | Dataspace | * | [Java Runtime Environment (JRE)](https://de.wikipedia.org/wiki/Java-Laufzeitumgebung) | >=11 | Test + Provided | * | License (GPL, BCL, ...) depends on choosen runtime. |
 | Dataspace | * | [Java Development Kit (JDK)](https://de.wikipedia.org/wiki/Java_Development_Kit) | >=11 | Compile + Packaging | * | License (GPL, BCL, ...) depends on choosen kit. |
 | Dataspace | * | [Junit Jupiter](https://junit.org) | >=5 | Test | MIT |     |
+| Dataspace | AAS Bridge | [FAAST Service](https://github.com/FraunhoferIOSB/FAAAST-Service) | >=0.4.0 | All | Apache License 2.0 |
+| Dataspace | AAS Bridge | [Eclipse Semantic Modeling Framework](https://github.com/eclipse-esmf/esmf-sdk) | >=1.1.0-M5 | Compile | MPL 2.0 |
+| Dataspace | AAS Bridge | [AAS4J](https://github.com/eclipse-aas4j/aas4j) | >=1.2.0 | All | Apache License 2.0 |
+| Dataspace | AAS Bridge | [OkHttp3 MockServer](https://github.com/square/okhttp) | 4.9.0 | Test | Apache License 2.0 |
 | Dataspace | Mock>Prognosis | [Fastapi](https://fastapi.tiangolo.com/) | >=0.70.0 | All | MIT |     |
 | Dataspace | Mock>Prognosis | [Gunicorn](https://gunicorn.org/) | >=20.1.0 | All | MIT |     |
 | Dataspace | Mock>Prognosis | [Python Dateutil](https://github.com/dateutil/dateutil) | >=2.8.1 | All | Apache License 2.0 and BSD-3 |     |
