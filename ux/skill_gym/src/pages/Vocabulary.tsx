@@ -15,7 +15,9 @@ export default function Vocabulary() {
 
   const valRegex = /([^&=]+)/;
   const params = new URLSearchParams(search);
-  const assetFilter = params.get('ontologies').match(valRegex)[1];
+  const ontologies = params.get('ontologies');
+  const ontologiesMatch = ontologies ? ontologies.match(valRegex) : [];
+  const assetFilter = ontologiesMatch && ontologiesMatch.length>0 ? ontologiesMatch[1] : '';
 
   return (
     <Box mt={4}>
@@ -66,7 +68,7 @@ export default function Vocabulary() {
       )}
       <Box mt={1} mb={1}>
         <OntologyHub
-          filter={assetFilter ? assetFilter : ''}
+          filter={assetFilter}
           onShowOntologyGraph={setSelectedOntology}
           onShowAssetList={onNavigateToAsset}
           pageSize={selectedOntology.length > 0 ? 5 : 12}
