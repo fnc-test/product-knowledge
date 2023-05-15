@@ -520,7 +520,8 @@ data:
     edc.api.control.auth.apikey.value={{ .Values.security.xApiKey }}
     
     cx.agent.callback=http://oem-data-plane:8186/callback/endpoint-data-reference
-    cx.agent.controlplane.url=http://oem-control-plane2:8181/management
+    cx.agent.controlplane.url=http://oem-control-plane2:8282
+    cx.agent.controlplane.management=http://oem-control-plane2:8181/management
     cx.agent.asset.file=dataspace.ttl
     cx.agent.dataspace.synchronization=60000
     cx.agent.dataspace.remotes=https://{{ .Values.ingress.host}}/tiera-edc-control/BPNL00000003CPIY

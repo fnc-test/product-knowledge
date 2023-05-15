@@ -54,6 +54,12 @@ bpnl:BPNL00000003B2OM cx-common:hasSite bpns:BPNS0000000006V6.
 
 bpnl:BPNL00000003B0Q0 cx-common:hasConnector <http://provider-agent:8082/sparql>.
 bpnl:BPNL00000003CSGV cx-common:hasConnector <http://provider-agent:8082/sparql>.
+bpnl:BPNL00000003AXS3 cx-common:hasConnector <http://provider-agent:8082/sparql>.
+bpnl:BPNL00000003AYRE cx-common:hasConnector <http://provider-agent:8082/sparql>.
+bpnl:BPNL00000003B2OM cx-common:hasConnector <http://provider-agent:8082/sparql>.
+bpnl:BPNL00000007OR16 cx-common:hasConnector <http://provider-agent:8082/sparql>.
+bpnl:BPNL00000003AVTH cx-common:hasConnector <http://provider-agent:8082/sparql>.
+bpnl:BPNL00000003AZQP cx-common:hasConnector <http://provider-agent:8082/sparql>.
 
 bpns:BPNS00000003AXS3 cx-common:hasGeoInformation <geo:BPNS00000003AXS3>.
 bpns:BPNS00000003B0Q0 cx-common:hasGeoInformation <geo:BPNS00000003B0Q0>.
