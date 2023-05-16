@@ -11,7 +11,7 @@ export default function Vocabulary() {
   const onNavigateToAsset = (ontologyName: string) => {
     let path = `/dataspace?ontology=${ontologyName.replace(' ', '')}`; 
     navigate(path);
-  }
+  };
 
   const valRegex = /([^&=]+)/;
   const params = new URLSearchParams(search);
