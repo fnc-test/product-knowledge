@@ -17,7 +17,7 @@ services:
     build:
       dockerfile: src/main/docker/Dockerfile
       context: ../dataspace/virtualize/druid
-    image: ghcr.io/catenax-ng/product-knowledge/virtualizer-druid:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/virtualizer-druid:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8888:8888" # http
@@ -41,7 +41,7 @@ services:
     build:
       dockerfile: src/main/docker/Dockerfile
       context: ../dataspace/virtualize/dremio
-    image: ghcr.io/catenax-ng/product-knowledge/virtualizer-dremio:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/virtualizer-dremio:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "9047:9047" # http
@@ -56,7 +56,7 @@ services:
 #    build:
 #      dockerfile: src/main/docker/Dockerfile
 #      context: ../dataspace/agents/sparql-anything
-#    image: ghcr.io/catenax-ng/product-knowledge/facadex-agent:0.9.1-SNAPSHOT
+#    image: ghcr.io/catenax-ng/product-knowledge/facadex-agent:1.9.1-SNAPSHOT
 #    ports:
 #      - "3000:3000"
 #    volumes:
@@ -74,7 +74,7 @@ services:
     build:
       dockerfile: src/main/docker/Dockerfile
       context: ../dataspace/agents/conforming
-    image: ghcr.io/catenax-ng/product-knowledge/conforming-agent:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/conforming-agent:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     environment:
       # Uncomment to enable for debugging, please choose a different port for each endpoint
@@ -90,7 +90,7 @@ services:
     build:
       dockerfile: src/main/docker/Dockerfile
       context: ../dataspace/agents/provisioning
-    image: ghcr.io/catenax-ng/product-knowledge/provisioning-agent:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/provisioning-agent:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8080:8080" # sparql endpoint
@@ -100,19 +100,19 @@ services:
       - "4039:4040" # DEBUG
     environment:
       # If you want to enable multiple endpoints, simply list them with spaces, like ONTOP_PORT: 8080 8082
-      ONTOP_PORT: 8080 8081 8082 8083
+      ONTOP_PORT: 8080 8081 8084 8082 8083
       # Uncomment to enable for debugging, please choose a different port for each endpoint
       #JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:4040 #-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:4040
       # If you want to enable multiple ontologies, simply list them with spaces, like ONTOP_ONTOLOGY_FILE: /input/cx-ontology.xml /input/cx-ontology2.xml 
-      ONTOP_ONTOLOGY_FILE: /opt/ontop/input/cx-ontology.xml /opt/ontop/input/cx-ontology.ttl /opt/ontop/input/cx-ontology-minimal.ttl /opt/ontop/input/cx-ontology.ttl
+      ONTOP_ONTOLOGY_FILE: /opt/ontop/input/cx-ontology.xml /opt/ontop/input/cx-ontology-minimal.ttl /opt/ontop/input/cx-ontology-minimal.ttl /opt/ontop/input/cx-ontology-minimal.ttl /opt/ontop/input/cx-ontology.ttl
       # If you want to enable multiple mappings, simply list them with spaces, like ONTOP_MAPPING_FILE: /input/dtc.obda /input/loadspectrum.obda 
-      ONTOP_MAPPING_FILE: /opt/ontop/input/dtc.obda /opt/ontop/input/hi.obda /opt/ontop/input/trace.obda /opt/ontop/input/quality.obda
+      ONTOP_MAPPING_FILE: /opt/ontop/input/dtc.obda /opt/ontop/input/hi.obda /opt/ontop/input/rul.obda /opt/ontop/input/trace.obda /opt/ontop/input/quality.obda
       # If you want to enable multiple settings, simply list them with spaces, like ONTOP_PROPERTIES_FILE: /input/settings.properties /input/settings.dremio.properties
-      ONTOP_PROPERTIES_FILE: /opt/ontop/input/settings.local.properties /opt/ontop/input/settings.dremio.properties /opt/ontop/input/settings.dremio.properties /opt/ontop/input/settings.dremio.properties
+      ONTOP_PROPERTIES_FILE: /opt/ontop/input/settings.local.properties /opt/ontop/input/settings.dremio.properties /opt/ontop/input/settings.dremio.properties /opt/ontop/input/settings.dremio.properties /opt/ontop/input/settings.dremio.properties
       # If you want to enable multiple portals, simply list them with spaces, like ONTOP_PORTAL_FILE: /input/portal.toml /input/portal2.toml 
-      ONTOP_PORTAL_FILE: /opt/ontop/input/portal.toml /opt/ontop/input/portal.toml /opt/ontop/input/portal.toml /opt/ontop/input/portal.toml
+      ONTOP_PORTAL_FILE: /opt/ontop/input/portal.toml /opt/ontop/input/portal.toml /opt/ontop/input/portal.toml /opt/ontop/input/portal.toml /opt/ontop/input/portal.toml
       # If you want to enable different developer modes, simply list them with spaces, like NTOP_DEV_MODE: true false 
-      ONTOP_DEV_MODE: true true true true
+      ONTOP_DEV_MODE: true true true true true
     volumes:
       - ./resources/cx-ontology.xml:/opt/ontop/input/cx-ontology.xml
       - ./resources/cx-ontology.ttl:/opt/ontop/input/cx-ontology.ttl
@@ -121,6 +121,7 @@ services:
       - ./oem/resources/hi.obda:/opt/ontop/input/hi.obda
       - ./oem/resources/hi.psql.obda:/opt/ontop/input/hi.psql.obda
       - ./oem/resources/trace.obda:/opt/ontop/input/trace.obda
+      - ./oem/resources/rul.obda:/opt/ontop/input/rul.obda
       - ./oem/resources/quality.obda:/opt/ontop/input/quality.obda
       - ./oem/resources/settings.local.properties:/opt/ontop/input/settings.local.properties
       - ./oem/resources/settings.dremio.properties:/opt/ontop/input/settings.dremio.properties
@@ -144,7 +145,7 @@ services:
         PROVIDER_SPARQL_ENDPOINT_ARG: https://knowledge.dev.demo.catena-x.net/oem-edc-data/BPNL00000003COJN/api/agent
         #PROVIDER_AGENT_PLANE_ARG: http://provider-agent:8082/sparql
         PROVIDER_AGENT_PLANE_ARG: http://oem-provider-agent:8082/sparql
-    image: ghcr.io/catenax-ng/product-knowledge/aas-bridge:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/aas-bridge:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8700:8080" # AAS-API
@@ -168,7 +169,7 @@ services:
       args:
         JAR: target/controlplane-memory.jar
         LIB: target/lib
-    image: ghcr.io/catenax-ng/product-knowledge/controlplane-memory:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-agents-edc/controlplane-memory:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8090:8080" # API
@@ -199,7 +200,7 @@ services:
       args:
         JAR: target/controlplane-memory.jar
         LIB: target/lib
-    image: ghcr.io/catenax-ng/product-knowledge/controlplane-memory:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-agents-edc/controlplane-memory:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8096:8080" # API
@@ -228,7 +229,7 @@ services:
       args:
         JAR: target/agentplane-azure-vault.jar
         LIB: target/lib
-    image: ghcr.io/catenax-ng/product-knowledge/agentplane-azure-vault:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-agents-edc/agentplane-azure-vault:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8100:8082"  # API/sparql endpoint
@@ -240,7 +241,7 @@ services:
       # If you want to enable multiple endpoints, simply list them with spaces, like ONTOP_PORT: 8080 8082
       EDC_FS_CONFIG: /app/configuration.properties
       # Uncomment to enable for debugging, please choose a different port for each endpoint
-      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:4040
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:4040
     volumes:
       - ./oem/resources/dataplane.properties:/app/configuration.properties
       - ./resources/dataspace_local.ttl:/app/dataspace.ttl
@@ -254,7 +255,7 @@ services:
     build:
       dockerfile: src/main/docker/Dockerfile
       context: ../dataspace/mock/prognosis
-    image: ghcr.io/catenax-ng/product-knowledge/prognosis:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/prognosis:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "5005:5005" # API
@@ -266,7 +267,7 @@ services:
     build:
       dockerfile: src/main/docker/Dockerfile
       context: ../dataspace/agents/remoting
-    image: ghcr.io/catenax-ng/product-knowledge/remoting-agent:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/remoting-agent:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8200:8081" # sparql endpoint
@@ -289,7 +290,7 @@ services:
       args:
         JAR: target/controlplane-memory.jar
         LIB: target/lib
-    image: ghcr.io/catenax-ng/product-knowledge/controlplane-memory:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-agents-edc/controlplane-memory:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8300:8080" # API
@@ -320,7 +321,7 @@ services:
       args:
         JAR: target/agentplane-azure-vault.jar
         LIB: target/lib
-    image: ghcr.io/catenax-ng/product-knowledge/agentplane-azure-vault:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-agents-edc/agentplane-azure-vault:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8400:8082"  # API/sparql endpoint
@@ -349,7 +350,7 @@ services:
       args:
         JAR: target/controlplane-memory.jar
         LIB: target/lib
-    image: ghcr.io/catenax-ng/product-knowledge/controlplane-memory:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-agents-edc/controlplane-memory:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8500:8080" # API
@@ -379,7 +380,7 @@ services:
       args:
         JAR: target/agentplane-azure-vault.jar
         LIB: target/lib
-    image: ghcr.io/catenax-ng/product-knowledge/agentplane-azure-vault:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-agents-edc/agentplane-azure-vault:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8600:8082"  # API/sparql endpoint
@@ -402,7 +403,7 @@ services:
     build:
       dockerfile: src/main/docker/Dockerfile
       context: ../ux
-    image: ghcr.io/catenax-ng/product-knowledge/ux:0.9.1-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/ux:1.9.1-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     environment:
       REACT_APP_SKILL_CONNECTOR_DATA: http://localhost:8500
