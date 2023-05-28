@@ -27,6 +27,5 @@
         <module>mock</module>
         <module>agents</module>
         <module>aas-bridge</module>
-        <module>edc</module>
     </modules>
 </project>
