@@ -188,11 +188,11 @@ spec:
               value: /connector-config/configuration.properties
           resources:
            requests:
-            cpu: 0.5
-            memory: "512Mi"
+            cpu: 500m
+            memory: 512Mi
            limits:
-            cpu: 0.5
-            memory: "512Mi"
+            cpu: 500m
+            memory: 512Mi
           startupProbe:
             failureThreshold: 17
             httpGet:
@@ -364,11 +364,11 @@ spec:
               value: /connector-config/configuration2.properties
           resources:
            requests:
-            cpu: 0.5
-            memory: "512Mi"
+            cpu: 500m
+            memory: 512Mi
            limits:
-            cpu: 0.5
-            memory: "512Mi"
+            cpu: 500m
+            memory: 512Mi
           startupProbe:
             failureThreshold: 17
             httpGet:
@@ -594,11 +594,11 @@ spec:
               value: /connector-config/configuration.properties
           resources:
             requests:
-              cpu: 0.5
-              memory: "512Mi"
+              cpu: 500m
+              memory: 512Mi
             limits:
-              cpu: 0.5
-              memory: "512Mi"
+              cpu: 500m
+              memory: 512Mi
           startupProbe:
             failureThreshold: 17
             httpGet:

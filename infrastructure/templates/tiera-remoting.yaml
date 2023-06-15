@@ -37,11 +37,11 @@ spec:
             - containerPort: 5005 # API
           resources:
            requests:
-            cpu: 0.5
-            memory: "256Mi"
+            cpu: 500m
+            memory: 256Mi
            limits:
-            cpu: 0.5
-            memory: "256Mi"
+            cpu: 500m
+            memory: 256Mi
           startupProbe:
             failureThreshold: 18
             httpGet:
@@ -169,11 +169,11 @@ spec:
             - containerPort: 8081 # API
           resources:
            requests:
-            cpu: 0.5
-            memory: "512Mi"
+            cpu: 500m
+            memory: 512Mi
            limits:
-            cpu: 0.5
-            memory: "512Mi"
+            cpu: 500m
+            memory: 512Mi
           startupProbe:
             failureThreshold: 18
             httpGet:
