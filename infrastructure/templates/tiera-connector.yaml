@@ -35,7 +35,7 @@ data:
     edc.oauth.endpoint.audience=https://{{ .Values.ingress.host }}/tiera-edc-control/{{ .Values.dataspace.bpnTier1 }}/api/v1/ids/data
 
     edc.data.encryption.algorithm=AES
-    edc.data.encryption.keys.alias=tiera-symmetric-key
+    edc.data.encryption.keys.alias=supplier-symmetric-key
     
     edc.oauth.provider.jwks.url={{ .Values.security.dapsUrl }}/.well-known/jwks.json
     edc.oauth.public.key.alias={{ .Values.dataspace.publicKeyAliasTier1 }}

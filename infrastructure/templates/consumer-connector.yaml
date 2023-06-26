@@ -35,7 +35,7 @@ data:
     edc.oauth.endpoint.audience=https://{{ .Values.ingress.host }}/consumer-edc-control/{{ .Values.dataspace.bpnCustomer }}/api/v1/ids/data
 
     edc.data.encryption.algorithm=AES
-    edc.data.encryption.keys.alias=customer-symmetric-key
+    edc.data.encryption.keys.alias=consumer-symmetric-key
     
     edc.oauth.provider.jwks.url={{ .Values.security.dapsUrl }}/.well-known/jwks.json
     edc.oauth.public.key.alias={{ .Values.dataspace.publicKeyAliasCustomer }}
