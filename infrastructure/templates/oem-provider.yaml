@@ -347,7 +347,7 @@ spec:
             memory: 4Gi
            limits:
             cpu: 500m
-            memory: 4Gi"
+            memory: 4Gi
           startupProbe:
             failureThreshold: 18
             httpGet:
