@@ -303,7 +303,7 @@ data:
     # Chapter Trust & Dataspace
     ###
 
-    edc.dataplane.token.validation.endpoint=http://oem-control-plane:9999/control/token
+    edc.dataplane.token.validation.endpoint=http://consumer-control-plane:9999/control/token
     edc.core.retry.retries.max= 0
     cx.agent.controlplane.protocol=http://consumer-control-plane:8282
     cx.agent.controlplane.management=http://consumer-control-plane:8181/management/v2
