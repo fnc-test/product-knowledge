@@ -154,7 +154,7 @@ data:
     otel.javaagent.enabled=false
     otel.javaagent.debug=false
   logging.properties: |-
-    .level=FINE
+    .level=INFO
     org.eclipse.dataspaceconnector.level=ALL
     handlers=java.util.logging.ConsoleHandler
     java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
@@ -194,7 +194,7 @@ spec:
                 - all
               add: ['NET_BIND_SERVICE']
             allowPrivilegeEscalation: false   
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
           ports:
             - containerPort: 8080 # API
             - containerPort: 8181 # MANAGEMENT
@@ -362,7 +362,7 @@ spec:
                 - all
               add: ['NET_BIND_SERVICE']
             allowPrivilegeEscalation: false   
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
           ports:
             - containerPort: 8080 # API
             - containerPort: 8181 # MANAGEMENT
@@ -610,7 +610,7 @@ spec:
                 - all
               add: ['NET_BIND_SERVICE']
             allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
           ports:
             - containerPort: 8082 # API
             - containerPort: 8185 # PUBLIC

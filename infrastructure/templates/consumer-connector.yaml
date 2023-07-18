@@ -15,7 +15,7 @@ data:
 
     edc.fs.config=/connector-config/configuration.properties
     edc.hostname={{ .Values.ingress.host }}
-    edc.participant.id=BPNL00000003CQI9
+    edc.participant.id={{ .Values.dataspace.bpnCustomer }}
 
     ###
     # Chapter Web Server / Ports
@@ -121,7 +121,7 @@ spec:
                 - all
               add: ['NET_BIND_SERVICE']
             allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
           ports:
             - containerPort: 8080 # API
             - containerPort: 8181 # MANAGEMENT
@@ -365,7 +365,7 @@ spec:
                 - all
               add: ['NET_BIND_SERVICE']
             allowPrivilegeEscalation: false   
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
           ports:
             - containerPort: 8082 # API
             - containerPort: 8185 # PUBLIC
