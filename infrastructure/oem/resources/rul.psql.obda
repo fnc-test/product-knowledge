@@ -37,14 +37,14 @@ source		SELECT gearbox_id, newest_telematics_id FROM vehicles
 
 mappingId   analysisInformation
 target      oem:{id} rdf:type cx-reliability:Analysis; cx-reliability:operatingHoursOfVehicle {metadata_status_operatingHours}^^xsd:float; cx-core:startDateTime {metadata_status_date}^^xsd:dateTime; cx-core:endDateTime {metadata_status_date}^^xsd:dateTime; cx-reliability:mileageOfVehicle {metadata_status_mileage}^^xsd:int.
-source		SELECT id, floor((load_spectra::jsonb->0->'metadata'->'status'->>'operatingHours')::numeric)::integer as metadata_status_operatingHours, replace(load_spectra::jsonb->0->'metadata'->'status'->>'date','Z','.000Z') as metadata_status_date,load_spectra::jsonb->0->'metadata'->'status'->>'mileage' as metadata_status_mileage FROM telematics_data
+source		SELECT id, metadata_status_operatingHours, metadata_status_date, metadata_status_mileage FROM reading
 
 mappingId   analysisResult
-target		oem:{newest_telematics_id} cx-reliability:result oem:{newest_telematics_id}/{name}.
-source		SELECT gearbox_id, newest_telematics_id, name FROM vehicles, (VALUES ('GearSet'), ('GearOil'), ('Clutch')) AS spectrum(name)
+target		oem:{id} cx-reliability:result oem:{id}/{index}.
+source		SELECT id, index FROM loadspectra
 
 mappingId   loadspectrum
-target      oem:{id}/{name} rdf:type cx-reliability:LoadSpectrum; cx-core:id {name}^^xsd:string; cx-core:name {metadata_projectDescription}^^xsd:string; cx-reliability:description {metadata_routeDescription}^^xsd:string; cx-reliability:countingValue {body_counts_countsName}^^xsd:string; cx-reliability:countingUnit {header_countingUnit}^^xsd:string; cx-reliability:countingMethod {header_countingMethod}^^xsd:string; cx-reliability:channels {header_channels}^^json:Object; cx-reliability:classes {body_classes}^^json:Object; cx-reliability:values {body_counts_countsList}^^json:Object .
-source		SELECT id, index, name, load_spectra::jsonb->index->'metadata'->>'projectDescription' as metadata_projectDescription, load_spectra::jsonb->index->'metadata'->>'routeDescription' as metadata_routeDescription, load_spectra::jsonb->index->'header'->>'countingUnit' as header_countingUnit, load_spectra::jsonb->index->'header'->>'countingMethod' as header_countingMethod, load_spectra::jsonb->index->'header'->'channels' as header_channels, load_spectra::jsonb->index->'body'->'classes' as body_classes, load_spectra::jsonb->index->'body'->'counts'->'countsName' as body_counts_countsName, load_spectra::jsonb->index->'body'->'counts'->'countsList' as body_counts_countsList FROM telematics_data, (VALUES (0,'GearSet'), (1,'GearOil'), (2,'Clutch')) AS spectrum(index,name)
+target      oem:{id}/{index} rdf:type cx-reliability:LoadSpectrum; cx-core:id {metadata_componentDescription}^^xsd:string; cx-core:name {metadata_projectDescription}^^xsd:string; cx-reliability:description {metadata_routeDescription}^^xsd:string; cx-reliability:countingValue {body_counts_countsName}^^xsd:string; cx-reliability:countingUnit {header_countingUnit}^^xsd:string; cx-reliability:countingMethod {header_countingMethod}^^xsd:string; cx-reliability:channels {header_channels}^^json:Object; cx-reliability:classes {body_classes}^^json:Object; cx-reliability:values {body_counts_countsList}^^json:Object .
+source		SELECT id, index, metadata_componentDescription, metadata_projectDescription, metadata_routeDescription, header_countingUnit, header_countingMethod, header_channels, body_classes, body_counts_countsName,  body_counts_countsList FROM loadspectra
 
 ]]  

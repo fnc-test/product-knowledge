@@ -97,7 +97,7 @@ services:
     build:
       dockerfile: src/main/docker/Dockerfile
       context: ../dataspace/virtualize/dremio
-    image: ghcr.io/catenax-ng/product-knowledge/virtualizer-dremio:1.9.4-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/virtualizer-dremio:1.9.5-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "9047:9047" # http
@@ -114,7 +114,7 @@ services:
   #  build:
   #    dockerfile: src/main/docker/Dockerfile
   #    context: ../dataspace/virtualize/druid
-  #  image: ghcr.io/catenax-ng/product-knowledge/virtualizer-druid:1.9.4-SNAPSHOT
+  #  image: ghcr.io/catenax-ng/product-knowledge/virtualizer-druid:1.9.5-SNAPSHOT
   #  platform: ${DOCKER_PLATFORM:-linux/amd64}
   #  ports:
   #    - "8888:8888" # http
@@ -130,7 +130,7 @@ services:
   #    build:
   #      dockerfile: src/main/docker/Dockerfile
   #      context: ../dataspace/agents/sparql-anything
-  #    image: ghcr.io/catenax-ng/product-knowledge/facadex-agent:1.9.4-SNAPSHOT
+  #    image: ghcr.io/catenax-ng/product-knowledge/facadex-agent:1.9.5-SNAPSHOT
   #    ports:
   #      - "3000:3000"
   #    volumes:
@@ -149,7 +149,7 @@ services:
     build:
       dockerfile: src/main/docker/Dockerfile
       context: ../dataspace/mock/prognosis
-    image: ghcr.io/catenax-ng/product-knowledge/prognosis:1.9.4-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/prognosis:1.9.5-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "5005:5005" # API
@@ -174,7 +174,7 @@ services:
   ###
   # A conformity-testing binding agent
   conforming-agent:
-    image: ghcr.io/catenax-ng/product-agents/conforming-agent:1.9.4-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-agents/conforming-agent:1.9.5-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     environment:
       # Uncomment to enable for debugging, please choose a different port for each endpoint
@@ -187,7 +187,7 @@ services:
   # A data provisioning agent
   #
   provider-agent:
-    image: ghcr.io/catenax-ng/product-agents/provisioning-agent:1.9.4-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-agents/provisioning-agent:1.9.5-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8080:8080" # sparql endpoint
@@ -238,7 +238,7 @@ services:
   ###
   # A function providing agent
   remoting-agent:
-    image: ghcr.io/catenax-ng/product-agents/remoting-agent:1.9.4-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-agents/remoting-agent:1.9.5-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8200:8081" # sparql endpoint
@@ -270,7 +270,7 @@ services:
         PROVIDER_SPARQL_ENDPOINT_ARG: https://knowledge.dev.demo.catena-x.net/oem-edc-data/BPNL00000003COJN/api/agent
         #PROVIDER_AGENT_PLANE_ARG: http://provider-agent:8082/sparql
         PROVIDER_AGENT_PLANE_ARG: http://oem-provider-agent:8082/sparql
-    image: ghcr.io/catenax-ng/product-knowledge/aas-bridge:1.9.4-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/aas-bridge:1.9.5-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
       - "8700:8080" # AAS-API
@@ -487,7 +487,7 @@ services:
     build:
       dockerfile: src/main/docker/Dockerfile
       context: ../ux
-    image: ghcr.io/catenax-ng/product-knowledge/ux:1.9.4-SNAPSHOT
+    image: ghcr.io/catenax-ng/product-knowledge/ux:1.9.5-SNAPSHOT
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     environment:
       REACT_APP_SKILL_CONNECTOR_DATA: http://localhost:8500

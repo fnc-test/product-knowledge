@@ -35,14 +35,14 @@ spec:
     spec:
       automountServiceAccountToken: false
       securityContext:
-        runAsUser: 10000
+        runAsUser: 10100
         runAsGroup: 30000
         fsGroup: 30000
         seccompProfile:
            type: RuntimeDefault
       containers:
         - name: conforming-agent
-          image: ghcr.io/catenax-ng/product-agents/conforming-agent:1.9.4-SNAPSHOT
+          image: ghcr.io/catenax-ng/product-agents/conforming-agent:1.9.5-SNAPSHOT
           imagePullPolicy: Always
           securityContext:
             capabilities:
