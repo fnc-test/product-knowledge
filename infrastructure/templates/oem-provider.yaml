@@ -380,21 +380,15 @@ spec:
             - name: JAVA_TOOL_OPTIONS
               value: "" #"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
           volumeMounts:
-            - name: backups
+            - name: data
               mountPath: /opt/dremio/data
             - name: oem-backend-config
               mountPath: /opt/dremio/conf/dremio.conf
               subPath: dremio.conf
               readOnly: true
       volumes:
-        - name: backups
-          csi:
-             driver: file.csi.azure.com
-             readOnly: false
-             volumeAttributes:
-                secretName: oem-backend-storage  # required
-                shareName: {{ .Values.security.backupsShare }} # required
-                mountOptions: "dir_mode=0777,file_mode=0777,cache=strict,actimeo=30,uid=10000,gid=30000"  # optional
+        - name: data
+          size: "4Gi"
         - name: oem-backend-config
           configMap:
             name: oem-backend-config
