@@ -20,7 +20,7 @@ All sources are locally documented using markdown and language-specific code com
 
 ## Repository Linking and Initialisation
 
-The individual modules may be maintained in separate repositories (currently: [a patched AASWC client](ux/skill_gym/public/aaswc)). 
+Some modules may be maintained in separate repositories (currently: [a patched AASWC client](ux/skill_gym/public/aaswc)). 
 
 They are linked as [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) 
 so you should be sure to run the following command after cloning this repo:
@@ -34,14 +34,16 @@ some of the docker images need a certain amount of memory and horsepower.
 
 ## Modules
 
-These are the sub-modules of the Agents Kit 
+These are the further sub-modules of the Agents Kit 
 
-- [Dataspace](dataspace/README.md) hosts reference implementations of the Gaia-X/IDS Dataspace extensions (Agents) for both Providers and Consumers which  the semantics of Catena-X.
+- [Dataspace](dataspace/README.md) hosts reference implementations of the Gaia-X/IDS Dataspace extensions (Agents) for both Providers and Consumers, such as AAS-Bridge and Data Virtualization Engines.
 - [UX](ux/README.md) hosts User Experience components and a sample portal/development environment for developing and executing semantically-driven logic and apps.
 - [Infrastructure](infrastructure/README.md) hosts "Infrastructure as Code" manifests and resources for easy deployment of above artifacts including a sample dataspace.
 
 Carved out external repositories
 - [Ontology](https://github.com/catenax-ng/product-ontology) hosts the CX domain ontologies (including the fully merged CX ontology and tooling) describing the semantics of the Catena-X Dataspace.
+- [Tractus-X Knowledge Agents EDC Extensions (KA-EDC)](http://github.com/catenax-ng/product-agents-edc) for enabled Semantic Web protocols over the Dataspace.
+- [Tractus-X Knowledge Agents Reference Implementations (KA)](http://github.com/catenax-ng/product-agents) which implement Semantic Web queries and semantics.
 
 Besides the markdown documentation including this file, we have some helper folders
 

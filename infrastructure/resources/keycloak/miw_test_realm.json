@@ -542,11 +542,7 @@
       ],
       "clientRoles": {
         "miw_00000_client": [
-          "view_wallets",
-          "update_wallet",
-          "add_wallets",
-          "view_wallet",
-          "update_wallets"
+          "view_wallet"
         ]
       },
       "notBefore": 0,
@@ -567,11 +563,7 @@
       ],
       "clientRoles": {
         "miw_00000_client": [
-          "view_wallets",
-          "update_wallet",
-          "add_wallets",
-          "view_wallet",
-          "update_wallets"
+          "view_wallet"
         ]
       },
       "notBefore": 0,
@@ -592,11 +584,7 @@
       ],
       "clientRoles": {
         "miw_00000_client": [
-          "view_wallets",
-          "update_wallet",
-          "add_wallets",
-          "view_wallet",
-          "update_wallets"
+          "view_wallet"
         ]
       },
       "notBefore": 0,
@@ -617,11 +605,7 @@
       ],
       "clientRoles": {
         "miw_00000_client": [
-          "view_wallets",
-          "update_wallet",
-          "add_wallets",
-          "view_wallet",
-          "update_wallets"
+          "view_wallet"
         ]
       },
       "notBefore": 0,
@@ -642,11 +626,7 @@
       ],
       "clientRoles": {
         "miw_00000_client": [
-          "view_wallets",
-          "update_wallet",
-          "add_wallets",
-          "view_wallet",
-          "update_wallets"
+          "view_wallet"
         ]
       },
       "notBefore": 0,

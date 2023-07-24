@@ -78,9 +78,6 @@ services:
       - ./resources/keycloak/health-check.sh:/opt/keycloak/health-check.sh
     ports:
       - "6060:6060"
-    depends_on:
-      postgres:
-        condition: service_healthy
     healthcheck:
       test: "timeout 10s bash -c ':> /dev/tcp/127.0.0.1/6060' || exit 1"
       interval: 10s
@@ -302,7 +299,6 @@ services:
       - "8093:8282" # DPS
       - "8094:9998" # METRICS
       - "8095:9999" # CONTROL
-      - "8096:8081" # OBSERVABILITY
       - "4040:4040" # DEBUG
     environment:
       # If you want to enable multiple endpoints, simply list them with spaces, like ONTOP_PORT: 8080 8082
