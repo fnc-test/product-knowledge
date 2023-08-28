@@ -19,7 +19,7 @@
             <password>${env.GITHUB_TOKEN}</password>
         </server>
         <server>
-            <id>esmf</id>
+            <id>aas4j</id>
             <username>${env.GITHUB_ACTOR}</username>
             <password>${env.GITHUB_TOKEN}</password>
         </server>
