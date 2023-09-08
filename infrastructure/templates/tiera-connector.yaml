@@ -362,7 +362,7 @@ spec:
         seccompProfile:
             type: RuntimeDefault
       containers:
-        - image: tractusx/agentplane-hashicorp:{{ .Values.txVersion }}
+        - image: ghcr.io/catenax-ng/product-agents-edc/agentplane-hashicorp:1.9.5-SNAPSHOT
           imagePullPolicy: Always
           name: tiera-data-plane
           securityContext:
