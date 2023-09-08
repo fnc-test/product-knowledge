@@ -8,7 +8,7 @@ CREATE TABLE $scratch.CX_TRC_MaterialForRecycling AS (
             SELECT
                 catenaXId,
                 FLATTEN("urn:bamm:io.catenax.material_for_recycling:1.1.0#MaterialForRecycling") AS json
-                FROM datalake."catenax-knowledge-agents"."CX_Testdata_v1.5-SNAPSHOT-AsPlanned.ndjson"
+                FROM datalake."catenax-knowledge-agents"."CX_Testdata_v1.5.2-SNAPSHOT-AsPlanned.ndjson"
         ) JSON WHERE JSON.json IS NOT NULL
     );
 
@@ -42,7 +42,7 @@ CREATE TABLE $scratch.CX_TRC_MaterialForRecycling_Components AS (
                 SELECT
                     catenaXId,
                     FLATTEN("urn:bamm:io.catenax.material_for_recycling:1.1.0#MaterialForRecycling") AS json
-                 FROM datalake."catenax-knowledge-agents"."CX_Testdata_v1.5-SNAPSHOT-AsPlanned.ndjson"
+                 FROM datalake."catenax-knowledge-agents"."CX_Testdata_v1.5.2-SNAPSHOT-AsPlanned.ndjson"
              ) JSON
              WHERE JSON.json IS NOT NULL) COMPONENTS
     );

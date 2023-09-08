@@ -8,13 +8,13 @@ CREATE TABLE $scratch.CX_TRC_PartAsPlanned AS
         JSON.pasp['partTypeInformation'].nameAtManufacturer as partTypeInformation_nameAtManufacturer,
         TO_DATE(LEFT(JSON.pasp['validityPeriod']['validFrom'],10),'YYYY-MM-DD') as validityPeriod_validFrom,
         TO_DATE(LEFT(JSON.pasp['validityPeriod']['validTo'],10),'YYYY-MM-DD') as validityPeriod_validTo,
-        ARRAY_LENGTH(JSON.slbomasp.childParts) as assembly_status
+        ARRAY_LENGTH(JSON.slbomasp.childItems) as assembly_status
     FROM (
        SELECT catenaXId,
               bpnl,
-              FLATTEN("urn:bamm:io.catenax.part_as_planned:1.0.0#PartAsPlanned") AS pasp,
-              FLATTEN("urn:bamm:io.catenax.single_level_bom_as_planned:1.0.2#SingleLevelBomAsPlanned") AS slbomasp
-         FROM datalake."catenax-knowledge-agents"."CX_Testdata_v1.5-SNAPSHOT-AsPlanned.ndjson"
+              FLATTEN("urn:bamm:io.catenax.part_as_planned:1.0.1#PartAsPlanned") AS pasp,
+              FLATTEN("urn:bamm:io.catenax.single_level_bom_as_planned:2.0.0#SingleLevelBomAsPlanned") AS slbomasp
+         FROM datalake."catenax-knowledge-agents"."CX_Testdata_v1.5.2-SNAPSHOT-AsPlanned.ndjson"
     ) JSON;
 
 DROP VIEW "TRACE_TEST_OEM".CX_TRC_PartAsPlanned;
@@ -47,7 +47,7 @@ CREATE TABLE $scratch.CX_TRC_PartSiteInformationAsPlanned AS
        SELECT catenaXId,
               bpnl,
               FLATTEN("urn:bamm:io.catenax.part_site_information_as_planned:1.0.0#PartSiteInformationAsPlanned") AS psiap
-         FROM datalake."catenax-knowledge-agents"."CX_Testdata_v1.5-SNAPSHOT-AsPlanned.ndjson"
+         FROM datalake."catenax-knowledge-agents"."CX_Testdata_v1.5.2-SNAPSHOT-AsPlanned.ndjson"
       ) JSON
     ) SITE;
 

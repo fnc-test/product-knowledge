@@ -40,7 +40,7 @@ via the frontend or the respective CLI.
 - [tiera](tiera/) Resources that will be integrated/mounted by the SUPPLIER tenant.
 - [consumer](consumer/) Resources that will be integrated/mounted by the CONSUMER tenant.
 - [Readme.md](Readme.md) This file.
-- 
+ 
 
 - [Dataspace](dataspace/README.md) hosts reference implementations of the Gaia-X/IDS Dataspace extensions (Agents) for both Providers and Consumers which  the semantics of Catena-X.
 - [UX](ux/README.md) hosts User Experience components and a sample portal/development environment for developing and executing semantically-driven logic and apps.
