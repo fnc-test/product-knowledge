@@ -1,7 +1,7 @@
 # the chart version should coincide with the binary versions 
 version: 1.10.2-SNAPSHOT
 # the version of the tractusx images
-txVersion: 1
+txVersion: latest
 
 dataspace:
   bpnOem: BPNL00000003COJN
