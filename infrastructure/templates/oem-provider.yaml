@@ -382,8 +382,8 @@ spec:
             successThreshold: 1
             timeoutSeconds: 5        
           env:
-            - name: JAVA_TOOL_OPTIONS
-              value: "" #"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
+#            - name: JAVA_TOOL_OPTIONS
+#              value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8090"
           volumeMounts:
             - name: data
               mountPath: /opt/dremio/data
