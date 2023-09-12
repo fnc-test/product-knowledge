@@ -285,10 +285,10 @@ services:
       - "8700:8080" # AAS-API
       - "4048:4040" # DEBUG
     environment:
-      #PROVIDER_SPARQL_ENDPOINT: https://knowledge.dev.demo.catena-x.net/oem-edc-data/BPNL00000003COJN/api/agent
+      PROVIDER_SPARQL_ENDPOINT: http://provider-agent:8082/sparql
       #PROVIDER_SPARQL_ENDPOINT: http://oem-data-plane:8082/api/agent
       #PROVIDER_AGENT_PLANE: http://provider-agent:8082/sparql
-      PROVIDER_SPARQL_ENDPOINT: https://knowledge.dev.demo.catena-x.net/oem-provider-agent3/sparql
+      #PROVIDER_SPARQL_ENDPOINT: https://knowledge.dev.demo.catena-x.net/oem-provider-agent3/sparql
       JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:4040
       TIMEOUT_SECONDS: 30
     volumes:

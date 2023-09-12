@@ -44,8 +44,8 @@ target      uuid:{catenaXId} cx-vehicle:manufacturer bpns:{catenaXSiteId}.
 source		SELECT * FROM "TRACE_TEST_OEM"."CX_TRC_PartSiteInformationAsPlanned" sites where "function"='production'
 
 mappingId	manufacturers
-target      bpns:{catenaXSiteId} rdf:type cx-common:Site; cx-common:isSiteOf bpnl:{bpnl}; cx-common:validityPeriodStart {functionValidFrom}^^xsd:date; cx-common:validityPeriodEnd {functionValidTo}^^xsd:date.
-source		SELECT catenaXSiteId, bpnl, min(functionValidFrom) as functionValidFrom, max(functionValidTo) as functionValidTo FROM "TRACE_TEST_OEM"."CX_TRC_PartSiteInformationAsPlanned" sites where "function"='production' GROUP BY catenaXSiteId, bpnl
+target      bpns:{catenaXSiteId} rdf:type cx-common:Site; cx-common:isSiteOf bpnl:{bpnl}; cx-common:validityPeriodStart {functionValidFrom}^^xsd:date; cx-common:validityPeriodEnd {functionValidUntil}^^xsd:date.
+source		SELECT catenaXSiteId, bpnl, min(functionValidFrom) as functionValidFrom, max(functionValidUntil) as functionValidUntil FROM "TRACE_TEST_OEM"."CX_TRC_PartSiteInformationAsPlanned" sites where "function"='production' GROUP BY catenaXSiteId, bpnl
 
 ]]
 
