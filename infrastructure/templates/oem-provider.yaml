@@ -205,6 +205,9 @@ spec:
     - port: 8083
       name: quality
       targetPort: 8083
+    - port: 8084
+      name: reliability
+      targetPort: 8084
   selector:
     app: oem-provider-agent
 ---

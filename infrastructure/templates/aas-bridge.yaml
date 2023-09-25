@@ -25,7 +25,7 @@ spec:
            type: RuntimeDefault
       containers:
         - name: aas-bridge
-          image: ghcr.io/catenax-ng/product-knowledge/aas-bridge:{{.Values.version}}
+          image: ghcr.io/catenax-ng/tx-knowledge-agents-aas-bridge/aas-bridge:0.10.2-SNAPSHOT
           imagePullPolicy: Always
           securityContext:
             capabilities:

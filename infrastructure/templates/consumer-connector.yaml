@@ -112,7 +112,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - image: tractusx/edc-controlplane-memory-hashicorp-vault:0.5.0
+        - image: tractusx/edc-controlplane-memory-hashicorp-vault:0.5.1
           imagePullPolicy: Always
           name: consumer-control-plane
           securityContext:
@@ -356,7 +356,7 @@ spec:
         seccompProfile:
             type: RuntimeDefault
       containers:
-        - image: ghcr.io/catenax-ng/product-agents-edc/agentplane-hashicorp:1.9.5-SNAPSHOT
+        - image: ghcr.io/catenax-ng/tx-knowledge-agents-edc/agentplane-hashicorp:{{ .Values.txVersion }}
           imagePullPolicy: Always
           name: consumer-data-plane
           securityContext:
