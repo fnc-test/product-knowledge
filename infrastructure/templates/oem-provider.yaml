@@ -270,6 +270,13 @@ spec:
                 name: oem-provider-agent
                 port:
                   number: 8083
+          - path: /oem-provider-agent5/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: oem-provider-agent
+                port:
+                  number: 8084
 ---
 apiVersion: v1
 data:
