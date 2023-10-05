@@ -31,7 +31,6 @@ data:
     web.http.protocol.path=/api/v1/dsp
     web.http.metrics.port=9998
     web.http.metrics.path=/metrics
-    edc.jsonld.https.enabled=true
 
     ###
     # Chapter Security
@@ -315,7 +314,7 @@ data:
     ###
 
     cx.agent.asset.file=dataspace.ttl
-    cx.agent.dataspace.synchronization=60000
+    cx.agent.dataspace.synchronization=360000
     cx.agent.dataspace.remotes=https://{{ .Values.ingress.host}}/oem-edc-control/BPNL00000003COJN,https://{{ .Values.ingress.host}}/tiera-edc-control/BPNL00000003CPIY,https://{{ .Values.ingress.host}}/consumer-edc-control/BPNL00000003CQI9    
   opentelemetry.properties: |-
     otel.javaagent.enabled=false
