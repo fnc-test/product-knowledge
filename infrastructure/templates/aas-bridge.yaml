@@ -46,7 +46,7 @@ spec:
           startupProbe:
             failureThreshold: 18
             httpGet:
-              path: /serialization?includeConceptDescriptions=true
+              path: /shells
               port: 8080
             initialDelaySeconds: 60
             periodSeconds: 30
@@ -55,7 +55,7 @@ spec:
           livenessProbe:
             failureThreshold: 3
             httpGet:
-              path: /serialization?includeConceptDescriptions=true
+              path: /shells
               port: 8080
             periodSeconds: 60
             successThreshold: 1
@@ -63,7 +63,7 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /serialization?includeConceptDescriptions=true
+              path: /shells
               port: 8080
             periodSeconds: 300
             successThreshold: 1
