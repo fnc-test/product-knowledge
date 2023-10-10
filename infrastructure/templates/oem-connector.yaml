@@ -695,7 +695,7 @@ spec:
     - port: 8185
       name: public
       targetPort: 8185
-    - port: 8186
+    - port: 8187
       name: callback
       targetPort: 8187
     - port: 9999

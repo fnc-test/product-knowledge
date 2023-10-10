@@ -453,7 +453,7 @@ spec:
       targetPort: 8185
     - port: 8187
       name: callback
-      targetPort: 8186
+      targetPort: 8187
     - port: 9999
       name: control
       targetPort: 9999
